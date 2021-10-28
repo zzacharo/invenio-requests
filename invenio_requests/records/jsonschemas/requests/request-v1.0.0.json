@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "local://requests/request-v1.0.0.json",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "$ref": "local://definitions-v1.0.0.json#/$schema"
+    },
+    "community": {
+      "type": "string"
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "content": {
+            "type": "object"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "type": {
+            "enum": [
+              "init", "comment", "edit", "accept", "decline"
+            ]
+          },
+          "updated_at": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "id": {
+      "$ref": "local://definitions-v1.0.0.json#/identifier"
+    },
+    "record": {
+      "type": "string"
+    },
+    "requester": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "open",
+        "accepted",
+        "declined",
+        "cancelled"
+      ]
+    },
+    "type": {
+      "enum": [
+        "record-membership",
+        "user-membership",
+        "quota"
+      ]
+    }
+  }
+}
