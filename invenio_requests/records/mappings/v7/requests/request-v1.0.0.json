@@ -28,7 +28,7 @@
         "type": "text"
       },
       "status": {
-        "type": "string"
+        "type": "keyword"
       },
       "is_open": {
         "type": "boolean"

@@ -1,33 +1,32 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2021 CERN.
-# Copyright (C) 2021 TU Wien.
+# Copyright (C) 2021 Northwestern University.
 #
 # Invenio-Requests is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
 """Invenio module for generic and customizable requests."""
 
-from flask_babelex import gettext as _
-
 from . import config
 
+from .services import RequestCommentsService, RequestsService, \
+    RequestCommentsServiceConfig, RequestsServiceConfig
 
-class InvenioRequests(object):
+
+class InvenioRequests:
     """Invenio-Requests extension."""
 
     def __init__(self, app=None):
         """Extension initialization."""
-        # TODO: This is an example of translation string with comment. Please
-        # remove it.
-        # NOTE: This is a note to a translator.
-        _("A translation string")
         if app:
             self.init_app(app)
 
     def init_app(self, app):
         """Flask application initialization."""
         self.init_config(app)
+        self.init_services(app)
+
         app.extensions["invenio-requests"] = self
 
     def init_config(self, app):
@@ -41,3 +40,13 @@ class InvenioRequests(object):
         for k in dir(config):
             if k.startswith("REQUESTS_"):
                 app.config.setdefault(k, getattr(config, k))
+
+    def init_services(self, app):
+        """Initialize services."""
+        # Services
+        self.requests_service = RequestsService(
+            RequestsServiceConfig()
+        )
+        self.request_comments_service = RequestCommentsService(
+            RequestCommentsServiceConfig()
+        )

@@ -7,10 +7,11 @@
 
 """API classes for requests in Invenio."""
 
+from invenio_pidstore.providers.recordid_v2 import RecordIdProviderV2
 from invenio_records.dumpers import ElasticsearchDumper
 from invenio_records.systemfields import ConstantField
 from invenio_records_resources.records.api import Record
-from invenio_records_resources.records.systemfields import IndexField
+from invenio_records_resources.records.systemfields import IndexField, PIDField
 
 from .actions import RequestAction
 from .models import RequestMetadata
@@ -34,6 +35,8 @@ class Request(Record):
 
     request_type = ConstantField("request_type", "Generic Request")
     """The human-readable request type."""
+
+    pid = PIDField('id', provider=RecordIdProviderV2)
 
     # TODO systemfield?
     @property

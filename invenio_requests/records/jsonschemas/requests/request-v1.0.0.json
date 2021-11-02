@@ -7,57 +7,14 @@
     "$schema": {
       "$ref": "local://definitions-v1.0.0.json#/$schema"
     },
-    "community": {
-      "type": "string"
-    },
-    "events": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "content": {
-            "type": "object"
-          },
-          "created_at": {
-            "type": "string"
-          },
-          "type": {
-            "enum": [
-              "init", "comment", "edit", "accept", "decline"
-            ]
-          },
-          "updated_at": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "id": {
       "$ref": "local://definitions-v1.0.0.json#/identifier"
     },
-    "record": {
+    "pid": {
+      "$ref": "local://definitions-v1.0.0.json#/internal-pid"
+    },
+    "request_type": {
       "type": "string"
-    },
-    "requester": {
-      "type": "string"
-    },
-    "status": {
-      "enum": [
-        "open",
-        "accepted",
-        "declined",
-        "cancelled"
-      ]
-    },
-    "type": {
-      "enum": [
-        "record-membership",
-        "user-membership",
-        "quota"
-      ]
     }
   }
 }
