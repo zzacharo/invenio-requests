@@ -1,4 +1,7 @@
 import {
+  RequestActions
+} from './request/RequestActions';
+import {
   InvenioRequestsTimelineAPI,
   RequestLinkExtractor,
   RequestEventsApi,
@@ -37,6 +40,7 @@ export class InvenioRequestsApp extends Component {
     return (
       <OverridableContext.Provider value={overriddenCmps}>
         <Provider store={this.store}>
+          <RequestActions />
           <RequestDetails request={request} />
         </Provider>
       </OverridableContext.Provider>
