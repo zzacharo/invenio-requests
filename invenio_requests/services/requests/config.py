@@ -13,6 +13,8 @@
 from invenio_records_resources.services import RecordServiceConfig, SearchOptions
 from invenio_records_resources.services.records.links import pagination_links
 
+from invenio_requests.services.requests import facets
+
 from ...customizations.base import RequestActions
 from ...records.api import Request
 from ..configurator import ConfiguratorMixin, FromConfig
@@ -24,7 +26,7 @@ from .components import (
     RequestNumberComponent,
 )
 from .links import RequestLink
-from .params import ReferenceFilterParam
+from .params import IsOpenParam, ReferenceFilterParam
 from .results import RequestItem, RequestList
 
 
@@ -42,7 +44,13 @@ class RequestSearchOptions(SearchOptions):
         ReferenceFilterParam.factory(param="created_by", field="created_by"),
         ReferenceFilterParam.factory(param="receiver", field="receiver"),
         ReferenceFilterParam.factory(param="topic", field="topic"),
+        IsOpenParam.factory("is_open"),
     ]
+
+    facets = {
+        'type': facets.type,
+        'status': facets.status,
+    }
 
 
 class RequestsServiceConfig(RecordServiceConfig, ConfiguratorMixin):

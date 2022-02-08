@@ -7,8 +7,12 @@
 # details.
 
 """Search parameter interpreters for requests."""
+from functools import partial
 
-from invenio_records_resources.services.records.params import FilterParam
+from invenio_records_resources.services.records.params import (
+    FilterParam,
+    ParamInterpreter,
+)
 
 from ...resolvers.registry import ResolverRegistry
 
@@ -52,4 +56,26 @@ class ReferenceFilterParam(FilterParam):
             else:
                 search = search.filter("terms", **{field_name: ref_id})
 
+        return search
+
+
+class IsOpenParam(ParamInterpreter):
+    """Evaluates the 'is_open' parameter."""
+
+    def __init__(self, field_name, config):
+        """Construct."""
+        self.field_name = field_name
+        super().__init__(config)
+
+    @classmethod
+    def factory(cls, field):
+        """Create a new filter parameter."""
+        return partial(cls, field)
+
+    def apply(self, identity, search, params):
+        """Evaluate the is_open parameter on the search."""
+        if params.get("is_open") is True:
+            search = search.filter('term', **{self.field_name: True})
+        elif params.get("is_open") is False:
+            search = search.filter('term', **{self.field_name: False})
         return search

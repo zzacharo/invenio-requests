@@ -10,6 +10,8 @@
 
 from invenio_records_resources.references.resolvers import UserResolver
 
+from invenio_requests.services.requests import facets
+
 from .services.permissions import PermissionPolicy
 
 REQUESTS_PERMISSION_POLICY = PermissionPolicy
@@ -22,3 +24,24 @@ REQUESTS_ENTITY_RESOLVERS = [
     UserResolver(),
 ]
 """Registered resolvers for resolving/creating references in request metadata."""
+
+REQUESTS_ROUTES = {
+    'details': '/requests/<pid_value>',
+}
+"""Invenio requests ui endpoints."""
+
+REQUESTS_FACETS = {
+    'type': {
+        'facet': facets.type,
+        'ui': {
+            'field': 'type',
+        }
+    },
+    'status': {
+        'facet': facets.status,
+        'ui': {
+            'field': 'status',
+        }
+    },
+}
+"""Invenio requests facets."""

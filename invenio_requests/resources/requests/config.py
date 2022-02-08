@@ -15,6 +15,7 @@ from invenio_records_resources.resources import (
     RecordResourceConfig,
     SearchRequestArgsSchema,
 )
+from marshmallow import fields
 
 from .fields import ReferenceString
 
@@ -28,6 +29,7 @@ class RequestSearchRequestArgsSchema(SearchRequestArgsSchema):
     created_by = ReferenceString()
     topic = ReferenceString()
     receiver = ReferenceString()
+    is_open = fields.Boolean()
 
 
 #
