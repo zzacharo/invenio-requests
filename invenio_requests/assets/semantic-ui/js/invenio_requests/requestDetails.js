@@ -1,19 +1,54 @@
+import RequestHeader from "./request/RequestHeader";
+import RequestMetadata from "./request/RequestMetadata";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Tab } from "semantic-ui-react";
-import ReactDOM from "react-dom";
+import Overridable from "react-overridable";
+import { Container, Grid, Tab, Header, Image } from "semantic-ui-react";
+import { Timeline } from "./timeline";
 
 class RequestDetails extends Component {
-  menuPanes = [
-    { menuItem: "Timeline", render: () => <Tab.Pane>TIMELINE</Tab.Pane> },
-    { menuItem: "Record", render: () => <Tab.Pane>Record</Tab.Pane> }
-  ];
+  get menuPanes() {
+    const { request } = this.props;
+    return [
+      {
+        menuItem: "Conversation",
+        render: () => (
+          <Tab.Pane>
+            <Container>
+              <Grid stackable reversed="mobile">
+                <Grid.Column width={13}>
+                  <Timeline />
+                </Grid.Column>
+                <Grid.Column width={3}>
+                  <RequestMetadata request={request} />
+                </Grid.Column>
+              </Grid>
+            </Container>
+          </Tab.Pane>
+        ),
+      },
+      { menuItem: "Record", render: () => <Tab.Pane>Record</Tab.Pane> },
+    ];
+  }
 
   render() {
-    return <Tab panes={this.menuPanes} />;
+    const { request } = this.props;
+    return (
+      <Overridable id="InvenioRequests.RequestDetails.layout" {...this.props}>
+        <>
+          <RequestHeader request={request} />
+          <Tab panes={this.menuPanes} />
+        </>
+      </Overridable>
+    );
   }
 }
 
-ReactDOM.render(<RequestDetails />, document.getElementById("request-detail"));
+RequestDetails.propTypes = {
+  request: PropTypes.object.isRequired,
+};
 
-export default RequestDetails;
+export default Overridable.component(
+  "InvenioRequests.RequestDetails",
+  RequestDetails
+);
