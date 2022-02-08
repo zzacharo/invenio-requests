@@ -1,10 +1,12 @@
 import Error from "../components/Error";
-import TimelineEvent from "./TimelineEvent";
 import Loader from "../components/Loader";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Overridable from "react-overridable";
-import { Container, Feed, Segment } from "semantic-ui-react";
+import { Container, Feed, Segment, Divider } from "semantic-ui-react";
+import { TimelineEventWithState } from "../timelineEventWithState";
+import { ConfirmationModal } from "../confirmationModal";
+import { TimelineCommentEditor } from "../timelineCommentEditor";
 
 class TimelineFeed extends Component {
   componentDidMount() {
@@ -19,6 +21,7 @@ class TimelineFeed extends Component {
 
   render() {
     const { timeline, loading, error } = this.props;
+
     return (
       <Loader isLoading={loading}>
         <Error error={error}>
@@ -27,10 +30,13 @@ class TimelineFeed extends Component {
               <Segment>
                 <Feed>
                   {timeline.hits?.hits.map((comment) => (
-                    <TimelineEvent event={comment} key={comment.id} />
+                    <TimelineEventWithState key={comment.id} event={comment} />
                   ))}
                 </Feed>
+                <Divider />
+                <TimelineCommentEditor />
               </Segment>
+              <ConfirmationModal />
             </Container>
           </Overridable>
         </Error>
@@ -44,6 +50,7 @@ TimelineFeed.propTypes = {
   timelineStopRefresh: PropTypes.func.isRequired,
   timeline: PropTypes.object,
   error: PropTypes.object,
+  isSubmitting: PropTypes.bool,
 };
 
 export default Overridable.component("TimelineFeed", TimelineFeed);

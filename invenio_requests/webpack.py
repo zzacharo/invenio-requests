@@ -34,8 +34,8 @@ requests = WebpackThemeBundle(
             dependencies={
                 'semantic-ui-css': '^2.4.1',
                 'semantic-ui-react': '^2.1.1',
-                '@ckeditor/ckeditor5-build-classic': '^16.0.0',
-                '@ckeditor/ckeditor5-react': '^2.1.0',
+                '@ckeditor/ckeditor5-build-classic': '^32.0.0',
+                '@ckeditor/ckeditor5-react': '^4.0.0',
                 'axios': '^0.19.0',
                 'lodash': '^4.17.15',
                 'luxon': '^1.21.1',
@@ -46,6 +46,7 @@ requests = WebpackThemeBundle(
                 'react-dom': '^16.11.0',
                 'yup': '^0.27.0',
                 'react-overridable': '^0.0.3',
+                '@semantic-ui-react/css-patch': '^1.0.0',
                 "redux": "^4.0.5",
                 "redux-devtools-extension": "^2.13.8",
                 "redux-thunk": "^2.3.0",

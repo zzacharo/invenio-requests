@@ -19,7 +19,7 @@ ReactDOM.render(<InvenioRequestsApp request={request} overriddenCmps={overridden
 
 export { default as RequestDetails } from "./RequestDetails";
 export { default as Timeline } from "./timeline/TimelineFeed";
-export { default as TimelineEvent } from "./timeline/TimelineEvent";
+export { default as TimelineEvent } from "./timelineEvent/TimelineEvent";
 export { default as RequestMetadata } from "./request/RequestMetadata";
 export { default as RequestTopic } from "./request/RequestTopic";
 export { default as RequestHeader } from "./request/RequestHeader";

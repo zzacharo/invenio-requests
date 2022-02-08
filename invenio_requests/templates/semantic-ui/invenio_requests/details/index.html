@@ -12,8 +12,8 @@
 {%- set title = _("Request ") -%}
 
 {%- block css %}
-{{ super() }}
-{{ webpack['invenio-requests-theme.css']}}
+  {{ super() }}
+  {{ webpack['invenio-requests-theme.css'] }}
 {%-endblock %}
 
 {%- block javascript %}
@@ -27,10 +27,10 @@
 
 {%- block page_body %}
   <div class="ui container request-detail-page">
-      <div class="ui header"><h2>{{ request.title }}</h2></div>
-      <div class="ui divider"></div>
-      <div id="request-detail"
-           data-record='{{ request | tojson }}'
-      >{# react app root #}</div>
+    <div class="ui header"><h2>{{ request.title }}</h2></div>
+    <div class="ui divider"></div>
+    <div id="request-detail"
+         data-record='{{ request | tojson }}'
+    >{# react app root #}</div>
   </div>
 {%- endblock page_body %}

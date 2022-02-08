@@ -1,4 +1,9 @@
-import { InvenioRequestsTimelineAPI, RequestLinkExtractor } from "./api/api";
+import {
+  InvenioRequestsTimelineAPI,
+  RequestLinkExtractor,
+  RequestEventsApi,
+  RequestEventsLinkExtractor,
+} from "./api/api";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { configureStore } from "./store";
@@ -9,18 +14,21 @@ import { Provider } from "react-redux";
 export class InvenioRequestsApp extends Component {
   constructor(props) {
     super(props);
-    const { api, request } = this.props;
-    const defaultApi = new InvenioRequestsTimelineAPI(
+    const { requestsApi, requestEventsApi, request } = this.props;
+
+    const defaultRequestsApi = new InvenioRequestsTimelineAPI(
       new RequestLinkExtractor(request.links)
     );
-
-    const apiClient = api ? api : defaultApi;
+    const defaultRequestEventsApi = (commentLinks) =>
+      new RequestEventsApi(new RequestEventsLinkExtractor(commentLinks));
 
     const appConfig = {
-      "apiClient": apiClient,
-      "request": request,
-      "refreshIntervalMs": 5000,
+      requestsApi: requestsApi || defaultRequestsApi,
+      request,
+      requestEventsApi: requestEventsApi || defaultRequestEventsApi,
+      refreshIntervalMs: 5000,
     };
+
     this.store = configureStore(appConfig);
   }
 
@@ -37,12 +45,13 @@ export class InvenioRequestsApp extends Component {
 }
 
 InvenioRequestsApp.propTypes = {
-  api: PropTypes.object,
+  requestsApi: PropTypes.object,
+  requestEventsApi: PropTypes.object,
   overriddenCmps: PropTypes.object,
   request: PropTypes.object.isRequired,
 };
 
 InvenioRequestsApp.defaultProps = {
-  overriddenCmps: { },
-  api: null,
+  overriddenCmps: {},
+  requestsApi: null,
 };

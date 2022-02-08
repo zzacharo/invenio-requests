@@ -11,7 +11,7 @@ class intervalManager {
   }
 }
 
-const fetchTimeline = (loadingState = true) => {
+const fetchTimeline = (loadingState = true, chosenParams) => {
   return async (dispatch, getState, config) => {
     if (loadingState) {
       dispatch({
@@ -21,8 +21,9 @@ const fetchTimeline = (loadingState = true) => {
     dispatch({
       type: IS_REFRESHING,
     });
+
     try {
-      const response = await config.apiClient.getTimeline();
+      const response = await config.requestsApi.getTimeline(chosenParams);
       dispatch({
         type: SUCCESS,
         payload: response.data,
@@ -39,13 +40,18 @@ const fetchTimeline = (loadingState = true) => {
 const timelineReload = (dispatch, getState, config) => {
   const state = getState();
   const { loading, refreshing, error } = state.timeline;
+  const { isLoading: isSubmitting } = state.timelineCommentEditor;
+
   const intervalId = intervalManager.intervalId;
   if (error) {
     // stop requesting if error
     clearInterval(intervalId);
   }
+
   // avoid concurrent requests if the previous one did not finish
-  return !loading && !refreshing && dispatch(fetchTimeline(false));
+  return (
+    !loading && !refreshing && !isSubmitting && dispatch(fetchTimeline(false))
+  );
 };
 
 export const getTimelineWithRefresh = () => {

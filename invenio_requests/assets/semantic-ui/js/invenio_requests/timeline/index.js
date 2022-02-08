@@ -12,6 +12,7 @@ const mapStateToProps = (state) => ({
   refreshing: state.timeline.refreshing,
   timeline: state.timeline.data,
   error: state.timeline.error,
+  isSubmitting: state.timelineCommentEditor.isLoading,
 });
 
 export const Timeline = connect(

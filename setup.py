@@ -57,6 +57,7 @@ setup_requires = [
 install_requires = [
     "invenio-db>=1.0.11,<2.0",
     f"invenio-records-resources{records_resources_version}",
+    "invenio-theme>=1.3.11"
 ]
 
 packages = find_packages()
