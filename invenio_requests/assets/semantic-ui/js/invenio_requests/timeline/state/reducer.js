@@ -1,9 +1,9 @@
-import { IS_LOADING, SUCCESS, HAS_ERROR, IS_REFRESHING } from './actions';
+import { IS_LOADING, SUCCESS, HAS_ERROR, IS_REFRESHING } from "./actions";
 
 export const initialState = {
   loading: false,
   refreshing: false,
-  data: {  },
+  data: {},
   error: null,
 };
 
@@ -12,7 +12,7 @@ export const timelineReducer = (state = initialState, action) => {
     case IS_LOADING:
       return { ...state, loading: true };
     case IS_REFRESHING:
-    return { ...state, refreshing: true };
+      return { ...state, refreshing: true };
     case SUCCESS:
       return {
         ...state,

@@ -1,4 +1,4 @@
-import Error from '../components/Error';
+import Error from "../components/Error";
 import TimelineEvent from "./TimelineEvent";
 import Loader from "../components/Loader";
 import React, { Component } from "react";
@@ -8,27 +8,13 @@ import { Container, Feed, Segment } from "semantic-ui-react";
 
 class TimelineFeed extends Component {
   componentDidMount() {
-    this.getTimelineWithRefresh();
+    const { getTimelineWithRefresh } = this.props;
+    getTimelineWithRefresh();
   }
 
-  timelineReload = () => {
-    const { fetchTimeline, loading, refreshing, error } = this.props;
-    if (error) {
-      // stop requesting if error
-      clearInterval(this.intervalId);
-    }
-    // avoid concurrent requests if the previous one did not finish
-    return !loading && !refreshing && fetchTimeline(false);
-  };
-
-  getTimelineWithRefresh = () => {
-    const { fetchTimeline, setRefreshInterval } = this.props;
-    fetchTimeline();
-    this.intervalId = setInterval(this.timelineReload, setRefreshInterval());
-  };
-
   componentWillUnmount() {
-    clearInterval(this.intervalId);
+    const { timelineStopRefresh } = this.props;
+    timelineStopRefresh();
   }
 
   render() {
@@ -54,8 +40,8 @@ class TimelineFeed extends Component {
 }
 
 TimelineFeed.propTypes = {
-  fetchTimeline: PropTypes.func.isRequired,
-  setRefreshInterval: PropTypes.oneOfType([PropTypes.func, PropTypes.number]),
+  getTimelineWithRefresh: PropTypes.func.isRequired,
+  timelineStopRefresh: PropTypes.func.isRequired,
   timeline: PropTypes.object,
   error: PropTypes.object,
 };

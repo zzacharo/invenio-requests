@@ -1,10 +1,10 @@
-import { connect } from 'react-redux';
-import { fetchTimeline, setRefreshInterval } from './state/actions';
-import TimelineFeedComponent from './TimelineFeed';
+import { connect } from "react-redux";
+import { getTimelineWithRefresh, timelineStopRefresh } from "./state/actions";
+import TimelineFeedComponent from "./TimelineFeed";
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchTimeline: (loadingState) => dispatch(fetchTimeline(loadingState)),
-  setRefreshInterval: () => dispatch(setRefreshInterval()),
+  getTimelineWithRefresh: () => dispatch(getTimelineWithRefresh()),
+  timelineStopRefresh: () => dispatch(timelineStopRefresh()),
 });
 
 const mapStateToProps = (state) => ({

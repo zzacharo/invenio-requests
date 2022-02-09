@@ -28,7 +28,6 @@ def requests_detail(request=None, pid_value=None):
         "avatar": "/static/images/placeholder.png",
         "full_name": "John Travolta"
     })
-
     try:
         request_dict["topic"] = request._request.topic.resolve()
     except Exception:
