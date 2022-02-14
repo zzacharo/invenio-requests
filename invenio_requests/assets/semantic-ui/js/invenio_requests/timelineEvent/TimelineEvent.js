@@ -1,3 +1,5 @@
+import FormattedInputEditor
+  from '../components/FormattedInputEditor';
 import React, { Component } from "react";
 import {
   Feed,
@@ -10,7 +12,6 @@ import {
 } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import Overridable from "react-overridable";
-import CommentEditor from "../components/CommentEditor";
 import { SaveButton, CancelButton } from "../components/Buttons";
 import { TimelineEventBody } from "./TimelineEventBody";
 
@@ -81,7 +82,7 @@ class TimelineEvent extends Component {
               {error && <Message negative>{error}</Message>}
 
               {isEditing ? (
-                <CommentEditor
+                <FormattedInputEditor
                   data={event?.payload?.content}
                   onChange={(event, editor) =>
                     this.setState({ commentContent: editor.getData() })

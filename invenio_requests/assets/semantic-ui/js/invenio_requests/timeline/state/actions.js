@@ -11,7 +11,7 @@ class intervalManager {
   }
 }
 
-const fetchTimeline = (loadingState = true, chosenParams) => {
+export const fetchTimeline = (loadingState = true, chosenParams) => {
   return async (dispatch, getState, config) => {
     if (loadingState) {
       dispatch({

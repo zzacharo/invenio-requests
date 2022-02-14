@@ -1,5 +1,5 @@
+import FormattedInputEditor from '../components/FormattedInputEditor';
 import React from "react";
-import CommentEditor from "../components/CommentEditor";
 import { SaveButton } from "../components/Buttons";
 import { Container, Message } from "semantic-ui-react";
 import PropTypes from "prop-types";
@@ -14,10 +14,10 @@ const TimelineCommentEditor = ({
   return (
     <Container className="timeline-comment-editor-container">
       {error && <Message negative>{error}</Message>}
-
-      <CommentEditor
+      <FormattedInputEditor
         data={commentContent}
         onChange={(event, editor) => setCommentContent(editor.getData())}
+        minHeight="200px"
       />
       <Container className="mt-10" textAlign="right">
         <SaveButton

@@ -1,10 +1,9 @@
-import RequestHeader from "./request/RequestHeader";
-import RequestMetadata from "./request/RequestMetadata";
+import RequestMetadata from "./RequestMetadata";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Overridable from "react-overridable";
 import { Container, Grid, Tab } from "semantic-ui-react";
-import { Timeline } from "./timeline";
+import { Timeline } from "../timeline";
 
 class RequestDetails extends Component {
   get menuPanes() {
@@ -36,7 +35,6 @@ class RequestDetails extends Component {
     return (
       <Overridable id="InvenioRequests.RequestDetails.layout" {...this.props}>
         <>
-          {/*<RequestHeader request={request} />*/}
           <Grid stackable reversed="mobile">
             <Grid.Column width={13}>
               <Timeline />

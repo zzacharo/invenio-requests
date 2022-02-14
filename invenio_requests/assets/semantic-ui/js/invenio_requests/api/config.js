@@ -8,12 +8,15 @@ import axios from "axios";
 
 const apiConfig = {
   withCredentials: true,
-  xsrfCookieName: 'csrftoken',
-  xsrfHeaderName: 'X_CSRFTOKEN',
+  xsrfCookieName: "csrftoken",
+  xsrfHeaderName: "X_CSRFTOKEN",
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  },
 };
 
 export const http = axios.create(apiConfig);
-
 
 /**
  * Wrap a promise to be cancellable and avoid potential memory leaks
@@ -26,8 +29,8 @@ export const withCancel = (promise) => {
 
   const wrappedPromise = new Promise((resolve, reject) => {
     promise.then(
-      (val) => (isCancelled ? reject('UNMOUNTED') : resolve(val)),
-      (error) => (isCancelled ? reject('UNMOUNTED') : reject(error))
+      (val) => (isCancelled ? reject("UNMOUNTED") : resolve(val)),
+      (error) => (isCancelled ? reject("UNMOUNTED") : reject(error))
     );
   });
 

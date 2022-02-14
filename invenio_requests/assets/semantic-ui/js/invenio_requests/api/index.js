@@ -1,5 +1,5 @@
 export {
   RequestLinkExtractor,
-  RequestEventsApi,
-  InvenioRequestsTimelineAPI,
+  InvenioRequestEventsApi,
+  InvenioRequestsAPI,
 } from "./api";

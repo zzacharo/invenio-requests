@@ -1,29 +1,27 @@
 import {
-  RequestActions
-} from './request/RequestActions';
-import {
-  InvenioRequestsTimelineAPI,
+  InvenioRequestsAPI,
   RequestLinkExtractor,
-  RequestEventsApi,
+  InvenioRequestEventsApi,
   RequestEventsLinkExtractor,
 } from "./api/api";
+import {
+  Request
+} from './request';
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { configureStore } from "./store";
 import { OverridableContext } from "react-overridable";
-import RequestDetails from "./RequestDetails";
 import { Provider } from "react-redux";
 
 export class InvenioRequestsApp extends Component {
   constructor(props) {
     super(props);
     const { requestsApi, requestEventsApi, request } = this.props;
-
-    const defaultRequestsApi = new InvenioRequestsTimelineAPI(
-      new RequestLinkExtractor(request.links)
+    const defaultRequestsApi = new InvenioRequestsAPI(
+      new RequestLinkExtractor(request)
     );
     const defaultRequestEventsApi = (commentLinks) =>
-      new RequestEventsApi(new RequestEventsLinkExtractor(commentLinks));
+      new InvenioRequestEventsApi(new RequestEventsLinkExtractor(commentLinks));
 
     const appConfig = {
       requestsApi: requestsApi || defaultRequestsApi,
@@ -36,12 +34,11 @@ export class InvenioRequestsApp extends Component {
   }
 
   render() {
-    const { overriddenCmps, request } = this.props;
+    const { overriddenCmps } = this.props;
     return (
       <OverridableContext.Provider value={overriddenCmps}>
         <Provider store={this.store}>
-          <RequestActions />
-          <RequestDetails request={request} />
+          <Request />
         </Provider>
       </OverridableContext.Provider>
     );
