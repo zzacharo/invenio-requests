@@ -25,3 +25,6 @@ recursive-include invenio_requests *.html
 recursive-include invenio_requests *.json
 recursive-include invenio_requests *.py
 recursive-include invenio_requests/translations *.po *.pot *.mo
+
+# added by check-manifest
+include babel.ini
