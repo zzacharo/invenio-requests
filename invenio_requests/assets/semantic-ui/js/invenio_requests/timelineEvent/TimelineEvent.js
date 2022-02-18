@@ -48,7 +48,7 @@ class TimelineEvent extends Component {
       <Overridable id="TimelineEvent.layout" event={event}>
         <Feed.Event>
           <Feed.Label>
-            <Image src="/static/images/placeholder.png" as={Image} rounded />
+            <Image src="/static/images/square-placeholder.png" as={Image} rounded />
           </Feed.Label>
           <Feed.Content>
             <Grid>

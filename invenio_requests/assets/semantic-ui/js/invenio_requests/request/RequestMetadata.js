@@ -10,7 +10,7 @@ class RequestMetadata extends Component {
       <Overridable id="InvenioRequest.RequestMetadata.Layout" {...this.props}>
         <>
           <Header as="h4">Requester</Header>
-          <Image src="/static/images/placeholder.png" avatar rounded />
+          <Image src="/static/images/square-placeholder.png" avatar rounded />
           <span>{request.created_by.full_name}</span>
           <Divider />
           <Header as="h4">Request type</Header>
