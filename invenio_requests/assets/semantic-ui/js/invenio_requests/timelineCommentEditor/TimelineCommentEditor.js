@@ -3,6 +3,7 @@ import React from "react";
 import { SaveButton } from "../components/Buttons";
 import { Container, Message } from "semantic-ui-react";
 import PropTypes from "prop-types";
+import { i18next } from "@translations/invenio_requests/i18next";
 
 const TimelineCommentEditor = ({
   isLoading,
@@ -23,7 +24,7 @@ const TimelineCommentEditor = ({
         <SaveButton
           icon="send"
           size="medium"
-          content="Comment"
+          content={i18next.t("Comment")}
           loading={isLoading}
           onClick={() => submitComment(commentContent, "html")}
         />

@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import Overridable from "react-overridable";
 import { Divider, Modal } from "semantic-ui-react";
 import { RequestActionModal } from "./index";
+import { Trans } from "react-i18next";
 
 export class RequestAction extends Component {
   constructor(props) {
@@ -33,7 +34,10 @@ export class RequestAction extends Component {
         >
           <Modal.Content>
             <Modal.Description>
-              Comment on your {action} request action (optional).
+              <Trans
+                defaults="Comment on your {{action}} request action (optional)."
+                values={{"action": action}}
+              />
               <Divider hidden />
               <FormattedInputEditor onChange={this.onCommentChange} />
             </Modal.Description>

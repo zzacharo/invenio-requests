@@ -1,3 +1,4 @@
+import Error from '../components/Error';
 import FormattedInputEditor
   from '../components/FormattedInputEditor';
 import React, { Component } from "react";
@@ -6,18 +7,15 @@ import {
   Image,
   Container,
   Dropdown,
-  Label,
   Grid,
-  Message,
 } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import Overridable from "react-overridable";
 import { SaveButton, CancelButton } from "../components/Buttons";
 import { TimelineEventBody } from "./TimelineEventBody";
+import { i18next } from "@translations/invenio_requests/i18next";
 
 class TimelineEvent extends Component {
-  // TODO i18n
-
   constructor(props) {
     super(props);
 
@@ -57,7 +55,7 @@ class TimelineEvent extends Component {
                   <Feed.Summary>
                     {/*TODO replace with event.icon and add a translated event description*/}
                     <Feed.User as="a">{event.created_by?.user}</Feed.User>{" "}
-                    commented
+                    {i18next.t("commented")}
                     <Feed.Date>{event.created}</Feed.Date>
                   </Feed.Summary>
                 </Grid.Column>
@@ -66,10 +64,10 @@ class TimelineEvent extends Component {
                     <Dropdown icon="ellipsis horizontal">
                       <Dropdown.Menu>
                         <Dropdown.Item onClick={() => toggleEditMode()}>
-                          Edit
+                          {i18next.t("Edit")}
                         </Dropdown.Item>
                         <Dropdown.Item onClick={() => deleteComment()}>
-                          Delete
+                          {i18next.t("Delete")}
                         </Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
@@ -79,7 +77,7 @@ class TimelineEvent extends Component {
             </Grid>
 
             <Feed.Extra text className="timeline-event-body">
-              {error && <Message negative>{error}</Message>}
+              {error && <Error error={error}/>}
 
               {isEditing ? (
                 <FormattedInputEditor
@@ -106,8 +104,8 @@ class TimelineEvent extends Component {
               )}
             </Feed.Extra>
             <Feed.Meta>
-              {commentHasBeenEdited && "Edited"}
-              {commentHasBeenDeleted && "Deleted"}
+              {commentHasBeenEdited && i18next.t("Edited")}
+              {commentHasBeenDeleted && i18next.t("Deleted")}
             </Feed.Meta>
           </Feed.Content>
         </Feed.Event>

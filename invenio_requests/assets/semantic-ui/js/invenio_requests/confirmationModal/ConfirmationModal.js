@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal, Button, Message } from "semantic-ui-react";
 import PropTypes from "prop-types";
+import { i18next } from "@translations/invenio_requests/i18next";
 
 export const ConfirmationModal = ({
   modalIsOpen,
@@ -12,7 +13,7 @@ export const ConfirmationModal = ({
 }) => {
   return (
     <Modal onClose={closeModal} open={modalIsOpen}>
-      <Modal.Header>Confirm</Modal.Header>
+      <Modal.Header>{i18next.t("Confirm")}</Modal.Header>
       <Modal.Content>{modalText}</Modal.Content>
       <Modal.Actions>
         {modalError && (
@@ -21,9 +22,9 @@ export const ConfirmationModal = ({
           </Message>
         )}
 
-        <Button content="cancel" onClick={() => closeModal()} />
+        <Button content={i18next.t("Cancel")} onClick={() => closeModal()} />
         <Button
-          content="confirm"
+          content={i18next.t("Confirm")}
           negative
           onClick={() => startAction()}
           loading={isLoading}

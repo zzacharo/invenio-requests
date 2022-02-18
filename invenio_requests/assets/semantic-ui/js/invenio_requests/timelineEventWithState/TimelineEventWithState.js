@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { TimelineEvent } from "../timelineEvent";
 import { errorSerializer } from "../api/serializers";
+import { i18next } from "@translations/invenio_requests/i18next";
 
 class TimelineEventWithState extends Component {
   constructor(props) {
@@ -50,7 +51,7 @@ class TimelineEventWithState extends Component {
     const { deleteComment, event, openConfirmModal } = this.props;
 
     openConfirmModal({
-      text: "Are you sure you want to delete this comment?",
+      text: i18next.t("Are you sure you want to delete this comment?"),
       action: () => deleteComment({ event }),
     });
   };

@@ -1,7 +1,10 @@
 import Overridable from "react-overridable";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Button, Message, Modal } from 'semantic-ui-react';
+import { Button, Modal } from "semantic-ui-react";
+import Error from "../../components/Error";
+import { i18next } from "@translations/invenio_requests/i18next";
+import { Trans } from "react-i18next";
 
 export class RequestActionModal extends Component {
   setOpen = (isOpen) => {
@@ -20,31 +23,41 @@ export class RequestActionModal extends Component {
       children,
     } = this.props;
     return (
-      <Overridable id="InvenioRequests.RequestActionModal.layout" {...this.props}>
+      <Overridable
+        id="InvenioRequests.RequestActionModal.layout"
+        {...this.props}
+      >
         <Modal
           open={modalOpen.modalId === modalId && modalOpen.isOpen}
           trigger={
             <Button onClick={() => this.setOpen(true)} loading={loading}>
-              {action}
+              <Trans
+                defaults="{{action}}"
+                values={{ "action": action }}
+              />
             </Button>
           }
         >
-          <Modal.Header>{action} request</Modal.Header>
+          <Modal.Header> <Trans
+                defaults="{{action}} request"
+                values={{ "action": action }}
+              /></Modal.Header>
           <Modal.Content>
             <Modal.Description>
-              {error && (
-                <Message
-                  error
-                  header="Something went wrong."
-                  content={error.message}
-                />
-              )}
+              {error && <Error error={error.message} />}
               {children}
             </Modal.Description>
           </Modal.Content>
           <Modal.Actions>
-            <Button onClick={() => this.setOpen(false)}>Cancel</Button>
-            <Button onClick={handleActionClick}>{action}</Button>
+            <Button onClick={() => this.setOpen(false)}>
+              {i18next.t("Cancel")}
+            </Button>
+            <Button onClick={handleActionClick}>
+              <Trans
+                defaults="{{action}}"
+                values={{ "action": action }}
+              />
+            </Button>
           </Modal.Actions>
         </Modal>
       </Overridable>

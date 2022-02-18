@@ -51,6 +51,13 @@ requests = WebpackThemeBundle(
                 "redux-devtools-extension": "^2.13.8",
                 "redux-thunk": "^2.3.0",
                 "react-redux": "^7.2.0",
+                "i18next": "^20.3.0",
+                "i18next-browser-languagedetector": "^6.1.0",
+                "react-i18next": "^11.11.0",
+            },
+            aliases={
+                '@translations/invenio_requests':
+                    'translations/invenio_requests'
             }
         ),
     }

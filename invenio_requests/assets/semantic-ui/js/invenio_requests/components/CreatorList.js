@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Overridable from "react-overridable";
 import { List } from "semantic-ui-react";
