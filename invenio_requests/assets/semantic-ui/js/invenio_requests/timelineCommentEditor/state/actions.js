@@ -1,3 +1,9 @@
+// This file is part of InvenioRequests
+// Copyright (C) 2022 CERN.
+//
+// Invenio RDM Records is free software; you can redistribute it and/or modify it
+// under the terms of the MIT License; see LICENSE file for more details.
+
 import { errorSerializer, payloadSerializer } from "../../api/serializers";
 import { SUCCESS as TIMELINE_SUCCESS } from "../../timeline/state/actions";
 import _cloneDeep from "lodash/cloneDeep";

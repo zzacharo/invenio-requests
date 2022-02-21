@@ -1,3 +1,9 @@
+// This file is part of InvenioRequests
+// Copyright (C) 2022 CERN.
+//
+// Invenio RDM Records is free software; you can redistribute it and/or modify it
+// under the terms of the MIT License; see LICENSE file for more details.
+
 export const IS_LOADING = "timeline/IS_LOADING";
 export const SUCCESS = "timeline/SUCCESS";
 export const HAS_ERROR = "timeline/HAS_ERROR";
