@@ -3,7 +3,8 @@
   "config": {
     "languages": [
       "en",
-      "pl"
+      "pl",
+      "de"
     ]
   },
   "devDependencies": {
