@@ -9,7 +9,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Overridable from "react-overridable";
 import { Divider, Modal } from "semantic-ui-react";
-import { RequestActionModal } from "./index";
+import { RequestActionModal } from "./";
 import { Trans } from "react-i18next";
 
 export class RequestAction extends Component {
@@ -29,9 +29,14 @@ export class RequestAction extends Component {
   };
 
   render() {
-    const { action, loading } = this.props;
+    const { action, loading, performAction } = this.props;
     return (
-      <Overridable id="InvenioRequests.RequestAction.layout" {...this.props}>
+      <Overridable
+        id="InvenioRequests.RequestAction.layout"
+        action={action}
+        loading={loading}
+        performAction={performAction}
+      >
         <RequestActionModal
           action={action}
           loading={loading}
@@ -42,7 +47,7 @@ export class RequestAction extends Component {
             <Modal.Description>
               <Trans
                 defaults="Comment on your {{action}} request action (optional)."
-                values={{"action": action}}
+                values={{ action: action }}
               />
               <Divider hidden />
               <FormattedInputEditor onChange={this.onCommentChange} />

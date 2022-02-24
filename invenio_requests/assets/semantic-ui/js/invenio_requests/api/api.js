@@ -4,7 +4,7 @@
 // Invenio RDM Records is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
 export {
-  RequestEventsLinkExtractor,
+  RequestEventsLinksExtractor,
   InvenioRequestEventsApi,
 } from "./InvenioRequestEventsApi";
-export { RequestLinkExtractor, InvenioRequestsAPI } from "./InvenioRequestApi";
+export { RequestLinksExtractor, InvenioRequestsAPI } from "./InvenioRequestApi";

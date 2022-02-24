@@ -13,6 +13,7 @@ import { i18next } from "@translations/invenio_requests/i18next";
 import { Trans } from "react-i18next";
 
 export class RequestActionModal extends Component {
+
   setOpen = (isOpen) => {
     const { setActionModalOpen, modalId } = this.props;
     setActionModalOpen(isOpen, modalId);
@@ -55,10 +56,10 @@ export class RequestActionModal extends Component {
             </Modal.Description>
           </Modal.Content>
           <Modal.Actions>
-            <Button onClick={() => this.setOpen(false)}>
+            <Button onClick={() => this.setOpen(false)} loading={loading}>
               {i18next.t("Cancel")}
             </Button>
-            <Button onClick={handleActionClick}>
+            <Button onClick={handleActionClick} loading={loading}>
               <Trans
                 defaults="{{action}}"
                 values={{ "action": action }}
@@ -74,7 +75,15 @@ export class RequestActionModal extends Component {
 RequestActionModal.propTypes = {
   setActionModalOpen: PropTypes.func.isRequired,
   handleActionClick: PropTypes.func.isRequired,
+  modalOpen: PropTypes.bool,
+  loading: PropTypes.bool,
+  modalId: PropTypes.string.isRequired
 };
+
+RequestActionModal.defaultProps = {
+  loading: false,
+  modalOpen: false,
+}
 
 export default Overridable.component(
   "InvenioRequests.RequestActionModal",

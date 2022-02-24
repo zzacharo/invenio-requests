@@ -4,57 +4,57 @@
 // Invenio RDM Records is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
 import { http } from "./config";
-import isEmpty from "lodash/isEmpty";
+import _isEmpty from "lodash/isEmpty";
 
-export class RequestLinkExtractor {
-  #links;
+export class RequestLinksExtractor {
+  #urls;
 
   constructor(request) {
     if (!request?.links) {
       throw TypeError("Request resource links are undefined");
     }
-    this.#links = request.links;
+    this.#urls = request.links;
   }
 
   get timeline() {
-    if (!this.#links.timeline) {
+    if (!this.#urls.timeline) {
       throw TypeError("Timeline link missing from resource.");
     }
-    return this.#links.timeline;
+    return this.#urls.timeline;
   }
 
   get comments() {
-    if (!this.#links.comments) {
+    if (!this.#urls.comments) {
       throw TypeError("Comments link missing from resource.");
     }
-    return this.#links.comments;
+    return this.#urls.comments;
   }
 
   get actions() {
-    if (!this.#links.actions) {
+    if (!this.#urls.actions) {
       throw TypeError("Actions link missing from resource.");
     }
-    return this.#links.actions;
+    return this.#urls.actions;
   }
 }
 
 export class InvenioRequestsAPI {
-  #links;
-  constructor(requestLinkExtractor) {
-    this.#links = requestLinkExtractor;
+  #urls;
+  constructor(requestLinksExtractor) {
+    this.#urls = requestLinksExtractor;
   }
 
   getTimeline = async (params) => {
-    return await http.get(this.#links.timeline, { params });
+    return await http.get(this.#urls.timeline, { params });
   };
 
   submitComment = async (payload) => {
-    return await http.post(this.#links.comments, payload);
+    return await http.post(this.#urls.comments, payload);
   };
 
-  performAction = async (action, commentContent) => {
+  performAction = async (action, commentContent=null) => {
     let payload = {};
-    if (!isEmpty(commentContent)) {
+    if (!_isEmpty(commentContent)) {
       payload = {
         payload: {
           content: commentContent,
@@ -62,6 +62,6 @@ export class InvenioRequestsAPI {
         },
       };
     }
-    return await http.post(this.#links.actions[action], payload);
+    return await http.post(this.#urls.actions[action], payload);
   };
 }

@@ -53,10 +53,12 @@ FormattedInputEditor.propTypes = {
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
+  minHeight: PropTypes.string,
 };
 
 FormattedInputEditor.defaultProps = {
   editor: ClassicEditor,
+  minHeight: undefined,
 };
 
 export default Overridable.component(

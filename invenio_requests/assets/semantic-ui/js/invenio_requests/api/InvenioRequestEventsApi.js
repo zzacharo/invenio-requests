@@ -7,7 +7,7 @@ import {
   http
 } from './config';
 
-export class RequestEventsLinkExtractor {
+export class RequestEventsLinksExtractor {
   #links;
   constructor(links) {
     this.#links = links;

@@ -32,6 +32,7 @@ const mapDispatchToPropsModal = (dispatch) => ({
 const mapStateToPropsModal = (state) => ({
   error: state.requestAction.error,
   modalOpen: state.requestAction.actionModalOpen,
+  loading: state.requestAction.loading,
 });
 
 

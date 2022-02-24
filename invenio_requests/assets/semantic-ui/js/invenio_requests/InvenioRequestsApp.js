@@ -6,9 +6,9 @@
 
 import {
   InvenioRequestsAPI,
-  RequestLinkExtractor,
+  RequestLinksExtractor,
   InvenioRequestEventsApi,
-  RequestEventsLinkExtractor,
+  RequestEventsLinksExtractor,
 } from "./api/api";
 import {
   Request
@@ -24,10 +24,10 @@ export class InvenioRequestsApp extends Component {
     super(props);
     const { requestsApi, requestEventsApi, request } = this.props;
     const defaultRequestsApi = new InvenioRequestsAPI(
-      new RequestLinkExtractor(request)
+      new RequestLinksExtractor(request)
     );
     const defaultRequestEventsApi = (commentLinks) =>
-      new InvenioRequestEventsApi(new RequestEventsLinkExtractor(commentLinks));
+      new InvenioRequestEventsApi(new RequestEventsLinksExtractor(commentLinks));
 
     const appConfig = {
       requestsApi: requestsApi || defaultRequestsApi,

@@ -5,7 +5,7 @@
 // under the terms of the MIT License; see LICENSE file for more details.
 
 import {
-  initRequest
+  updateRequestAfterAction,
 } from '../../../request/state/actions';
 import { fetchTimeline } from '../../../timeline/state/actions';
 
@@ -27,7 +27,7 @@ export const performAction = (action, commentContent) => {
         payload: response.data,
       });
       dispatch(fetchTimeline());
-      dispatch(initRequest(response.data));
+      dispatch(updateRequestAfterAction(response.data));
       dispatch(setActionModalOpen(false, action));
     } catch (error) {
       dispatch({
