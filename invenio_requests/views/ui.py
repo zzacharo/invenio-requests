@@ -48,7 +48,7 @@ def create_ui_blueprint(app):
         static_folder='../static'
     )
 
-    if app.config('COMMUNITIES_ENABLED', False):
+    if app.config.get('COMMUNITIES_ENABLED', False):
         blueprint.add_url_rule(
             routes["details"],
             view_func=requests_detail,
