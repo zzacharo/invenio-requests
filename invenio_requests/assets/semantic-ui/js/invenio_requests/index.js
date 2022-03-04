@@ -20,7 +20,7 @@ const overriddenCmps = {
 };
 
 ReactDOM.render(
-  <InvenioRequestsApp request={request} />,
+  <InvenioRequestsApp request={request}  />,
   requestDetailsDiv
 );
 

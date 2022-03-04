@@ -8,6 +8,7 @@ export const IS_LOADING = "timeline/IS_LOADING";
 export const SUCCESS = "timeline/SUCCESS";
 export const HAS_ERROR = "timeline/HAS_ERROR";
 export const IS_REFRESHING = "timeline/REFRESHING";
+export const CHANGE_PAGE = "timeline/CHANGE_PAGE";
 
 class intervalManager {
   static IntervalId = undefined;
@@ -17,8 +18,11 @@ class intervalManager {
   }
 }
 
-export const fetchTimeline = (loadingState = true, chosenParams) => {
+export const fetchTimeline = (loadingState = true) => {
   return async (dispatch, getState, config) => {
+    const state = getState();
+    const { size, page } = state.timeline;
+
     if (loadingState) {
       dispatch({
         type: IS_LOADING,
@@ -29,7 +33,11 @@ export const fetchTimeline = (loadingState = true, chosenParams) => {
     });
 
     try {
-      const response = await config.requestsApi.getTimeline(chosenParams);
+      const response = await config.requestsApi.getTimeline({
+        size: size,
+        page: page,
+        sort: 'oldest',
+      });
       dispatch({
         type: SUCCESS,
         payload: response.data,
@@ -40,6 +48,17 @@ export const fetchTimeline = (loadingState = true, chosenParams) => {
         payload: error,
       });
     }
+  };
+};
+
+export const setPage = (page) => {
+  return async (dispatch, getState, config) => {
+    dispatch({
+      type: CHANGE_PAGE,
+      payload: page,
+    });
+
+    dispatch(fetchTimeline());
   };
 };
 
@@ -62,12 +81,17 @@ const timelineReload = (dispatch, getState, config) => {
 
 export const getTimelineWithRefresh = () => {
   return async (dispatch, getState, config) => {
-    dispatch(fetchTimeline());
-    const intervalId = setInterval(
-      () => timelineReload(dispatch, getState, config),
-      config.refreshIntervalMs
-    );
-    intervalManager.setIntervalId(intervalId);
+    dispatch(fetchTimeline(true));
+
+    const intervalAlreadySet = intervalManager.intervalId;
+
+    if (!intervalAlreadySet) {
+      const intervalId = setInterval(
+        () => timelineReload(dispatch, getState, config),
+        config.refreshIntervalMs
+      );
+      intervalManager.setIntervalId(intervalId);
+    }
   };
 };
 

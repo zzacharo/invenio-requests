@@ -4,13 +4,24 @@
 // Invenio RDM Records is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
 
-import { IS_LOADING, SUCCESS, HAS_ERROR, IS_REFRESHING } from "./actions";
+import {
+  IS_LOADING,
+  SUCCESS,
+  HAS_ERROR,
+  IS_REFRESHING,
+  CHANGE_PAGE,
+} from "./actions";
+
+const requestDetailsDiv = document.getElementById("request-detail");
+const { size } = JSON.parse(requestDetailsDiv.dataset.defaultQueryConfig);
 
 export const initialState = {
   loading: false,
   refreshing: false,
   data: {},
   error: null,
+  size: size,
+  page: 1,
 };
 
 export const timelineReducer = (state = initialState, action) => {
@@ -33,6 +44,11 @@ export const timelineReducer = (state = initialState, action) => {
         refreshing: false,
         loading: false,
         error: action.payload,
+      };
+    case CHANGE_PAGE:
+      return {
+        ...state,
+        page: action.payload,
       };
     default:
       return state;

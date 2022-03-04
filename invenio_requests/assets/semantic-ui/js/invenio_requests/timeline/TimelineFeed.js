@@ -6,6 +6,7 @@
 
 import Error from "../components/Error";
 import Loader from "../components/Loader";
+import { Pagination } from "../components/Pagination";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Overridable from "react-overridable";
@@ -39,7 +40,7 @@ class TimelineFeed extends Component {
   };
 
   render() {
-    const { timeline, loading, error } = this.props;
+    const { timeline, loading, error, setPage, size, page } = this.props;
     const { modalOpen, modalAction } = this.state;
 
     return (
@@ -47,7 +48,7 @@ class TimelineFeed extends Component {
         <Error error={error}>
           <Overridable id="TimelineFeed.layout" {...this.props}>
             <Container>
-              <Segment>
+              <Segment className="borderless shadowless">
                 <Feed>
                   {timeline.hits?.hits.map((comment) => (
                     <TimelineEventWithState
@@ -58,6 +59,15 @@ class TimelineFeed extends Component {
                   ))}
                 </Feed>
                 <Divider />
+                <Container textAlign="center">
+                  <Pagination
+                    page={page}
+                    size={size}
+                    setPage={setPage}
+                    totalLength={timeline.hits?.total}
+                  />
+                </Container>
+                <Divider hidden />
                 <TimelineCommentEditor />
                 <DeleteConfirmationModal
                   open={modalOpen}
@@ -80,6 +90,9 @@ TimelineFeed.propTypes = {
   timeline: PropTypes.object,
   error: PropTypes.object,
   isSubmitting: PropTypes.bool,
+  setPage: PropTypes.func.isRequired,
+  page: PropTypes.number,
+  size: PropTypes.number,
 };
 
 export default Overridable.component("TimelineFeed", TimelineFeed);

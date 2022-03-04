@@ -47,6 +47,7 @@
       <div class="ui divider"></div>
       <div id="request-detail"
            data-record='{{ request | tojson }}'
+           data-default-query-config='{{ default_query_config | tojson }}'
       >{# react app root #}</div>
     </div>
   {% endblock conversation %}

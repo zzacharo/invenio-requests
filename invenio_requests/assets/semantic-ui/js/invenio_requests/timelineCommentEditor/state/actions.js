@@ -5,7 +5,10 @@
 // under the terms of the MIT License; see LICENSE file for more details.
 
 import { errorSerializer, payloadSerializer } from "../../api/serializers";
-import { SUCCESS as TIMELINE_SUCCESS } from "../../timeline/state/actions";
+import {
+  CHANGE_PAGE,
+  SUCCESS as TIMELINE_SUCCESS,
+} from "../../timeline/state/actions";
 import _cloneDeep from "lodash/cloneDeep";
 
 export const IS_LOADING = "eventEditor/IS_LOADING";
@@ -24,6 +27,8 @@ export const setEventContent = (content) => {
 
 export const submitComment = (content, format) => {
   return async (dispatch, getState, config) => {
+    const { timeline: timelineState } = getState();
+
     dispatch({
       type: IS_LOADING,
     });
@@ -31,12 +36,30 @@ export const submitComment = (content, format) => {
     const payload = payloadSerializer(content, format || "html");
 
     try {
+      /* Because of the delay in ES indexing we need to handle the updated state on the client-side until it is ready to be retrieved from the server.
+      That includes the pagination logic e.g. changing pages if the current page size is exceeded by a new comment. */
+
       const response = await config.requestsApi.submitComment(payload);
-      dispatch({
-        type: TIMELINE_SUCCESS,
-        payload: _updatedState(response.data, getState().timeline.data),
-      });
+
+      const currentPage = timelineState.page;
+      const currentSize = timelineState.size;
+      const currentCommentsLength = timelineState.data.hits.hits.length;
+      const shouldGoToNextPage = currentCommentsLength + 1 > currentSize;
+
+      if (shouldGoToNextPage) {
+        dispatch({ type: CHANGE_PAGE, payload: currentPage + 1 });
+      }
+
       dispatch({ type: SUCCESS });
+
+      await dispatch({
+        type: TIMELINE_SUCCESS,
+        payload: _updatedState(
+          response.data,
+          timelineState,
+          shouldGoToNextPage
+        ),
+      });
     } catch (error) {
       dispatch({
         type: HAS_ERROR,
@@ -49,12 +72,15 @@ export const submitComment = (content, format) => {
   };
 };
 
-const _updatedState = (newComment, currentState) => {
-  const timelineState = _cloneDeep(currentState);
+const _updatedState = (newComment, timelineState, shouldGoToNextPage) => {
+  const timelineData = _cloneDeep(timelineState.data);
+  const currentHits = timelineData.hits.hits;
 
-  const currentHits = timelineState.hits.hits;
+  timelineData.hits.hits = shouldGoToNextPage
+    ? [newComment]
+    : [...currentHits, newComment];
 
-  currentHits.push(newComment);
+  timelineData.hits.total++;
 
-  return timelineState;
+  return timelineData;
 };

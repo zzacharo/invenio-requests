@@ -5,12 +5,13 @@
 // under the terms of the MIT License; see LICENSE file for more details.
 
 import { connect } from "react-redux";
-import { getTimelineWithRefresh, timelineStopRefresh } from "./state/actions";
+import {getTimelineWithRefresh, setPage, timelineStopRefresh} from "./state/actions";
 import TimelineFeedComponent from "./TimelineFeed";
 
 const mapDispatchToProps = (dispatch) => ({
   getTimelineWithRefresh: () => dispatch(getTimelineWithRefresh()),
   timelineStopRefresh: () => dispatch(timelineStopRefresh()),
+  setPage: (page) => dispatch(setPage(page))
 });
 
 const mapStateToProps = (state) => ({
@@ -19,6 +20,8 @@ const mapStateToProps = (state) => ({
   timeline: state.timeline.data,
   error: state.timeline.error,
   isSubmitting: state.timelineCommentEditor.isLoading,
+  size: state.timeline.size,
+  page: state.timeline.page
 });
 
 export const Timeline = connect(

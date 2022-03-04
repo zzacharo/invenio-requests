@@ -45,3 +45,6 @@ REQUESTS_FACETS = {
     },
 }
 """Invenio requests facets."""
+
+REQUESTS_TIMELINE_PAGE_SIZE = 15
+"""Amount of items per page on the request details timeline"""
