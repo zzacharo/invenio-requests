@@ -11,10 +11,19 @@ import PropTypes from "prop-types";
 import Overridable from "react-overridable";
 import { Container, Feed, Segment, Divider } from "semantic-ui-react";
 import { TimelineEventWithState } from "../timelineEventWithState";
-import { ConfirmationModal } from "../confirmationModal";
 import { TimelineCommentEditor } from "../timelineCommentEditor";
+import { DeleteConfirmationModal } from "../components/modals/DeleteConfirmationModal";
 
 class TimelineFeed extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      modalOpen: false,
+      modalAction: null,
+    };
+  }
+
   componentDidMount() {
     const { getTimelineWithRefresh } = this.props;
     getTimelineWithRefresh();
@@ -25,8 +34,13 @@ class TimelineFeed extends Component {
     timelineStopRefresh();
   }
 
+  onOpenModal = (action) => {
+    this.setState({ modalOpen: true, modalAction: action });
+  };
+
   render() {
     const { timeline, loading, error } = this.props;
+    const { modalOpen, modalAction } = this.state;
 
     return (
       <Loader isLoading={loading}>
@@ -36,13 +50,22 @@ class TimelineFeed extends Component {
               <Segment>
                 <Feed>
                   {timeline.hits?.hits.map((comment) => (
-                    <TimelineEventWithState key={comment.id} event={comment} />
+                    <TimelineEventWithState
+                      key={comment.id}
+                      event={comment}
+                      openConfirmModal={this.onOpenModal}
+                    />
                   ))}
                 </Feed>
                 <Divider />
                 <TimelineCommentEditor />
+                <DeleteConfirmationModal
+                  open={modalOpen}
+                  action={modalAction}
+                  onOpen={() => this.setState({ modalOpen: true })}
+                  onClose={() => this.setState({ modalOpen: false })}
+                />
               </Segment>
-              <ConfirmationModal />
             </Container>
           </Overridable>
         </Error>

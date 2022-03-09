@@ -14,7 +14,6 @@ function MinHeightPlugin(editor) {
 }
 
 function setMinHeight(minHeight) {
-
   MinHeightPlugin.prototype.init = function () {
     this.editor.ui.view.editable.extendTemplate({
       attributes: {
@@ -27,9 +26,7 @@ function setMinHeight(minHeight) {
   ClassicEditor.builtinPlugins.push(MinHeightPlugin);
 }
 
-
 class FormattedInputEditor extends Component {
-
   constructor(props) {
     super(props);
     const { minHeight } = this.props;
@@ -39,7 +36,31 @@ class FormattedInputEditor extends Component {
   }
 
   render() {
-    return <CKEditor {...this.props} />;
+    const {
+      editor,
+      data,
+      config,
+      id,
+      disabled,
+      onReady,
+      onChange,
+      onBlur,
+      onFocus,
+    } = this.props;
+    return (
+      <CKEditor
+        editor={editor}
+        data={data}
+        config={config}
+        id={id}
+        disabled={disabled}
+        onReady={onReady}
+        onInit={onReady}
+        onChange={onChange}
+        onBlur={onBlur}
+        onFocus={onFocus}
+      />
+    );
   }
 }
 
@@ -59,6 +80,14 @@ FormattedInputEditor.propTypes = {
 FormattedInputEditor.defaultProps = {
   editor: ClassicEditor,
   minHeight: undefined,
+  data: "",
+  config: undefined,
+  id: undefined,
+  disabled: undefined,
+  onReady: undefined,
+  onChange: undefined,
+  onBlur: undefined,
+  onFocus: undefined,
 };
 
 export default Overridable.component(

@@ -8,7 +8,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { TimelineEvent } from "../timelineEvent";
 import { errorSerializer } from "../api/serializers";
-import { i18next } from "@translations/invenio_requests/i18next";
 
 class TimelineEventWithState extends Component {
   constructor(props) {
@@ -56,21 +55,21 @@ class TimelineEventWithState extends Component {
   deleteComment = async () => {
     const { deleteComment, event, openConfirmModal } = this.props;
 
-    openConfirmModal({
-      text: i18next.t("Are you sure you want to delete this comment?"),
-      action: () => deleteComment({ event }),
-    });
+    openConfirmModal(() => deleteComment({ event }));
   };
 
   render() {
     const { event } = this.props;
+    const { isLoading, isEditing, error } = this.state;
 
     return (
       <TimelineEvent
         updateComment={this.updateComment}
         deleteComment={this.deleteComment}
         toggleEditMode={this.toggleEditMode}
-        {...this.state}
+        isLoading={isLoading}
+        isEditing={isEditing}
+        error={error}
         event={event}
       />
     );
@@ -81,7 +80,7 @@ TimelineEventWithState.propTypes = {
   event: PropTypes.object.isRequired,
   updateComment: PropTypes.func.isRequired,
   deleteComment: PropTypes.func.isRequired,
-  openConfirmModal: PropTypes.func,
+  openConfirmModal: PropTypes.func.isRequired,
 };
 
 export default TimelineEventWithState;

@@ -9,7 +9,7 @@ import {
   RequestLinksExtractor,
   InvenioRequestEventsApi,
   RequestEventsLinksExtractor,
-} from "./api/api";
+} from "./api";
 import {
   Request
 } from './request';

@@ -4,7 +4,7 @@
 // Invenio RDM Records is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
 
-import FormattedInputEditor from '../components/FormattedInputEditor';
+import FormattedInputEditor from "../components/FormattedInputEditor";
 import React from "react";
 import { SaveButton } from "../components/Buttons";
 import { Container, Message } from "semantic-ui-react";
@@ -24,7 +24,7 @@ const TimelineCommentEditor = ({
       <FormattedInputEditor
         data={commentContent}
         onChange={(event, editor) => setCommentContent(editor.getData())}
-        minHeight="200px"
+        minHeight="7rem"
       />
       <Container className="mt-10" textAlign="right">
         <SaveButton
@@ -42,9 +42,15 @@ const TimelineCommentEditor = ({
 TimelineCommentEditor.propTypes = {
   commentContent: PropTypes.string,
   isLoading: PropTypes.bool,
-  setCommentContent: PropTypes.func,
+  setCommentContent: PropTypes.func.isRequired,
   error: PropTypes.string,
-  submitComment: PropTypes.func,
+  submitComment: PropTypes.func.isRequired,
+};
+
+TimelineCommentEditor.defaultProps = {
+  commentContent: "",
+  isLoading: false,
+  error: "",
 };
 
 export default TimelineCommentEditor;

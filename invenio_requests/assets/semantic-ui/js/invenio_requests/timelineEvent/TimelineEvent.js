@@ -4,17 +4,10 @@
 // Invenio RDM Records is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
 
-import Error from '../components/Error';
-import FormattedInputEditor
-  from '../components/FormattedInputEditor';
+import Error from "../components/Error";
+import FormattedInputEditor from "../components/FormattedInputEditor";
 import React, { Component } from "react";
-import {
-  Feed,
-  Image,
-  Container,
-  Dropdown,
-  Grid,
-} from "semantic-ui-react";
+import { Feed, Image, Container, Dropdown, Grid } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import Overridable from "react-overridable";
 import { SaveButton, CancelButton } from "../components/Buttons";
@@ -52,7 +45,11 @@ class TimelineEvent extends Component {
       <Overridable id="TimelineEvent.layout" event={event}>
         <Feed.Event>
           <Feed.Label>
-            <Image src="/static/images/square-placeholder.png" as={Image} rounded />
+            <Image
+              src="/static/images/square-placeholder.png"
+              as={Image}
+              rounded
+            />
           </Feed.Label>
           <Feed.Content>
             <Grid>
@@ -83,7 +80,7 @@ class TimelineEvent extends Component {
             </Grid>
 
             <Feed.Extra text className="timeline-event-body">
-              {error && <Error error={error}/>}
+              {error && <Error error={error} />}
 
               {isEditing ? (
                 <FormattedInputEditor
@@ -128,6 +125,12 @@ TimelineEvent.propTypes = {
   isLoading: PropTypes.bool,
   isEditing: PropTypes.bool,
   error: PropTypes.string,
+};
+
+TimelineEvent.defaultProps = {
+  isLoading: false,
+  isEditing: false,
+  error: undefined,
 };
 
 export default Overridable.component("TimelineEvent", TimelineEvent);

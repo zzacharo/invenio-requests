@@ -14,7 +14,7 @@ export const SUCCESS = "eventEditor/SUCCESS";
 export const SETTING_CONTENT = "eventEditor/SETTING_CONTENT";
 
 export const setEventContent = (content) => {
-  return async (dispatch) => {
+  return async (dispatch, getState, config) => {
     dispatch({
       type: SETTING_CONTENT,
       payload: content,
