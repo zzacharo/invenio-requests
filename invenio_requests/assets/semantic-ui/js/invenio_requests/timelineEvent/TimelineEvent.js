@@ -13,6 +13,7 @@ import Overridable from "react-overridable";
 import { SaveButton, CancelButton } from "../components/Buttons";
 import { TimelineEventBody } from "./TimelineEventBody";
 import { i18next } from "@translations/invenio_requests/i18next";
+import { DateTime } from "luxon";
 
 class TimelineEvent extends Component {
   constructor(props) {
@@ -23,6 +24,8 @@ class TimelineEvent extends Component {
     this.state = {
       commentContent: event?.payload?.content,
     };
+    this.timestampToRelativeTime = (timestamp) =>
+      DateTime.fromISO(timestamp).setLocale(i18next.language).toRelative();
   }
 
   render() {
@@ -59,7 +62,9 @@ class TimelineEvent extends Component {
                     {/*TODO replace with event.icon and add a translated event description*/}
                     <Feed.User as="a">{event.created_by?.user}</Feed.User>{" "}
                     {i18next.t("commented")}
-                    <Feed.Date>{event.created}</Feed.Date>
+                    <Feed.Date>
+                      {this.timestampToRelativeTime(event.created)}
+                    </Feed.Date>
                   </Feed.Summary>
                 </Grid.Column>
                 <Grid.Column width={1}>
