@@ -72,10 +72,15 @@ class RequestsService(RecordService):
         )
 
         creator = (
-            ResolverRegistry.reference_entity(creator)
+            ResolverRegistry.reference_entity(creator, raise_=True)
             if creator is not None
             else ResolverRegistry.reference_identity(identity)
         )
+        if topic is not None:
+            topic = ResolverRegistry.reference_entity(topic, raise_=True)
+        if receiver is not None:
+            receiver = ResolverRegistry.reference_entity(receiver, raise_=True)
+
         # Run components
         self.run_components(
             "create",
@@ -84,8 +89,8 @@ class RequestsService(RecordService):
             record=request,
             errors=errors,
             created_by=creator,
-            topic=ResolverRegistry.reference_entity(topic),
-            receiver=ResolverRegistry.reference_entity(receiver),
+            topic=topic,
+            receiver=receiver,
             uow=uow,
         )
 
