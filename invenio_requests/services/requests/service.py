@@ -181,19 +181,6 @@ class RequestsService(RecordService):
 
         return True
 
-    def reindex(self, identity, params=None, es_preference=None, **kwargs):
-        """Reindex records matching the query parameters."""
-        # TODO check later
-        return super().reindex(identity, params=None, es_preference=None, **kwargs)
-
-    def rebuild_index(self, identity):
-        """Reindex all records managed by this service."""
-        for req_meta in self.record_cls.model_cls.query.all():
-            request = self._request_from_model(req_meta)
-
-            if not request.is_deleted:
-                self.indexer.index(request)
-
     def _execute(self, identity, request, action, uow):
         """Internal method to execute a given named action."""
         action_obj = RequestActions.get_action(request, action)
