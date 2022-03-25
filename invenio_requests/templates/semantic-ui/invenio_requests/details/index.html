@@ -26,21 +26,24 @@
   {#  placeholder for custom header fe. community #}
 {% endblock custom_header %}
 
-<div class="ui container mt-25">
-  <div class="ui grid">
-    <div class="two column row">
-      <div class="column ten wide">
-        {% block request_topic %}
-        {% endblock request_topic %}
-      </div>
-      <div class="column six wide right aligned">
-        {% block request_actions %}
-          <div id="request-actions"></div>
-        {% endblock request_actions %}
+  {% block request_header %}
+    <div class="ui container  mt-25">
+      <div class="ui grid">
+        <div class="two column row">
+          <div class="column ten wide">
+            {% block request_topic %}
+            {% endblock request_topic %}
+          </div>
+          <div class="column six wide right aligned">
+            {% block request_actions %}
+              <div id="request-actions"></div>
+            {% endblock request_actions %}
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+  {% endblock request_header %}
+
   {% block conversation %}
     <div class="ui container request-detail-page">
       <div class="ui header"><h2>{{ request.title }}</h2></div>
