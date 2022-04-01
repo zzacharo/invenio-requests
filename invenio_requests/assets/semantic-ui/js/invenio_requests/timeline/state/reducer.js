@@ -12,15 +12,14 @@ import {
   CHANGE_PAGE,
 } from "./actions";
 
-const requestDetailsDiv = document.getElementById("request-detail");
-const { size } = JSON.parse(requestDetailsDiv.dataset.defaultQueryConfig);
+
 
 export const initialState = {
   loading: false,
   refreshing: false,
   data: {},
   error: null,
-  size: size,
+  size: 15,
   page: 1,
 };
 

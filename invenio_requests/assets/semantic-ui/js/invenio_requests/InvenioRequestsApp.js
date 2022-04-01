@@ -20,7 +20,8 @@ import { Provider } from "react-redux";
 export class InvenioRequestsApp extends Component {
   constructor(props) {
     super(props);
-    const { requestsApi, requestEventsApi, request } = this.props;
+    const { requestsApi, requestEventsApi, request, defaultQueryParams } =
+      this.props;
     const defaultRequestsApi = new InvenioRequestsAPI(
       new RequestLinksExtractor(request)
     );
@@ -34,6 +35,7 @@ export class InvenioRequestsApp extends Component {
       request,
       requestEventsApi: requestEventsApi || defaultRequestEventsApi,
       refreshIntervalMs: 5000,
+      defaultQueryParams,
     };
 
     this.store = configureStore(appConfig);
@@ -41,6 +43,7 @@ export class InvenioRequestsApp extends Component {
 
   render() {
     const { overriddenCmps } = this.props;
+
     return (
       <OverridableContext.Provider value={overriddenCmps}>
         <Provider store={this.store}>
@@ -56,9 +59,11 @@ InvenioRequestsApp.propTypes = {
   requestEventsApi: PropTypes.object,
   overriddenCmps: PropTypes.object,
   request: PropTypes.object.isRequired,
+  defaultQueryParams: PropTypes.object,
 };
 
 InvenioRequestsApp.defaultProps = {
   overriddenCmps: {},
   requestsApi: null,
+  defaultQueryParams: { size: 15 },
 };

@@ -13,7 +13,6 @@ import { i18next } from "@translations/invenio_requests/i18next";
 import { Trans } from "react-i18next";
 
 export class RequestActionModal extends Component {
-
   setOpen = (isOpen) => {
     const { setActionModalOpen, modalId } = this.props;
     setActionModalOpen(isOpen, modalId);
@@ -38,17 +37,13 @@ export class RequestActionModal extends Component {
           open={modalOpen.modalId === modalId && modalOpen.isOpen}
           trigger={
             <Button onClick={() => this.setOpen(true)} loading={loading}>
-              <Trans
-                defaults="{{action}}"
-                values={{ "action": action }}
-              />
+              <Trans defaults="{{action}}" values={{ action: action }} />
             </Button>
           }
         >
-          <Modal.Header> <Trans
-                defaults="{{action}} request"
-                values={{ "action": action }}
-              /></Modal.Header>
+          <Modal.Header>
+            <Trans defaults="{{action}} request" values={{ action: action }} />
+          </Modal.Header>
           <Modal.Content>
             <Modal.Description>
               {error && <Error error={error.message} />}
@@ -60,10 +55,7 @@ export class RequestActionModal extends Component {
               {i18next.t("Cancel")}
             </Button>
             <Button onClick={handleActionClick} loading={loading}>
-              <Trans
-                defaults="{{action}}"
-                values={{ "action": action }}
-              />
+              <Trans defaults="{{action}}" values={{ action: action }} />
             </Button>
           </Modal.Actions>
         </Modal>
@@ -77,13 +69,13 @@ RequestActionModal.propTypes = {
   handleActionClick: PropTypes.func.isRequired,
   modalOpen: PropTypes.bool,
   loading: PropTypes.bool,
-  modalId: PropTypes.string.isRequired
+  modalId: PropTypes.string.isRequired,
 };
 
 RequestActionModal.defaultProps = {
   loading: false,
   modalOpen: false,
-}
+};
 
 export default Overridable.component(
   "InvenioRequests.RequestActionModal",

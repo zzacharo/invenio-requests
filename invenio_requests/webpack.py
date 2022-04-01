@@ -29,7 +29,7 @@ requests = WebpackThemeBundle(
                 'invenio-requests-theme':
                     './less/invenio_requests/theme.less',
                 'invenio-requests-base':
-                    './js/invenio_requests/index.js',
+                    './js/invenio_requests/requestsAppInit.js',
             },
             dependencies={
                 'semantic-ui-css': '^2.4.1',
@@ -57,7 +57,9 @@ requests = WebpackThemeBundle(
             },
             aliases={
                 '@translations/invenio_requests':
-                    'translations/invenio_requests'
+                    'translations/invenio_requests',
+                '@js/invenio_requests':
+                    './js/invenio_requests/index.js'
             }
         ),
     }
