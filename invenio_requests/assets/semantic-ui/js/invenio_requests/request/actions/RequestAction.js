@@ -4,15 +4,18 @@
 // Invenio RDM Records is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
 
+import { RequestActionContext } from "@js/invenio_requests/request/actions/context";
 import FormattedInputEditor from "../../components/FormattedInputEditor";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Overridable from "react-overridable";
-import { Divider, Modal } from "semantic-ui-react";
-import { RequestActionModal } from "./";
+import { Button, Divider, Modal } from "semantic-ui-react";
+import { RequestActionModal } from "./RequestActionModal";
 import { Trans } from "react-i18next";
 
 export class RequestAction extends Component {
+  static contextType = RequestActionContext;
+
   constructor(props) {
     super(props);
     this.state = { actionComment: "", modalOpen: false };
@@ -23,13 +26,16 @@ export class RequestAction extends Component {
   };
 
   handleActionClick = () => {
-    const { action, performAction } = this.props;
+    const { performAction } = this.context;
+    const { action } = this.props;
     const { actionComment } = this.state;
     performAction(action, actionComment);
   };
 
   render() {
-    const { action, loading, performAction } = this.props;
+    const { loading, performAction, toggleModal } = this.context;
+    const { action } = this.props;
+    const modalId = action;
     return (
       <Overridable
         id="InvenioRequests.RequestAction.layout"
@@ -37,23 +43,27 @@ export class RequestAction extends Component {
         loading={loading}
         performAction={performAction}
       >
-        <RequestActionModal
-          action={action}
-          loading={loading}
-          handleActionClick={this.handleActionClick}
-          modalId={action}
-        >
-          <Modal.Content>
-            <Modal.Description>
-              <Trans
-                defaults="Comment on your {{action}} request action (optional)."
-                values={{ action: action }}
-              />
-              <Divider hidden />
-              <FormattedInputEditor onChange={this.onCommentChange} />
-            </Modal.Description>
-          </Modal.Content>
-        </RequestActionModal>
+        <>
+          <Button onClick={() => toggleModal(modalId, true)} loading={loading}>
+            <Trans defaults="{{action}}" values={{ action: action }} />
+          </Button>
+          <RequestActionModal
+            action={action}
+            handleActionClick={this.handleActionClick}
+            modalId={modalId}
+          >
+            <Modal.Content>
+              <Modal.Description>
+                <Trans
+                  defaults="Comment on your {{action}} request action (optional)."
+                  values={{ action: action }}
+                />
+                <Divider hidden />
+                <FormattedInputEditor onChange={this.onCommentChange} />
+              </Modal.Description>
+            </Modal.Content>
+          </RequestActionModal>
+        </>
       </Overridable>
     );
   }
@@ -61,12 +71,6 @@ export class RequestAction extends Component {
 
 RequestAction.propTypes = {
   action: PropTypes.string.isRequired,
-  performAction: PropTypes.func.isRequired,
-  loading: PropTypes.bool,
-};
-
-RequestAction.defaultProps = {
-  loading: false,
 };
 
 export default Overridable.component(

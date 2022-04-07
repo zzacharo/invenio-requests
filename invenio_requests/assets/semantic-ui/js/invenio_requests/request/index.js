@@ -6,10 +6,11 @@
 
 import RequestComponent from './Request';
 import { connect } from 'react-redux';
-import { initRequest } from './state/actions'
+import { initRequest, updateRequestAfterAction } from './state/actions';
 
 const mapDispatchToProps = (dispatch) => ({
   initRequest: () => dispatch(initRequest()),
+  updateRequestAfterAction: (request) => dispatch(updateRequestAfterAction(request))
 });
 
 const mapStateToProps = (state) => ({

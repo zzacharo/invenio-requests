@@ -1,42 +1,31 @@
 // This file is part of InvenioRequests
-// Copyright (C) 2022 CERN.
-//
-// Invenio RDM Records is free software; you can redistribute it and/or modify it
-// under the terms of the MIT License; see LICENSE file for more details.
 
-import { connect } from 'react-redux';
-import { performAction, setActionModalOpen } from './state/actions';
-import RequestActionCmp from './RequestAction';
-import RequestActionModalCmp from './RequestActionModal';
+import { RequestActionController } from "@js/invenio_requests/request/actions/RequestActionController";
+import PropTypes from "prop-types";
+import ReactDOM from "react-dom";
+import React from "react";
+import Overridable from "react-overridable";
 
-const mapDispatchToProps = (dispatch) => ({
-  performAction: (action, payload) => dispatch(performAction(action, payload)),
-});
+const element = document.getElementById("request-actions");
 
-const mapStateToProps = (state) => ({
-  loading: state.requestAction.loading,
-  error: state.requestAction.error,
-});
+const RequestActionsPortalCmp = ({ request, actionSuccessCallback }) => {
+  return ReactDOM.createPortal(
+    <RequestActionController
+      request={request}
+      actionSuccessCallback={actionSuccessCallback}
+    />,
+    element
+  );
+};
 
+RequestActionsPortalCmp.propTypes = {
+  request: PropTypes.object.isRequired,
+  actionSuccessCallback: PropTypes.func.isRequired,
+};
 
-export const RequestAction = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(RequestActionCmp);
+export default Overridable.component(
+  "InvenioRequests.RequestActionsPortal",
+  RequestActionsPortalCmp
+);
 
-
-const mapDispatchToPropsModal = (dispatch) => ({
-  setActionModalOpen: (isOpen, modalId) => dispatch(setActionModalOpen(isOpen, modalId)),
-});
-
-const mapStateToPropsModal = (state) => ({
-  error: state.requestAction.error,
-  modalOpen: state.requestAction.actionModalOpen,
-  loading: state.requestAction.loading,
-});
-
-
-export const RequestActionModal = connect(
-  mapStateToPropsModal,
-  mapDispatchToPropsModal
-)(RequestActionModalCmp);
+export { RequestActionController } from "@js/invenio_requests/request/actions/RequestActionController";

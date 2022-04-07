@@ -10,7 +10,6 @@ import Overridable from "react-overridable";
 import { Divider, Header, Image, Label, Icon } from "semantic-ui-react";
 import { i18next } from "@translations/invenio_requests/i18next";
 
-
 class RequestMetadata extends Component {
   render() {
     const { request } = this.props;
@@ -35,7 +34,7 @@ class RequestMetadata extends Component {
               {request.state}
             </>
           )}
-          <Divider hidden/>
+          <Divider hidden />
         </>
       </Overridable>
     );

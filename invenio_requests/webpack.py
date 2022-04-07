@@ -59,7 +59,7 @@ requests = WebpackThemeBundle(
                 '@translations/invenio_requests':
                     'translations/invenio_requests',
                 '@js/invenio_requests':
-                    './js/invenio_requests/index.js'
+                    'js/invenio_requests'
             }
         ),
     }

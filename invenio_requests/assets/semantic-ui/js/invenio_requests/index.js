@@ -10,3 +10,7 @@ export { default as TimelineEvent } from "./timelineEvent/TimelineEvent";
 export { default as RequestMetadata } from "./request/RequestMetadata";
 export { InvenioRequestsAPI } from "./api/api";
 export { InvenioRequestsApp } from "./InvenioRequestsApp";
+export { RequestActions } from "./request/actions/RequestActions";
+export { RequestAction } from "./request/actions/RequestAction";
+export { RequestActionController } from "./request/actions/RequestActionController";
+export { RequestActionContext } from "./request/actions/context";

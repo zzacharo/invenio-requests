@@ -12,7 +12,6 @@ import { Grid } from "semantic-ui-react";
 import { Timeline } from "../timeline";
 
 class RequestDetails extends Component {
-
   render() {
     const { request } = this.props;
     return (

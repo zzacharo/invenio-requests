@@ -7,7 +7,6 @@
 import { timelineReducer } from "../timeline/state/reducer";
 import { commentEditorReducer } from "../timelineCommentEditor/state/reducer";
 import { combineReducers } from "redux";
-import { requestActionReducer } from "../request/actions/state/reducer";
 import { requestReducer } from "../request/state/reducer";
 
 export default function createReducers() {
@@ -15,6 +14,5 @@ export default function createReducers() {
     timeline: timelineReducer,
     timelineCommentEditor: commentEditorReducer,
     request: requestReducer,
-    requestAction: requestActionReducer,
   });
 }

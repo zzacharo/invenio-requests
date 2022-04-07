@@ -7,15 +7,16 @@
 import { RequestLinksExtractor } from "../../api";
 import React from "react";
 import Overridable from "react-overridable";
-import ReactDOM from "react-dom";
-import { RequestAction } from "./index";
-
-const element = document.getElementById("request-actions");
+import { RequestAction } from "./RequestAction";
 
 export const RequestActions = ({ request }) => {
   const actions = Object.keys(new RequestLinksExtractor(request).actions);
   return (
-    <Overridable id="InvenioRequests.RequestActions.layout" request={request}>
+    <Overridable
+      id="InvenioRequests.RequestActions.layout"
+      request={request}
+      actions={actions}
+    >
       <>
         {actions.map((action) => (
           <RequestAction action={action} key={action} />
@@ -24,15 +25,6 @@ export const RequestActions = ({ request }) => {
     </Overridable>
   );
 };
-
-export const RequestActionsPortalCmp = ({ request }) => {
-  return ReactDOM.createPortal(<RequestActions request={request} />, element);
-};
-
-export const RequestActionsPortal = Overridable.component(
-  "InvenioRequests.RequestActionsPortal",
-  RequestActionsPortalCmp
-);
 
 export default Overridable.component(
   "InvenioRequests.RequestActions",

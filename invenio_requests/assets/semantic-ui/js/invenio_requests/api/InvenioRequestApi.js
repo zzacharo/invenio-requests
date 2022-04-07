@@ -16,6 +16,10 @@ export class RequestLinksExtractor {
     this.#urls = request.links;
   }
 
+  get self_html() {
+    return this.#urls.self_html
+  }
+
   get timeline() {
     if (!this.#urls.timeline) {
       throw TypeError("Timeline link missing from resource.");

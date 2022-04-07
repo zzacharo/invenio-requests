@@ -4,6 +4,10 @@
 // Invenio RDM Records is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
 
+import {
+  fetchTimeline
+} from '@js/invenio_requests/timeline/state/actions';
+
 export const REQUEST_INIT = "request/INIT";
 
 export const initRequest = () => {
@@ -21,5 +25,13 @@ export const updateRequestAfterAction = (request) => {
       type: REQUEST_INIT,
       payload: request,
     });
+    dispatch(fetchTimeline());
   };
 };
+
+export const setRefreshInterval = () => {
+  return (dispatch, getState, config) => {
+    return config.refreshIntervalMs;
+  };
+};
+
