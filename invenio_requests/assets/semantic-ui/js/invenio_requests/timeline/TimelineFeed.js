@@ -11,9 +11,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Overridable from "react-overridable";
 import { Container, Feed, Segment, Divider } from "semantic-ui-react";
-import { TimelineEventWithState } from "../timelineEventWithState";
+import { TimelineCommentEventControlled } from "../timelineCommentEventControlled";
 import { TimelineCommentEditor } from "../timelineCommentEditor";
 import { DeleteConfirmationModal } from "../components/modals/DeleteConfirmationModal";
+import RequestsFeed from "../components/RequestsFeed";
 
 class TimelineFeed extends Component {
   constructor(props) {
@@ -47,35 +48,32 @@ class TimelineFeed extends Component {
       <Loader isLoading={loading}>
         <Error error={error}>
           <Overridable id="TimelineFeed.layout" {...this.props}>
-            <Container>
-              <Segment className="borderless shadowless">
-                <Feed>
-                  {timeline.hits?.hits.map((comment) => (
-                    <TimelineEventWithState
-                      key={comment.id}
-                      event={comment}
-                      openConfirmModal={this.onOpenModal}
-                    />
-                  ))}
-                </Feed>
-                <Divider />
-                <Container textAlign="center">
-                  <Pagination
-                    page={page}
-                    size={size}
-                    setPage={setPage}
-                    totalLength={timeline.hits?.total}
+            <Container id="requests-timeline">
+              <RequestsFeed>
+                {timeline.hits?.hits.map((event) => (
+                  <TimelineCommentEventControlled
+                    key={event.id}
+                    event={event}
+                    openConfirmModal={this.onOpenModal}
                   />
-                </Container>
-                <Divider hidden />
-                <TimelineCommentEditor />
-                <DeleteConfirmationModal
-                  open={modalOpen}
-                  action={modalAction}
-                  onOpen={() => this.setState({ modalOpen: true })}
-                  onClose={() => this.setState({ modalOpen: false })}
+                ))}
+              </RequestsFeed>
+              <Divider fitted />
+              <Container textAlign="center" className="mb-15 mt-15">
+                <Pagination
+                  page={page}
+                  size={size}
+                  setPage={setPage}
+                  totalLength={timeline.hits?.total}
                 />
-              </Segment>
+              </Container>
+              <TimelineCommentEditor />
+              <DeleteConfirmationModal
+                open={modalOpen}
+                action={modalAction}
+                onOpen={() => this.setState({ modalOpen: true })}
+                onClose={() => this.setState({ modalOpen: false })}
+              />
             </Container>
           </Overridable>
         </Error>

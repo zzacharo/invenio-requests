@@ -10,6 +10,22 @@ export const HAS_ERROR = "timeline/HAS_ERROR";
 export const IS_REFRESHING = "timeline/REFRESHING";
 export const CHANGE_PAGE = "timeline/CHANGE_PAGE";
 
+const mockedRequestStatusEvents = [
+  {
+    id: "dasf33d23dsd",
+    payload: {
+      content: "<p> accepted the invitation 2 days go</p>",
+      format: "html",
+    },
+    created_at: "2021-10-28T20:30.212323",
+    type: "A",
+    created_by: { user: "1", name: "John Doe" },
+    updated_at: "2021-10-28T20:31.212323",
+    links: {},
+    revision_id: 1,
+  },
+];
+
 class intervalManager {
   static IntervalId = undefined;
 
@@ -36,11 +52,20 @@ export const fetchTimeline = (loadingState = true) => {
       const response = await config.requestsApi.getTimeline({
         size: size,
         page: page,
-        sort: 'oldest',
+        sort: "oldest",
       });
+
+      const dataWithMock = (data) => {
+        data.hits.hits = data.hits.hits.concat(mockedRequestStatusEvents);
+        data.hits.hits.push(data.hits.hits[0])
+
+
+        return data;
+      };
+
       dispatch({
         type: SUCCESS,
-        payload: response.data,
+        payload: dataWithMock(response.data),
       });
     } catch (error) {
       dispatch({

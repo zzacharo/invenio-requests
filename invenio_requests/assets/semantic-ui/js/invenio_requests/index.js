@@ -6,7 +6,7 @@
 
 export { default as RequestDetails } from "./request/RequestDetails";
 export { default as Timeline } from "./timeline/TimelineFeed";
-export { default as TimelineEvent } from "./timelineEvent/TimelineEvent";
+export { default as TimelineEvent } from "./timelineEvents/TimelineCommentEvent";
 export { default as RequestMetadata } from "./request/RequestMetadata";
 export { InvenioRequestsAPI } from "./api/api";
 export { InvenioRequestsApp } from "./InvenioRequestsApp";

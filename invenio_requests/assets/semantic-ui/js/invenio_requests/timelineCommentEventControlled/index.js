@@ -4,7 +4,7 @@
 // Invenio RDM Records is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
 
-import EventWithStateComponent from "./TimelineEventWithState";
+import EventWithStateComponent from "./TimelineCommentEventControlled";
 import { connect } from "react-redux";
 import { updateComment, deleteComment } from "./state/actions";
 
@@ -13,7 +13,7 @@ const mapDispatchToProps = (dispatch) => ({
   deleteComment: async (payload) => dispatch(deleteComment(payload)),
 });
 
-export const TimelineEventWithState = connect(
+export const TimelineCommentEventControlled = connect(
   null,
   mapDispatchToProps
 )(EventWithStateComponent);

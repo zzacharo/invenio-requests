@@ -4,4 +4,6 @@
 // Invenio RDM Records is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
 
-export { default as TimelineEvent } from "./TimelineEvent";
+export { default as TimelineEvent } from "./TimelineCommentEvent";
+export * from "./timelineActionEvents";
+export { TimelineActionEvent } from "../components/TimelineActionEvent";

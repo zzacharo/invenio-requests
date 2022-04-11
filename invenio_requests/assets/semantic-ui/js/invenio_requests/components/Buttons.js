@@ -13,5 +13,5 @@ export const SaveButton = (props) => (
 );
 
 export const CancelButton = (props) => (
-  <Button icon="cancel" content={i18next.t("Save")} size="mini" {...props} />
+  <Button icon="cancel" content={i18next.t("Cancel")} size="mini" {...props} />
 );
