@@ -16,7 +16,6 @@ from invenio_records_resources.services.errors import PermissionDeniedError
 #
 # Error handlers
 #
-from invenio_requests.views.requests import requests_detail
 
 
 def not_found_error(error):
@@ -46,11 +45,6 @@ def create_ui_blueprint(app):
         __name__,
         template_folder="../templates",
         static_folder='../static'
-    )
-
-    blueprint.add_url_rule(
-        routes["details"],
-        view_func=requests_detail,
     )
 
     # Register error handlers
