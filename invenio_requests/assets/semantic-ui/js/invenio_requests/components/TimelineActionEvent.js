@@ -5,7 +5,7 @@
 // under the terms of the MIT License; see LICENSE file for more details.
 
 import React, { Component } from "react";
-import { Feed, Icon } from "semantic-ui-react";
+import { Feed } from "semantic-ui-react";
 import { TimelineEventBody } from "./TimelineEventBody";
 import { Image } from "react-invenio-forms";
 import PropTypes from "prop-types";
@@ -25,10 +25,8 @@ class TimelineActionEvent extends Component {
         userAction={userAction}
       >
         <RequestsFeed.Item>
-          <RequestsFeed.IconContainer>
-            <Icon name={iconName} size="large" color={iconColor} />
-          </RequestsFeed.IconContainer>
-          <RequestsFeed.InnerContainer>
+          <RequestsFeed.Content isEvent={true}>
+            <RequestsFeed.Icon name={iconName} size="large" color={iconColor}/>
             <RequestsFeed.Event isActionEvent={true}>
               <Feed.Label>
                 {userAction && (
@@ -52,7 +50,7 @@ class TimelineActionEvent extends Component {
                 </div>
               </Feed.Content>
             </RequestsFeed.Event>
-          </RequestsFeed.InnerContainer>
+          </RequestsFeed.Content>
         </RequestsFeed.Item>
       </Overridable>
     );

@@ -5,8 +5,9 @@
 // under the terms of the MIT License; see LICENSE file for more details.
 
 import React from "react";
-import { Feed, Container } from "semantic-ui-react";
+import { Feed, Container, Icon } from "semantic-ui-react";
 import PropTypes from "prop-types";
+import { Image } from "react-invenio-forms";
 
 // Wrapper component for the custom styles being used inside the request events timeline
 // Enables centralizing the styles and abstracts it away from the template
@@ -22,16 +23,26 @@ export const RequestEventItem = ({ children }) => (
   </div>
 );
 
-export const RequestEventInnerContainer = ({ children }) => (
-  <div className="ui feed requests-event-inner-container">{children}</div>
+export const RequestEventInnerContainer = ({ children, isEvent }) => (
+  <div className={`requests-event-inner-container${isEvent ? " thread" : ""}`}>{children}</div>
 );
 
-export const RequestEventAvatarContainer = ({ children }) => (
-  <div className="requests-avatar-container">{children} </div>
+export const RequestEventAvatarContainer = ({ src, ...uiProps }) => (
+  <div className="requests-avatar-container">
+    <Image
+      src="/static/images/square-placeholder.png"
+      as={Image}
+      rounded
+      avatar
+      {...uiProps}
+    />
+  </div>
 );
 
-export const RequestEventItemIconContainer = ({ children }) => (
-  <div className="requests-action-event-icon"> {children} </div>
+export const RequestEventItemIconContainer = ({ name, size, color }) => (
+  <div className="requests-action-event-icon">
+    <Icon name={name} size={size} color={color} />
+  </div>
 );
 
 export const RequestEventItemBody = ({ isActionEvent, ...props }) => (
@@ -48,9 +59,9 @@ RequestEventItemBody.defaultProps = {
   isActionEvent: false,
 };
 
-RequestsFeed.InnerContainer = RequestEventInnerContainer;
-RequestsFeed.AvatarContainer = RequestEventAvatarContainer;
-RequestsFeed.IconContainer = RequestEventItemIconContainer;
+RequestsFeed.Content = RequestEventInnerContainer;
+RequestsFeed.Avatar = RequestEventAvatarContainer;
+RequestsFeed.Icon = RequestEventItemIconContainer;
 RequestsFeed.Item = RequestEventItem;
 RequestsFeed.Event = RequestEventItemBody;
 

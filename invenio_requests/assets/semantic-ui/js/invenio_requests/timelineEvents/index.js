@@ -6,4 +6,4 @@
 
 export { default as TimelineEvent } from "./TimelineCommentEvent";
 export * from "./timelineActionEvents";
-export { TimelineActionEvent } from "../components/TimelineActionEvent";
+export { default as TimelineActionEvent } from "../components/TimelineActionEvent";

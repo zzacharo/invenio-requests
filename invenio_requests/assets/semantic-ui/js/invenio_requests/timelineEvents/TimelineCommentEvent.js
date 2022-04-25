@@ -52,49 +52,42 @@ class TimelineCommentEvent extends Component {
     return (
       <Overridable id={`TimelineEvent.layout.${event?.type}`} event={event}>
         <RequestsFeed.Item>
-          <RequestsFeed.AvatarContainer>
-            <Image
+          <RequestsFeed.Content>
+            <RequestsFeed.Avatar
               src="/static/images/square-placeholder.png"
               as={Image}
               circular
-              className="request-avatar-image"
             />
-          </RequestsFeed.AvatarContainer>
-          <RequestsFeed.InnerContainer>
             <RequestsFeed.Event>
               <Feed.Content>
-                <Grid>
-                  <Grid.Row>
-                    <Grid.Column width={15}>
-                      <Feed.Summary>
-                        {/*TODO replace with event.icon and add a translated event description*/}
-                        <Feed.User as="a">{event.created_by?.user}</Feed.User>{" "}
-                        {i18next.t("commented")}
-                        <Feed.Date>
-                          {timestampToRelativeTime(event.created)}
-                        </Feed.Date>
-                      </Feed.Summary>
-                    </Grid.Column>
-                    <Grid.Column width={1}>
-                      {commentCanBeDeleted && (canDelete || canUpdate) && (
-                        <Dropdown icon="ellipsis horizontal">
-                          <Dropdown.Menu>
-                            {canUpdate && (
-                              <Dropdown.Item onClick={() => toggleEditMode()}>
-                                {i18next.t("Edit")}
-                              </Dropdown.Item>
-                            )}
-                            {canDelete && (
-                              <Dropdown.Item onClick={() => deleteComment()}>
-                                {i18next.t("Delete")}
-                              </Dropdown.Item>
-                            )}
-                          </Dropdown.Menu>
-                        </Dropdown>
+                {commentCanBeDeleted && (canDelete || canUpdate) && (
+                  <Dropdown
+                    icon="ellipsis horizontal"
+                    className="right-floated"
+                  >
+                    <Dropdown.Menu>
+                      {canUpdate && (
+                        <Dropdown.Item onClick={() => toggleEditMode()}>
+                          {i18next.t("Edit")}
+                        </Dropdown.Item>
                       )}
-                    </Grid.Column>
-                  </Grid.Row>
-                </Grid>
+                      {canDelete && (
+                        <Dropdown.Item onClick={() => deleteComment()}>
+                          {i18next.t("Delete")}
+                        </Dropdown.Item>
+                      )}
+                    </Dropdown.Menu>
+                  </Dropdown>
+                )}
+                <Feed.Summary>
+                  {/*TODO replace with event.icon and add a translated event description*/}
+                  <Feed.User as="a">{event.created_by?.user}</Feed.User>{" "}
+                  {i18next.t("commented")}
+                  <Feed.Date>
+                    {timestampToRelativeTime(event.created)}
+                  </Feed.Date>
+                </Feed.Summary>
+
 
                 <Feed.Extra text={!isEditing}>
                   {error && <Error error={error} />}
@@ -124,13 +117,13 @@ class TimelineCommentEvent extends Component {
                     </Container>
                   )}
                 </Feed.Extra>
-                <Feed.Meta>
-                  {commentHasBeenEdited && i18next.t("Edited")}
-                  {commentHasBeenDeleted && i18next.t("Deleted")}
-                </Feed.Meta>
+                {commentHasBeenEdited || commentHasBeenDeleted && <Feed.Meta>
+                  {commentHasBeenEdited && i18next.t('Edited')}
+                  {commentHasBeenDeleted && i18next.t('Deleted')}
+                </Feed.Meta>}
               </Feed.Content>
             </RequestsFeed.Event>
-          </RequestsFeed.InnerContainer>
+          </RequestsFeed.Content>
         </RequestsFeed.Item>
       </Overridable>
     );
