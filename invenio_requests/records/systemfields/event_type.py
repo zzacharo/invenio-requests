@@ -78,7 +78,6 @@ class EventTypeField(ModelField):
     #
     def pre_init(self, record, data, model=None, **kwargs):
         """Ensure type is always in the registry."""
-        # import ipdb; ipdb.set_trace()
         _type = kwargs.get("type")
         if _type is None:
             # validate type from instantiated model
