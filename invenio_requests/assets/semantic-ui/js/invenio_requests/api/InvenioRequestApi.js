@@ -6,7 +6,6 @@
 import { http } from "./config";
 import _isEmpty from "lodash/isEmpty";
 
-
 export class RequestLinksExtractor {
   #urls;
 
@@ -18,7 +17,11 @@ export class RequestLinksExtractor {
   }
 
   get self_html() {
-    return this.#urls.self_html
+    return this.#urls.self_html;
+  }
+
+  get self() {
+    return this.#urls.self;
   }
 
   get timeline() {
@@ -50,8 +53,16 @@ export class InvenioRequestsAPI {
     this.#urls = requestLinksExtractor;
   }
 
+  get availableRequestStatuses() {
+    return ["accepted", "declined", "expired", "cancelled"];
+  }
+
   getTimeline = async (params) => {
     return await http.get(this.#urls.timeline, { params });
+  };
+
+  getRequest = async () => {
+    return await http.get(this.#urls.self);
   };
 
   submitComment = async (payload) => {

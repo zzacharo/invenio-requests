@@ -4,27 +4,13 @@
 // Invenio RDM Records is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
 
+import { updateRequest } from "../../request/state/actions";
+
 export const IS_LOADING = "timeline/IS_LOADING";
 export const SUCCESS = "timeline/SUCCESS";
 export const HAS_ERROR = "timeline/HAS_ERROR";
 export const IS_REFRESHING = "timeline/REFRESHING";
 export const CHANGE_PAGE = "timeline/CHANGE_PAGE";
-
-const mockedRequestStatusEvents = [
-  {
-    id: "dasf33d23dsd",
-    payload: {
-      content: "<p> accepted the invitation 2 days go</p>",
-      format: "html",
-    },
-    created_at: "2021-10-28T20:30.212323",
-    type: "A",
-    created_by: { user: "1", name: "John Doe" },
-    updated_at: "2021-10-28T20:31.212323",
-    links: {},
-    revision_id: 1,
-  },
-];
 
 class intervalManager {
   static IntervalId = undefined;
@@ -55,17 +41,21 @@ export const fetchTimeline = (loadingState = true) => {
         sort: "oldest",
       });
 
-      const dataWithMock = (data) => {
-        data.hits.hits = data.hits.hits.concat(mockedRequestStatusEvents);
-        data.hits.hits.push(data.hits.hits[0])
-
-
-        return data;
-      };
-
+      // Check if a LogEvent was added and fetch request
+      const actionEventFound = response.data.hits.hits.some(
+        (event) =>
+          event.type === "L" &&
+          config.requestsApi.availableRequestStatuses.includes(
+            event?.payload?.event
+          )
+      );
+      if (actionEventFound) {
+        const response = await config.requestsApi.getRequest();
+        dispatch(updateRequest(response.data));
+      }
       dispatch({
         type: SUCCESS,
-        payload: dataWithMock(response.data),
+        payload: response.data,
       });
     } catch (error) {
       dispatch({

@@ -25,7 +25,7 @@ class EventType:
     payload_schema = None
     """Schema for supported payload fields.
 
-    Define it as a dictionary of fields mapping:
+    Define it as a dictionary of fields mapping or callable that returns a dictionary:
 
     .. code-block:: python
 
@@ -33,6 +33,13 @@ class EventType:
             "content": fields.String(),
             # ...
         }
+
+        # or a callable
+        def payload_schema():
+            return {
+                "content": fields.String(),
+                # ...
+            }
     """
 
     payload_required = False
@@ -66,7 +73,6 @@ class EventType:
     def _create_marshmallow_schema(cls):
         """Create a marshmallow schema for this request type."""
         # Avoid circular imports
-        from invenio_requests.records.api import RequestEventFormat
         from invenio_requests.services.schemas import RequestEventSchema
 
         additional_fields = {}
@@ -78,21 +84,15 @@ class EventType:
 
         # If a payload schema is defined, add it to the request schema
         if cls.payload_schema is not None:
-            # we need to define the format field here to avoid circular imports with
-            # RequestEventFormat
-            _format = fields.Str(
-                validate=validate.OneOf(choices=[e.value for e in RequestEventFormat]),
-                load_default=RequestEventFormat.HTML.value,
-            )
+            payload_schema = cls.payload_schema
+            if callable(cls.payload_schema):
+                payload_schema = payload_schema()
+
             payload_required = False
             if cls.payload_required is not None:
                 payload_required = cls.payload_required
             additional_fields["payload"] = ma.fields.Nested(
-                PayloadBaseSchema.from_dict(
-                    dict(
-                        **cls.payload_schema, format=_format
-                    )
-                ),
+                PayloadBaseSchema.from_dict(payload_schema),
                 required=payload_required
             )
 
@@ -115,12 +115,20 @@ class LogEventType(EventType):
 
     type_id = "L"
 
-    payload_schema = dict(
-        event=fields.String(),
-        content=utils_fields.SanitizedHTML(
-            validate=validate.Length(min=1)
+    def payload_schema():
+        """Return payload schema as a dictionary."""
+        # we need to import here because of circular imports
+        from invenio_requests.records.api import RequestEventFormat
+        return dict(
+            event=fields.String(validate=validate.Length(min=1)),
+            content=utils_fields.SanitizedHTML(
+                validate=validate.Length(min=1)
+            ),
+            format=fields.Str(
+                validate=validate.OneOf(choices=[e.value for e in RequestEventFormat]),
+                load_default=RequestEventFormat.HTML.value,
+            )
         )
-    )
 
 
 class CommentEventType(EventType):
@@ -128,10 +136,18 @@ class CommentEventType(EventType):
 
     type_id = "C"
 
-    payload_schema = dict(
-        content=utils_fields.SanitizedHTML(
-            required=True, validate=validate.Length(min=1)
+    def payload_schema():
+        """Return payload schema as a dictionary."""
+        # we need to import here because of circular imports
+        from invenio_requests.records.api import RequestEventFormat
+        return dict(
+            content=utils_fields.SanitizedHTML(
+                required=True, validate=validate.Length(min=1)
+            ),
+            format=fields.Str(
+                validate=validate.OneOf(choices=[e.value for e in RequestEventFormat]),
+                load_default=RequestEventFormat.HTML.value,
+            )
         )
-    )
 
     payload_required = True

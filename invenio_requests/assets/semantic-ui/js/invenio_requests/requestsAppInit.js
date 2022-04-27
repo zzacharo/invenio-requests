@@ -12,6 +12,7 @@ import {
   TimelineCancelEvent,
   TimelineDeclineEvent,
   TimelineExpireEvent,
+  TimelineUnknownEvent,
 } from "./timelineEvents";
 import {
   IconSubmitStatus,
@@ -29,10 +30,11 @@ const defaultQueryParams = JSON.parse(
 );
 
 const overriddenComponents = {
-  "TimelineEvent.layout.D": TimelineDeclineEvent,
-  "TimelineEvent.layout.A": TimelineAcceptEvent,
-  "TimelineEvent.layout.E": TimelineExpireEvent,
-  "TimelineEvent.layout.X": TimelineCancelEvent,
+  "TimelineEvent.layout.unknown": TimelineUnknownEvent,
+  "TimelineEvent.layout.declined": TimelineDeclineEvent,
+  "TimelineEvent.layout.accepted": TimelineAcceptEvent,
+  "TimelineEvent.layout.expired": TimelineExpireEvent,
+  "TimelineEvent.layout.cancelled": TimelineCancelEvent,
   "RequestStatusIcon.layout.submitted": IconSubmitStatus,
   "RequestStatusIcon.layout.deleted": IconDeleteStatus,
   "RequestStatusIcon.layout.accepted": IconAcceptStatus,

@@ -12,6 +12,7 @@
 
 from invenio_records_resources.services import RecordService, ServiceSchemaWrapper
 from invenio_records_resources.services.uow import (
+    IndexRefreshOp,
     RecordCommitOp,
     RecordDeleteOp,
     unit_of_work,
@@ -224,6 +225,9 @@ class RequestsService(RecordService):
             )
             current_events_service.create(identity, request.id, _data, CommentEventType,
                                           uow=uow)
+
+        # make events immediatelly available in search
+        uow.register(IndexRefreshOp(index=current_events_service.record_cls.index))
 
         return self.result_item(
             self,
