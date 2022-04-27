@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 
 export const TimelineEventBody = ({ content, format }) => {
   return format === "html" ? (
-    <div dangerouslySetInnerHTML={{ __html: content }} />
+    <span dangerouslySetInnerHTML={{ __html: content }} />
   ) : (
     content
   );

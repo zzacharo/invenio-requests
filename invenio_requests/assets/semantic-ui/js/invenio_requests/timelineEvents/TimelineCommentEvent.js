@@ -13,11 +13,8 @@ import Overridable from "react-overridable";
 import { SaveButton, CancelButton } from "../components/Buttons";
 import { TimelineEventBody } from "../components/TimelineEventBody";
 import { i18next } from "@translations/invenio_requests/i18next";
-import { DateTime } from "luxon";
 import RequestsFeed from "../components/RequestsFeed";
-
-const timestampToRelativeTime = (timestamp) =>
-  DateTime.fromISO(timestamp).setLocale(i18next.language).toRelative();
+import { timestampToRelativeTime } from "../timelineEvents/utils";
 
 class TimelineCommentEvent extends Component {
   constructor(props) {
@@ -29,6 +26,17 @@ class TimelineCommentEvent extends Component {
       commentContent: event?.payload?.content,
     };
   }
+
+  eventToType = ({ type, payload }) => {
+    switch (type) {
+      case "L":
+        return payload?.event || "unknown";
+      case "C":
+        return "comment";
+      default:
+        return "unknown";
+    }
+  };
 
   render() {
     const {
@@ -50,7 +58,10 @@ class TimelineCommentEvent extends Component {
     const canUpdate = event?.permissions?.can_update_comment;
 
     return (
-      <Overridable id={`TimelineEvent.layout.${event?.type}`} event={event}>
+      <Overridable
+        id={`TimelineEvent.layout.${this.eventToType(event)}`}
+        event={event}
+      >
         <RequestsFeed.Item>
           <RequestsFeed.Content>
             <RequestsFeed.Avatar
@@ -88,7 +99,6 @@ class TimelineCommentEvent extends Component {
                   </Feed.Date>
                 </Feed.Summary>
 
-
                 <Feed.Extra text={!isEditing}>
                   {error && <Error error={error} />}
 
@@ -117,10 +127,13 @@ class TimelineCommentEvent extends Component {
                     </Container>
                   )}
                 </Feed.Extra>
-                {commentHasBeenEdited || commentHasBeenDeleted && <Feed.Meta>
-                  {commentHasBeenEdited && i18next.t('Edited')}
-                  {commentHasBeenDeleted && i18next.t('Deleted')}
-                </Feed.Meta>}
+                {commentHasBeenEdited ||
+                  (commentHasBeenDeleted && (
+                    <Feed.Meta>
+                      {commentHasBeenEdited && i18next.t("Edited")}
+                      {commentHasBeenDeleted && i18next.t("Deleted")}
+                    </Feed.Meta>
+                  ))}
               </Feed.Content>
             </RequestsFeed.Event>
           </RequestsFeed.Content>

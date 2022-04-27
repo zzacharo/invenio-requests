@@ -20,7 +20,7 @@ class EventTypeField(ModelField):
 
     @staticmethod
     def get_instance(value):
-        """."""
+        """Ensure that always an instance is returned."""
         if inspect.isclass(value):
             # if a class was passed rather than an instance, try to instantiate it
             value = value()
@@ -80,10 +80,11 @@ class EventTypeField(ModelField):
         """Ensure type is always in the registry."""
         _type = kwargs.get("type")
         if _type is None:
-            # validate type from instantiated model
+            # retrieve type from instantiated model
             _type = model.type
         value = EventTypeField.get_instance(_type).type_id
         try:
+            # validate type
             current_event_type_registry.lookup(value)
         except KeyError:
             raise TypeError(f"Event type {value} is not registered.")

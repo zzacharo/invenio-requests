@@ -11,10 +11,11 @@ import { Image } from "react-invenio-forms";
 import PropTypes from "prop-types";
 import Overridable from "react-overridable";
 import RequestsFeed from "./RequestsFeed";
+import { timestampToRelativeTime } from "../timelineEvents/utils";
 
 class TimelineActionEvent extends Component {
   render() {
-    const { event, iconName, iconColor, userAction } = this.props;
+    const { event, iconName, iconColor, userAction, eventContent } = this.props;
 
     return (
       <Overridable
@@ -26,28 +27,30 @@ class TimelineActionEvent extends Component {
       >
         <RequestsFeed.Item>
           <RequestsFeed.Content isEvent={true}>
-            <RequestsFeed.Icon name={iconName} size="large" color={iconColor}/>
+            <RequestsFeed.Icon name={iconName} size="large" color={iconColor} />
             <RequestsFeed.Event isActionEvent={true}>
               <Feed.Label>
                 {userAction && (
                   <Image
                     src="/static/images/square-placeholder.png"
                     as={Image}
-                    rounded
                     avatar
                   />
                 )}
               </Feed.Label>
               <Feed.Content>
-                <div className="flex">
+                <Feed.Summary>
                   {userAction && (
-                    <b className="mr-5">{event.created_by.name}</b>
-                  )}
+                    <Feed.User as="a">{event.created_by?.user}</Feed.User>
+                  )}{" "}
                   <TimelineEventBody
-                    content={event?.payload?.content}
+                    content={eventContent}
                     format={event?.payload?.format}
                   />
-                </div>
+                  <Feed.Date>
+                    {timestampToRelativeTime(event.created)}
+                  </Feed.Date>
+                </Feed.Summary>
               </Feed.Content>
             </RequestsFeed.Event>
           </RequestsFeed.Content>
@@ -60,6 +63,7 @@ class TimelineActionEvent extends Component {
 TimelineActionEvent.propTypes = {
   event: PropTypes.object.isRequired,
   iconName: PropTypes.string.isRequired,
+  eventContent: PropTypes.string.isRequired,
   iconColor: PropTypes.string,
   userAction: PropTypes.bool,
 };

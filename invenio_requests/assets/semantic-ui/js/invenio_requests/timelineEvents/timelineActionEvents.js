@@ -6,28 +6,51 @@
 
 import React from "react";
 import TimelineActionEvent from "../components/TimelineActionEvent";
+import { i18next } from "@translations/invenio_requests/i18next";
 
 export const TimelineAcceptEvent = ({ event }) => (
   <TimelineActionEvent
     iconName="check circle"
-    iconColor={"green"}
+    iconColor="green"
     event={event}
+    eventContent={i18next.t("accepted this request")}
   />
 );
 
 export const TimelineDeclineEvent = ({ event }) => (
-  <TimelineActionEvent iconName="close" event={event} iconColor="red" />
+  <TimelineActionEvent
+    iconName="close"
+    event={event}
+    eventContent={i18next.t("declined this request")}
+    iconColor="red"
+  />
 );
 
 export const TimelineExpireEvent = ({ event }) => (
   <TimelineActionEvent
     iconName="calendar times"
     event={event}
+    eventContent={i18next.t("this request expired")}
     userAction={false}
     iconColor="red"
   />
 );
 
 export const TimelineCancelEvent = ({ event }) => (
-  <TimelineActionEvent iconName="close" event={event} iconColor="red" />
+  <TimelineActionEvent
+    iconName="close"
+    event={event}
+    eventContent={i18next.t("cancelled this request")}
+    iconColor="red"
+  />
+);
+
+export const TimelineUnknownEvent = ({ event }) => (
+  <TimelineActionEvent
+    iconName="close"
+    iconColor="red"
+    event={event}
+    eventContent={i18next.t("unknown event")}
+    userAction={false}
+  />
 );

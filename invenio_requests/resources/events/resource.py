@@ -24,8 +24,6 @@ from invenio_records_resources.resources import RecordResource
 from invenio_records_resources.resources.records.resource import request_headers
 from invenio_records_resources.resources.records.utils import es_preference
 
-from invenio_requests.records.systemfields import event_type
-
 from ...customizations.event_types import CommentEventType
 
 
