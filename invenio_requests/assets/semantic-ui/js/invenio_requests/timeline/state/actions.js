@@ -23,7 +23,7 @@ class intervalManager {
 export const fetchTimeline = (loadingState = true) => {
   return async (dispatch, getState, config) => {
     const state = getState();
-    const { size, page } = state.timeline;
+    const { size, page, data: timelineData } = state.timeline;
 
     if (loadingState) {
       dispatch({
@@ -41,18 +41,25 @@ export const fetchTimeline = (loadingState = true) => {
         sort: "oldest",
       });
 
-      // Check if a LogEvent was added and fetch request
-      const actionEventFound = response.data.hits.hits.some(
-        (event) =>
-          event.type === "L" &&
-          config.requestsApi.availableRequestStatuses.includes(
-            event?.payload?.event
-          )
-      );
-      if (actionEventFound) {
-        const response = await config.requestsApi.getRequest();
-        dispatch(updateRequest(response.data));
+      // Check if timeline has more events than the current state
+      const hasMoreEvents =
+        response.data?.hits?.total > timelineData?.hits?.total;
+      if (hasMoreEvents) {
+        // Check if a LogEvent was added and fetch request
+        const actionEventFound = response.data.hits.hits.some(
+          (event) =>
+            event.type === "L" &&
+            config.requestsApi.availableRequestStatuses.includes(
+              event?.payload?.event
+            )
+        );
+
+        if (actionEventFound) {
+          const response = await config.requestsApi.getRequest();
+          dispatch(updateRequest(response.data));
+        }
       }
+
       dispatch({
         type: SUCCESS,
         payload: response.data,
