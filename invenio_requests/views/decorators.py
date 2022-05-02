@@ -26,7 +26,7 @@ def pass_request(f):
     @wraps(f)
     def view(**kwargs):
         """Decorated view."""
-        pid_value = kwargs['pid_value']
+        pid_value = kwargs['request_pid_value']
         request = service().read(
             id_=pid_value, identity=g.identity
         )
