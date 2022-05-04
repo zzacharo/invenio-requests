@@ -30,7 +30,7 @@ export class RequestActionModal extends Component {
 
   render() {
     const { action, handleActionClick, modalId, children } = this.props;
-    const { modalOpen, loading, toggleModal, error } = this.context;
+    const { modalOpen, loading, toggleModal, error, cleanError } = this.context;
 
     const currentModalOpen = modalOpen[modalId];
 
@@ -56,7 +56,10 @@ export class RequestActionModal extends Component {
             </Modal.Content>
             <Modal.Actions>
               <Button
-                onClick={() => toggleModal(modalId, false)}
+                onClick={() => {
+                  cleanError();
+                  toggleModal(modalId, false);
+                }}
                 loading={loading}
               >
                 {i18next.t("Cancel")}

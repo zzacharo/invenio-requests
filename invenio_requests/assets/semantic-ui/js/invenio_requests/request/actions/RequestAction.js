@@ -9,7 +9,7 @@ import FormattedInputEditor from "../../components/FormattedInputEditor";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Overridable from "react-overridable";
-import { Button, Divider, Modal } from "semantic-ui-react";
+import { Button, Divider, Modal, Message } from "semantic-ui-react";
 import { RequestActionModal } from "./RequestActionModal";
 import { Trans } from "react-i18next";
 
@@ -33,7 +33,7 @@ export class RequestAction extends Component {
   };
 
   render() {
-    const { loading, performAction, toggleModal } = this.context;
+    const { loading, performAction, toggleModal, error } = this.context;
     const { action } = this.props;
     const modalId = action;
     return (
@@ -53,6 +53,12 @@ export class RequestAction extends Component {
             modalId={modalId}
           >
             <Modal.Content>
+              {error && (
+                <Message negative>
+                  <p>{error}</p>
+                </Message>
+              )}
+
               <Modal.Description>
                 <Trans
                   defaults="Comment on your {{action}} request action (optional)."

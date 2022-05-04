@@ -44,6 +44,10 @@ export class RequestActionController extends Component {
     }
   };
 
+  cleanError = () => {
+    this.setState({ error: undefined });
+  };
+
   render() {
     const { modalOpen, error, loading } = this.state;
     const { request, children } = this.props;
@@ -55,6 +59,7 @@ export class RequestActionController extends Component {
           linkExtractor: this.linkExtractor,
           requestApi: this.requestApi,
           performAction: this.performAction,
+          cleanError: this.cleanError,
           error: error,
           loading: loading,
         }}

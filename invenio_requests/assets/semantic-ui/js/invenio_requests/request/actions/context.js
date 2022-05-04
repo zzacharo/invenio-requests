@@ -6,6 +6,7 @@ export const RequestActionContext = React.createContext({
   linkExtractor: undefined,
   requestApi: undefined,
   performAction: () => {},
+  cleanError: () => {},
   error: undefined,
   loading: false,
 });
