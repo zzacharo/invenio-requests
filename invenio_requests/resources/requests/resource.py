@@ -29,15 +29,34 @@ from invenio_records_resources.resources.records.utils import es_preference
 class RequestsResource(RecordResource):
     """Resource for generic requests."""
 
+    def create_blueprint(self, **options):
+        """Create the blueprint."""
+        # We avoid passing url_prefix to the blueprint because we need to
+        # install URLs under both /records and /user/records. Instead we
+        # add the prefix manually to each route (which is anyway what Flask
+        # does in the end)
+        options["url_prefix"] = ""
+        return super().create_blueprint(**options)
+
     def create_url_rules(self):
         """Create the URL rules for the record resource."""
         routes = self.config.routes
+
+        def p(route):
+            """Prefix a route with the URL prefix."""
+            return f"{self.config.url_prefix}{route}"
+
+        def s(route):
+            """Suffix a route with the URL prefix."""
+            return f"{route}{self.config.url_prefix}"
+
         return [
-            route("GET", routes["list"], self.search),
-            route("GET", routes["item"], self.read),
-            route("PUT", routes["item"], self.update),
-            route("DELETE", routes["item"], self.delete),
-            route("POST", routes["action"], self.execute_action),
+            route("GET", p(routes["list"]), self.search),
+            route("GET", p(routes["item"]), self.read),
+            route("PUT", p(routes["item"]), self.update),
+            route("DELETE", p(routes["item"]), self.delete),
+            route("POST", p(routes["action"]), self.execute_action),
+            route("GET", s(routes["user-prefix"]), self.search_user_requests),
         ]
 
     @request_extra_args
@@ -51,6 +70,23 @@ class RequestsResource(RecordResource):
             params=resource_requestctx.args,
             es_preference=es_preference(),
             expand=resource_requestctx.args["expand"],
+        )
+        return hits.to_dict(), 200
+
+    @request_extra_args
+    @request_search_args
+    @request_view_args
+    @response_handler(many=True)
+    def search_user_requests(self):
+        """Perform a search over user requets.
+
+        /GET /user/requests
+        """
+        hits = self.service.search_user_requests(
+            identity=g.identity,
+            params=resource_requestctx.args,
+            es_preference=es_preference(),
+            expand=resource_requestctx.args.get("expand", False),
         )
         return hits.to_dict(), 200
 
