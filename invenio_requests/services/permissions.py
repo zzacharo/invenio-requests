@@ -29,6 +29,8 @@ class PermissionPolicy(RecordPermissionPolicy):
     # Just about ability to perform a search (not what requests you can access)
     can_search = [AuthenticatedUser(), SystemProcess()]
 
+    can_search_user_requests = can_search
+
     # Read/update/delete action deals with requests in **multiple states**, and
     # thus must take the request status into account.
     can_read = [

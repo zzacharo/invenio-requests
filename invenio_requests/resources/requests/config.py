@@ -42,6 +42,7 @@ class RequestsResourceConfig(RecordResourceConfig):
     url_prefix = "/requests"
     routes = {
         "list": "/",
+        "user-prefix": "/user",
         "item": "/<id>",
         "action": "/<id>/actions/<action>",
     }

@@ -10,7 +10,7 @@
 """Service tests."""
 
 from invenio_requests.customizations.event_types import CommentEventType
-from invenio_requests.records.api import RequestEvent, RequestEventFormat
+from invenio_requests.records.api import Request, RequestEvent, RequestEventFormat
 
 
 def test_submit_request(app, identity_simple, submit_request, request_events_service):
@@ -112,7 +112,12 @@ def test_decline_request(
     assert 3 == results.total  # submit comment + decline event + comment
 
 
-def test_update_request(app, identity_simple, submit_request, requests_service):
+def test_update_request(
+    app,
+    identity_simple,
+    submit_request,
+    requests_service
+):
     request = submit_request(identity_simple)
     request_id = request.id
 
@@ -127,3 +132,30 @@ def test_update_request(app, identity_simple, submit_request, requests_service):
 
     request_dict = request.to_dict()
     assert "Zim boum ba" == request_dict["title"]
+
+
+def test_search_user_requests(
+    app,
+    identity_simple,
+    identity_simple_2,
+    users,
+    submit_request,
+    requests_service
+):
+    request = submit_request(identity_simple, receiver=users[2])
+    request_id = request.id
+    Request.index.refresh()
+
+    # creator can see the requests
+    hits = requests_service.search_user_requests(
+        identity_simple,
+    ).to_dict()["hits"]["hits"]
+
+    assert str(request_id) in [h["id"] for h in hits]
+
+    # others cannot see the request
+    hits = requests_service.search_user_requests(
+        identity=identity_simple_2
+    ).to_dict()["hits"]["hits"]
+
+    assert str(request_id) not in [h["id"] for h in hits]

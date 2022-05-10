@@ -78,6 +78,7 @@ class RequestsServiceConfig(RecordServiceConfig, ConfiguratorMixin):
         "timeline": RequestLink("{+api}/requests/{id}/timeline"),
     }
     links_search = pagination_links("{+api}/requests{?args*}")
+    links_user_requests_search = pagination_links("{+api}/user/requests{?args*}")
     action_link = RequestLink(
         "{+api}/requests/{id}/actions/{action}", when=_is_action_available
     )

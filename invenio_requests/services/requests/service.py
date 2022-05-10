@@ -10,7 +10,9 @@
 
 """Requests service."""
 
+from elasticsearch_dsl.query import Bool, Q
 from invenio_records_resources.services import RecordService, ServiceSchemaWrapper
+from invenio_records_resources.services.base import LinksTemplate
 from invenio_records_resources.services.uow import (
     IndexRefreshOp,
     RecordCommitOp,
@@ -252,6 +254,42 @@ class RequestsService(RecordService):
             request,
             schema=self._wrap_schema(request.type.marshmallow_schema()),
             links_tpl=self.links_item_tpl,
+            expandable_fields=self.expandable_fields,
+            expand=expand,
+        )
+
+    def search_user_requests(
+            self, identity, params=None, es_preference=None, expand=False, **kwargs):
+        """Search for requests matching the querystring and belong to user.
+
+        The user is able to search the requests that were created by them
+        or they are the receiver.
+        """
+        self.require_permission(identity, 'search_user_requests')
+
+        # Prepare and execute the search
+        params = params or {}
+        search_result = self._search(
+            'search',
+            identity,
+            params,
+            es_preference,
+            permission_action=None,
+            extra_filter=Bool("should", should=[
+                Q("term", **{"created_by.user": identity.id}),
+                Q("term", **{"receiver.user": identity.id}),
+            ]),
+            **kwargs
+        ).execute()
+
+        return self.result_list(
+            self,
+            identity,
+            search_result,
+            params,
+            links_tpl=LinksTemplate(
+                self.config.links_user_requests_search, context={"args": params}),
+            links_item_tpl=self.links_item_tpl,
             expandable_fields=self.expandable_fields,
             expand=expand,
         )
