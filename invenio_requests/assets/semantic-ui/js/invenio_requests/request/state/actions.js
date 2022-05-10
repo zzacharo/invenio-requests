@@ -29,7 +29,7 @@ export const updateRequest = (request) => {
 export const updateRequestAfterAction = (request) => {
   return async (dispatch, getState, config) => {
     dispatch(updateRequest(request));
-    dispatch(fetchTimeline());
+    window.location.reload();
   };
 };
 
