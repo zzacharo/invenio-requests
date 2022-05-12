@@ -16,7 +16,7 @@ import RequestStatusIcon from "./RequestStatusIcon";
 const User = ({ user }) => (
   <>
     <Image src={user.links.avatar} avatar rounded />
-    <span>{user.profile.full_name}</span>
+    <span>{user.profile?.full_name || user.username}</span>
   </>
 );
 const Community = ({ community }) => (

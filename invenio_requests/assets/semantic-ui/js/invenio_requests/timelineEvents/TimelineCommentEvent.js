@@ -63,7 +63,7 @@ class TimelineCommentEvent extends Component {
     const expandedCreatedBy = event.expanded?.created_by;
 
     let userAvatar,
-      user = null;
+      userName = null;
     if (isUser) {
       userAvatar = (
         <RequestsFeed.Avatar
@@ -72,7 +72,8 @@ class TimelineCommentEvent extends Component {
           circular
         />
       );
-      user = expandedCreatedBy.profile.full_name;
+      userName =
+        expandedCreatedBy.profile?.full_name || expandedCreatedBy.username;
     }
 
     return (
@@ -106,7 +107,7 @@ class TimelineCommentEvent extends Component {
                   </Dropdown>
                 )}
                 <Feed.Summary>
-                  {user} {i18next.t("commented")}
+                  {userName} {i18next.t("commented")}
                   <Feed.Date>
                     {timestampToRelativeTime(event.created)}
                   </Feed.Date>
