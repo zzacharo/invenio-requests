@@ -63,6 +63,7 @@ export class RequestAction extends Component {
             action={action}
             handleActionClick={this.handleActionClick}
             modalId={modalId}
+            requestType={requestType}
           >
             <Modal.Content>
               {error && (
