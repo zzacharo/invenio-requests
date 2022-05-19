@@ -26,6 +26,23 @@ function setMinHeight(minHeight) {
   ClassicEditor.builtinPlugins.push(MinHeightPlugin);
 }
 
+const defaultConfig = {
+  toolbar: [
+    "heading",
+    "|",
+    "bold",
+    "italic",
+    "link",
+    "bulletedList",
+    "numberedList",
+    "Indent",
+    "Outdent",
+    "blockQuote",
+    "Undo",
+    "Redo",
+  ],
+};
+
 class FormattedInputEditor extends Component {
   constructor(props) {
     super(props);
@@ -81,7 +98,7 @@ FormattedInputEditor.defaultProps = {
   editor: ClassicEditor,
   minHeight: undefined,
   data: "",
-  config: undefined,
+  config: defaultConfig,
   id: undefined,
   disabled: undefined,
   onReady: undefined,
