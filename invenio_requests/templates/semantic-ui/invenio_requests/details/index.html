@@ -18,29 +18,29 @@
 {% block page_body %}
   {{ super() }}
   {%- block request_body %}
-  <div class="ui container request-detail-page">
+    <div class="ui container request-detail-page">
 
-    {%- block request_header %}
-    <div class="ui stackable grid">
+      {%- block request_header %}
+        <div class="ui stackable grid">
 
-      <div class="sixteen wide mobile ten wide tablet eight wide computer column">
-        <h2 class="ui header">
-          {% block request_header_title %}
-          {{ request.title }}
-          {% endblock request_header_title %}
-        </h2>
-      </div>
+          <div class="sixteen wide mobile ten wide tablet eight wide computer column">
+            <h2 class="ui header">
+              {% block request_header_title %}
+                {{ request.title }}
+              {% endblock request_header_title %}
+            </h2>
+          </div>
 
-      <div class="sixteen wide mobile six wide tablet eight wide computer column right floated right aligned">
-        {% block request_actions %}
-          <div id="request-actions" class="rel-mb-1"></div>
-        {% endblock request_actions %}
-      </div>
-    </div>
+          <div class="sixteen wide mobile six wide tablet eight wide computer column right floated right aligned">
+            {% block request_actions %}
+              <div id="request-actions" class="rel-mb-1"></div>
+            {% endblock request_actions %}
+          </div>
+        </div>
 
-    <div class="ui divider"></div>
+        <div class="ui divider"></div>
 
-    {%- endblock request_header %}
+      {%- endblock request_header %}
 
     {%- block request_timeline %}
     <div id="request-detail"
@@ -50,7 +50,7 @@
     >{# react app root #}</div>
     {%- endblock request_timeline %}
 
-  </div>
+    </div>
   {% endblock request_body %}
 {% endblock page_body %}
 
@@ -60,7 +60,7 @@
 {% endblock %}
 
 {% block javascript %}
-    {{ super() }}
-    {% include config.THEME_JAVASCRIPT_TEMPLATE %}
+  {{ super() }}
+  {% include config.THEME_JAVASCRIPT_TEMPLATE %}
   {{ webpack['invenio-requests-base.js'] }}
 {% endblock %}

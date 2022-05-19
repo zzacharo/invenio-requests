@@ -74,7 +74,7 @@ class RequestMetadata extends Component {
       <Overridable id="InvenioRequest.RequestMetadata.Layout" request={request}>
         <>
           <Header as="h3" size="tiny">
-            {i18next.t("Requestor")}
+            {i18next.t("Creator")}
           </Header>
           <UserOrCommunity
             userData={request.created_by}
