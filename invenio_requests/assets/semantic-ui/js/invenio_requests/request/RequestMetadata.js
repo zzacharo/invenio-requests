@@ -102,7 +102,7 @@ class RequestMetadata extends Component {
           </Header>
           <RequestStatusIcon status={request.status} />
           <Overridable id={`RequestStatus.${request.status}`}>
-            <span>{request.status}</span>
+            <>{request.status}</>
           </Overridable>
           <Divider />
 

@@ -29,7 +29,8 @@ export class RequestActionModal extends Component {
   };
 
   render() {
-    const { action, handleActionClick, modalId, children } = this.props;
+    const { action, handleActionClick, modalId, children, requestType } =
+      this.props;
     const { modalOpen, loading, toggleModal, error, cleanError } = this.context;
 
     const currentModalOpen = modalOpen[modalId];
@@ -67,9 +68,19 @@ export class RequestActionModal extends Component {
               >
                 {i18next.t("Cancel")}
               </Button>
-              <Button onClick={handleActionClick} loading={loading}>
-                <Trans defaults="{{action}}" values={{ action: action }} />
-              </Button>
+              <Overridable
+                id={`RequestActionModal.button.${action}`}
+                onClick={handleActionClick}
+                loading={loading}
+              >
+                <Button
+                  onClick={handleActionClick}
+                  loading={loading}
+                  requestType={requestType}
+                >
+                  <>{action}</>
+                </Button>
+              </Overridable>
             </Modal.Actions>
           </Modal>
         )}
@@ -81,6 +92,7 @@ export class RequestActionModal extends Component {
 RequestActionModal.propTypes = {
   handleActionClick: PropTypes.func.isRequired,
   modalId: PropTypes.string.isRequired,
+  requestType: PropTypes.string.isRequired,
 };
 
 RequestActionModal.defaultProps = {

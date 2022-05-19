@@ -22,15 +22,25 @@ export const CancelButton = (props) => (
   <Button icon="cancel" content={i18next.t("Cancel")} size="mini" {...props} />
 );
 
-export const RequestCancelButton = ({ onClick }) => (
-  <Button icon="cancel" content={i18next.t("Cancel")} onClick={onClick} />
+export const RequestCancelButton = ({ onClick, loading }) => (
+  <Button
+    icon="cancel"
+    content={i18next.t("Cancel")}
+    onClick={onClick}
+    loading={loading}
+  />
 );
 
-export const RequestDeclineButton = ({ onClick }) => (
-  <Button icon="cancel" content={i18next.t("Decline")} onClick={onClick} />
+export const RequestDeclineButton = ({ onClick, loading }) => (
+  <Button
+    icon="cancel"
+    content={i18next.t("Decline")}
+    onClick={onClick}
+    loading={loading}
+  />
 );
 
-export const RequestAcceptButton = ({ onClick, requestType }) => {
+export const RequestAcceptButton = ({ onClick, requestType, loading }) => {
   const requestIsCommunitySubmission = requestType === "community-submission";
   const buttonText = requestIsCommunitySubmission
     ? i18next.t("Accept and publish")
@@ -41,6 +51,16 @@ export const RequestAcceptButton = ({ onClick, requestType }) => {
       content={buttonText}
       onClick={onClick}
       color="green"
+      loading={loading}
     />
   );
 };
+
+export const RequestModalCancelButton = ({ onClick, loading }) => (
+  <Button
+    icon="cancel"
+    content={i18next.t("Cancel request")}
+    onClick={onClick}
+    loading={loading}
+  />
+);
