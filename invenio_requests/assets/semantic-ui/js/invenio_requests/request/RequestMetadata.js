@@ -15,7 +15,7 @@ import RequestStatusIcon from "./RequestStatusIcon";
 import RequestTypeLabel from "./RequestTypeLabel";
 
 const User = ({ user }) => (
-  <div class="flex">
+  <div className="flex">
     <Image
       src={user.links.avatar}
       avatar
@@ -28,7 +28,7 @@ const User = ({ user }) => (
   </div>
 );
 const Community = ({ community }) => (
-  <div class="flex">
+  <div className="flex">
     <Image
       src={community.links.logo}
       avatar
@@ -46,10 +46,8 @@ const UserOrCommunity = ({ userData, details }) => {
 
   if (isUser) {
     return <User user={details} />;
-
   } else if (isCommunity) {
     return <Community community={details} />;
-
   } else {
     // default unknown created_by
     return (
@@ -69,31 +67,48 @@ const UserOrCommunity = ({ userData, details }) => {
 };
 
 class RequestMetadata extends Component {
-
   render() {
     const { request } = this.props;
 
     return (
       <Overridable id="InvenioRequest.RequestMetadata.Layout" request={request}>
         <>
-          <Header as="h3" size="tiny">{i18next.t("Requestor")}</Header>
-          <UserOrCommunity userData={request.created_by} details={request.expanded?.created_by}/>
+          <Header as="h3" size="tiny">
+            {i18next.t("Requestor")}
+          </Header>
+          <UserOrCommunity
+            userData={request.created_by}
+            details={request.expanded?.created_by}
+          />
           <Divider />
 
-          <Header as="h3" size="tiny">{i18next.t("Receiver")}</Header>
-          <UserOrCommunity userData={request.receiver} details={request.expanded?.receiver}/>
+          <Header as="h3" size="tiny">
+            {i18next.t("Receiver")}
+          </Header>
+          <UserOrCommunity
+            userData={request.receiver}
+            details={request.expanded?.receiver}
+          />
           <Divider />
 
-          <Header as="h3" size="tiny">{i18next.t("Request type")}</Header>
-          <RequestTypeLabel type={request.type}/>
+          <Header as="h3" size="tiny">
+            {i18next.t("Request type")}
+          </Header>
+          <RequestTypeLabel type={request.type} />
           <Divider />
 
-          <Header as="h3" size="tiny">{i18next.t("Status")}</Header>
+          <Header as="h3" size="tiny">
+            {i18next.t("Status")}
+          </Header>
           <RequestStatusIcon status={request.status} />
-          {request.status}
-          <Divider/>
+          <Overridable id={`RequestStatus.${request.status}`}>
+            <span>{request.status}</span>
+          </Overridable>
+          <Divider />
 
-          <Header as="h3" size="tiny">{i18next.t("Created")}</Header>
+          <Header as="h3" size="tiny">
+            {i18next.t("Created")}
+          </Header>
           {timestampToRelativeTime(request.created)}
 
           {request.expires_at && (

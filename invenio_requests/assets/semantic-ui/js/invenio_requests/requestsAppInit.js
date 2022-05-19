@@ -22,10 +22,13 @@ import {
   IconCancelStatus,
   IconExpireStatus,
 } from "./request";
+import { LabelTypeSubmission, LabelTypeInvitation } from "./request";
 import {
-  LabelTypeSubmission,
-  LabelTypeInvitation,
-} from "./request"
+  RequestAcceptButton,
+  RequestCancelButton,
+  RequestDeclineButton,
+} from "./components/Buttons";
+import {i18next} from "@translations/invenio_requests/i18next";
 
 const requestDetailsDiv = document.getElementById("request-detail");
 const request = JSON.parse(requestDetailsDiv.dataset.record);
@@ -47,6 +50,17 @@ const overriddenComponents = {
   "RequestStatusIcon.layout.expired": IconExpireStatus,
   "RequestTypeLabel.layout.community-submission": LabelTypeSubmission,
   "RequestTypeLabel.layout.community-invitation": LabelTypeInvitation,
+  "RequestAction.button.cancel": RequestCancelButton,
+  "RequestAction.button.accept": RequestAcceptButton,
+  "RequestAction.button.decline": RequestDeclineButton,
+  "RequestActionModal.title.cancel": () =>  i18next.t("Cancel request"),
+  "RequestActionModal.title.accept": () => i18next.t("Accept request"),
+  "RequestActionModal.title.decline": () => i18next.t("Decline request"),
+  "RequestStatus.submitted": () => i18next.t("Submitted") ,
+  "RequestStatus.accepted": () => i18next.t("Accepted"),
+  "RequestStatus.cancelled": () => i18next.t("Cancelled"),
+  "RequestStatus.declined": () => i18next.t("Declined"),
+  "RequestStatus.expired": () => i18next.t("Expired")
 };
 
 ReactDOM.render(

@@ -12,6 +12,7 @@ import Overridable from "react-overridable";
 import { Button, Divider, Modal, Message } from "semantic-ui-react";
 import { RequestActionModal } from "./RequestActionModal";
 import { Trans } from "react-i18next";
+import { i18next } from "@translations/invenio_requests/i18next";
 
 export class RequestAction extends Component {
   static contextType = RequestActionContext;
@@ -34,7 +35,7 @@ export class RequestAction extends Component {
 
   render() {
     const { loading, performAction, toggleModal, error } = this.context;
-    const { action } = this.props;
+    const { action, requestType } = this.props;
     const modalId = action;
     return (
       <Overridable
@@ -44,9 +45,20 @@ export class RequestAction extends Component {
         performAction={performAction}
       >
         <>
-          <Button onClick={() => toggleModal(modalId, true)} loading={loading}>
-            <Trans defaults="{{action}}" values={{ action: action }} />
-          </Button>
+          <Overridable
+            id={`RequestAction.button.${action}`}
+            onClick={() => toggleModal(modalId, true)}
+            loading={loading}
+            action={action}
+            requestType={requestType}
+          >
+            <Button
+              onClick={() => toggleModal(modalId, true)}
+              loading={loading}
+            >
+              {action}
+            </Button>
+          </Overridable>
           <RequestActionModal
             action={action}
             handleActionClick={this.handleActionClick}
@@ -77,6 +89,7 @@ export class RequestAction extends Component {
 
 RequestAction.propTypes = {
   action: PropTypes.string.isRequired,
+  requestType: PropTypes.string.isRequired,
 };
 
 export default Overridable.component(

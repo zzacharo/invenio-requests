@@ -43,10 +43,12 @@ export class RequestActionModal extends Component {
         {currentModalOpen && (
           <Modal open={currentModalOpen}>
             <Modal.Header>
-              <Trans
-                defaults="{{action}} request"
-                values={{ action: action }}
-              />
+              <Overridable id={`RequestActionModal.title.${action}`}>
+                <Trans
+                  defaults="{{action}} request"
+                  values={{ action: action }}
+                />
+              </Overridable>
             </Modal.Header>
             <Modal.Content>
               <Modal.Description>
