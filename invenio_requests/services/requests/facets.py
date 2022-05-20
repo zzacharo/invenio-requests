@@ -13,9 +13,20 @@ from invenio_records_resources.services.records.facets import TermsFacet
 type = TermsFacet(
     field='type',
     label=_('Type'),
+    value_labels={
+        "community-submission": _("New submission"),
+        "community-invitation": _("New invitation")
+    },
 )
 
 status = TermsFacet(
     field='status',
-    label=_('Status'),
+    label=_("Status"),
+    value_labels={
+        "submitted": _("Submitted"),
+        "expired": _("Expired"),
+        "accepted": _("Accepted"),
+        "declined": _("Declined"),
+        "cancelled": _("Cancelled"),
+    },
 )

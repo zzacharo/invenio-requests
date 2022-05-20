@@ -8,10 +8,10 @@ import React from "react";
 import { Label } from "semantic-ui-react";
 import { i18next } from "@translations/invenio_requests/i18next";
 
-export const LabelTypeSubmission = () => (
-  <Label>{i18next.t("New submission")}</Label>
+export const LabelTypeSubmission = (props) => (
+  <Label {...props}>{i18next.t("New submission")}</Label>
 );
 
-export const LabelTypeInvitation = () => (
-  <Label>{i18next.t("New invitation")}</Label>
+export const LabelTypeInvitation = (props) => (
+  <Label {...props}>{i18next.t("New invitation")}</Label>
 );
