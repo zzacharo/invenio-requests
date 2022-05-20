@@ -72,10 +72,7 @@ export class RequestAction extends Component {
                 </Message>
               )}
               <Modal.Description>
-                <Trans
-                  defaults="Add comment (optional)"
-                  values={{ action: action }}
-                />
+                {i18next.t("Add comment (optional)")}
                 <Divider hidden />
                 <FormattedInputEditor onChange={this.onCommentChange} />
               </Modal.Description>
