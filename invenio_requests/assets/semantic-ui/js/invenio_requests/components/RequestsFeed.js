@@ -30,7 +30,7 @@ export const RequestEventInnerContainer = ({ children, isEvent }) => (
 );
 
 export const RequestEventAvatarContainer = ({ src, ...uiProps }) => (
-  <div className="requests-avatar-container">
+  <div className="requests-avatar-container mt-10">
     <Image src={src} rounded avatar {...uiProps} />
   </div>
 );
