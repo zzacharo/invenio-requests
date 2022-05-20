@@ -71,7 +71,6 @@ export class RequestAction extends Component {
                   <p>{error}</p>
                 </Message>
               )}
-
               <Modal.Description>
                 <Trans
                   defaults="Add comment (optional)"

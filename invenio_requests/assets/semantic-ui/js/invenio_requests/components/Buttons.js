@@ -37,6 +37,7 @@ export const RequestDeclineButton = ({ onClick, loading }) => (
     content={i18next.t("Decline")}
     onClick={onClick}
     loading={loading}
+    color="red"
   />
 );
 
@@ -62,5 +63,6 @@ export const RequestModalCancelButton = ({ onClick, loading }) => (
     content={i18next.t("Cancel request")}
     onClick={onClick}
     loading={loading}
+    color="red"
   />
 );

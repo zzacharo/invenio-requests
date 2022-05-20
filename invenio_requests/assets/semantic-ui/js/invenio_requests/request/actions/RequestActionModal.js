@@ -12,6 +12,7 @@ import { Trans } from "react-i18next";
 import Overridable from "react-overridable";
 import { Button, Modal } from "semantic-ui-react";
 import Error from "../../components/Error";
+import { CancelButton } from "../../components/Buttons";
 
 export class RequestActionModal extends Component {
   static contextType = RequestActionContext;
@@ -58,16 +59,14 @@ export class RequestActionModal extends Component {
               </Modal.Description>
             </Modal.Content>
             <Modal.Actions>
-              <Button
+              <CancelButton
                 onClick={() => {
                   cleanError();
                   toggleModal(modalId, false);
                 }}
-                loading={loading}
                 floated="left"
-              >
-                {i18next.t("Cancel")}
-              </Button>
+                size="medium"
+              />
               <Overridable
                 id={`RequestActionModal.button.${action}`}
                 onClick={handleActionClick}
