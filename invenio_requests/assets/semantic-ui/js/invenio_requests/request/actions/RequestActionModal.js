@@ -5,7 +5,6 @@
 // under the terms of the MIT License; see LICENSE file for more details.
 
 import { RequestActionContext } from "@js/invenio_requests/request/actions/context";
-import { i18next } from "@translations/invenio_requests/i18next";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { Trans } from "react-i18next";
@@ -69,6 +68,8 @@ export class RequestActionModal extends Component {
                   cleanError();
                   toggleModal(modalId, false);
                 }}
+                loading={loading}
+                disabled={loading}
                 floated="left"
                 size="medium"
               />

@@ -40,6 +40,7 @@ export const RequestCancelButton = ({ onClick, loading, ariaAttributes }) => (
     content={i18next.t("Cancel")}
     onClick={onClick}
     loading={loading}
+    disabled={loading}
     {...ariaAttributes}
   />
 );
@@ -50,6 +51,7 @@ export const RequestDeclineButton = ({ onClick, loading, ariaAttributes }) => (
     content={i18next.t("Decline")}
     onClick={onClick}
     loading={loading}
+    disabled={loading}
     color="red"
     {...ariaAttributes}
   />
@@ -67,6 +69,7 @@ export const RequestAcceptButton = ({ onClick, requestType, loading, ariaAttribu
       onClick={onClick}
       color="green"
       loading={loading}
+      disabled={loading}
       {...ariaAttributes}
     />
   );
@@ -78,6 +81,7 @@ export const RequestModalCancelButton = ({ onClick, loading }) => (
     content={i18next.t("Cancel request")}
     onClick={onClick}
     loading={loading}
+    disabled={loading}
     color="red"
   />
 );

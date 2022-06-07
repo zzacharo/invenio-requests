@@ -30,7 +30,7 @@ export class RequestAction extends Component {
     const { performAction } = this.context;
     const { action } = this.props;
     const { actionComment } = this.state;
-    performAction(action, actionComment);
+    return performAction(action, actionComment);
   };
 
   render() {
