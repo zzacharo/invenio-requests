@@ -18,6 +18,11 @@ class intervalManager {
   static setIntervalId(intervalId) {
     this.intervalId = intervalId;
   }
+
+  static resetInterval() {
+    clearInterval(this.intervalId);
+    delete this.intervalId;
+  }
 }
 
 export const fetchTimeline = (loadingState = true) => {
@@ -89,22 +94,26 @@ const timelineReload = (dispatch, getState, config) => {
   const { loading, refreshing, error } = state.timeline;
   const { isLoading: isSubmitting } = state.timelineCommentEditor;
 
-  const intervalId = intervalManager.intervalId;
   if (error) {
-    // stop requesting if error
-    clearInterval(intervalId);
+    dispatch(clearTimelineInterval());
   }
 
-  // avoid concurrent requests if the previous one did not finish
-  return (
-    !loading && !refreshing && !isSubmitting && dispatch(fetchTimeline(false))
-  );
+  const concurrentRequests = loading && refreshing && isSubmitting;
+
+  if (concurrentRequests) return;
+
+  dispatch(fetchTimeline(false));
 };
 
 export const getTimelineWithRefresh = () => {
   return async (dispatch, getState, config) => {
     dispatch(fetchTimeline(true));
+    dispatch(setTimelineInterval());
+  };
+};
 
+export const setTimelineInterval = () => {
+  return async (dispatch, getState, config) => {
     const intervalAlreadySet = intervalManager.intervalId;
 
     if (!intervalAlreadySet) {
@@ -117,9 +126,8 @@ export const getTimelineWithRefresh = () => {
   };
 };
 
-export const timelineStopRefresh = () => {
+export const clearTimelineInterval = () => {
   return (dispatch, getState, config) => {
-    const intervalId = intervalManager.intervalId;
-    clearInterval(intervalId);
+    intervalManager.resetInterval();
   };
 };

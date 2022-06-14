@@ -20,12 +20,8 @@ import { Provider } from "react-redux";
 export class InvenioRequestsApp extends Component {
   constructor(props) {
     super(props);
-    const {
-      requestsApi,
-      requestEventsApi,
-      request,
-      defaultQueryParams,
-    } = this.props;
+    const { requestsApi, requestEventsApi, request, defaultQueryParams } =
+      this.props;
     const defaultRequestsApi = new InvenioRequestsAPI(
       new RequestLinksExtractor(request)
     );
@@ -50,7 +46,7 @@ export class InvenioRequestsApp extends Component {
     return (
       <OverridableContext.Provider value={overriddenCmps}>
         <Provider store={this.store}>
-          <Request userAvatar={userAvatar}/>
+          <Request userAvatar={userAvatar} />
         </Provider>
       </OverridableContext.Provider>
     );

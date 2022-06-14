@@ -4,12 +4,18 @@
 // Invenio RDM Records is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
 
-import { IS_REFRESHING, SUCCESS } from "../../timeline/state/actions";
+import {
+  clearTimelineInterval,
+  IS_REFRESHING,
+  setTimelineInterval,
+  SUCCESS,
+} from "../../timeline/state/actions";
 import { payloadSerializer } from "../../api/serializers";
 import _cloneDeep from "lodash/cloneDeep";
 
 export const updateComment = ({ content, format, event }) => {
   return async (dispatch, getState, config) => {
+    dispatch(clearTimelineInterval());
     const commentsApi = config.requestEventsApi(event.links);
 
     const payload = payloadSerializer(content, format);
@@ -23,12 +29,15 @@ export const updateComment = ({ content, format, event }) => {
       payload: _newStateWithUpdate(response.data, getState().timeline.data),
     });
 
+    dispatch(setTimelineInterval());
+
     return response.data;
   };
 };
 
 export const deleteComment = ({ event }) => {
   return async (dispatch, getState, config) => {
+    dispatch(clearTimelineInterval());
     const commentsApi = config.requestEventsApi(event.links);
 
     dispatch({ type: IS_REFRESHING });
@@ -39,6 +48,8 @@ export const deleteComment = ({ event }) => {
       type: SUCCESS,
       payload: _newStateWithDelete(event.id, getState().timeline.data),
     });
+
+    dispatch(setTimelineInterval());
 
     return response.data;
   };

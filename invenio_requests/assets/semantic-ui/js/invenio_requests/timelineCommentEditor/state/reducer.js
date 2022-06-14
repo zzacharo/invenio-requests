@@ -21,7 +21,12 @@ export const commentEditorReducer = (state = initial_state, action) => {
     case HAS_ERROR:
       return { ...state, error: action.payload, isLoading: false };
     case SUCCESS:
-      return { ...state, isLoading: false, error: null, commentContent: "" };
+      return {
+        ...state,
+        isLoading: false,
+        error: null,
+        commentContent: "",
+      };
     default:
       return state;
   }

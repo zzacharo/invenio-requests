@@ -4,8 +4,6 @@
 // Invenio RDM Records is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
 
-import { fetchTimeline } from "../../timeline/state/actions";
-
 export const REQUEST_INIT = "request/INIT";
 
 export const initRequest = () => {

@@ -5,14 +5,12 @@
 // under the terms of the MIT License; see LICENSE file for more details.
 
 import {
-  IS_LOADING,
-  SUCCESS,
-  HAS_ERROR,
-  IS_REFRESHING,
   CHANGE_PAGE,
+  HAS_ERROR,
+  IS_LOADING,
+  IS_REFRESHING,
+  SUCCESS,
 } from "./actions";
-
-
 
 export const initialState = {
   loading: false,
@@ -49,6 +47,7 @@ export const timelineReducer = (state = initialState, action) => {
         ...state,
         page: action.payload,
       };
+
     default:
       return state;
   }

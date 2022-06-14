@@ -7,6 +7,8 @@
 import { errorSerializer, payloadSerializer } from "../../api/serializers";
 import {
   CHANGE_PAGE,
+  clearTimelineInterval,
+  setTimelineInterval,
   SUCCESS as TIMELINE_SUCCESS,
 } from "../../timeline/state/actions";
 import _cloneDeep from "lodash/cloneDeep";
@@ -28,6 +30,8 @@ export const setEventContent = (content) => {
 export const submitComment = (content, format) => {
   return async (dispatch, getState, config) => {
     const { timeline: timelineState } = getState();
+
+    dispatch(clearTimelineInterval());
 
     dispatch({
       type: IS_LOADING,
@@ -60,11 +64,14 @@ export const submitComment = (content, format) => {
           shouldGoToNextPage
         ),
       });
+      dispatch(setTimelineInterval());
     } catch (error) {
       dispatch({
         type: HAS_ERROR,
         payload: errorSerializer(error),
       });
+
+      dispatch(setTimelineInterval());
 
       // throw it again, so it can be caught in the local state
       throw error;
