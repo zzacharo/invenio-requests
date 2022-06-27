@@ -52,8 +52,6 @@ class TimelineCommentEvent extends Component {
     const { commentContent } = this.state;
 
     const commentHasBeenEdited = event?.revision_id > 1 && event?.payload;
-    const commentHasBeenDeleted = !event?.payload;
-    const commentCanBeDeleted = event?.payload;
 
     const canDelete = event?.permissions?.can_delete_comment;
     const canUpdate = event?.permissions?.can_update_comment;
@@ -86,7 +84,7 @@ class TimelineCommentEvent extends Component {
             {userAvatar}
             <RequestsFeed.Event>
               <Feed.Content>
-                {commentCanBeDeleted && (canDelete || canUpdate) && (
+                {(canDelete || canUpdate) && (
                   <Dropdown
                     icon="ellipsis horizontal"
                     className="right-floated"
@@ -109,7 +107,8 @@ class TimelineCommentEvent extends Component {
                 <Feed.Summary>
                   <b>{userName}</b>
                   <Feed.Date>
-                    {i18next.t("commented")} {timestampToRelativeTime(event.created)}
+                    {i18next.t("commented")}{" "}
+                    {timestampToRelativeTime(event.created)}
                   </Feed.Date>
                 </Feed.Summary>
 
@@ -141,11 +140,8 @@ class TimelineCommentEvent extends Component {
                     </Container>
                   )}
                 </Feed.Extra>
-                {(commentHasBeenEdited || commentHasBeenDeleted) && (
-                  <Feed.Meta>
-                    {commentHasBeenEdited && i18next.t("Edited")}
-                    {commentHasBeenDeleted && i18next.t("Deleted")}
-                  </Feed.Meta>
+                {commentHasBeenEdited && (
+                  <Feed.Meta>{i18next.t("Edited")}</Feed.Meta>
                 )}
               </Feed.Content>
             </RequestsFeed.Event>

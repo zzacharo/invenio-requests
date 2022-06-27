@@ -80,6 +80,7 @@ export const submitComment = (content, format) => {
 };
 
 const _updatedState = (newComment, timelineState, shouldGoToNextPage) => {
+  // return timeline with new comment and pagination logic
   const timelineData = _cloneDeep(timelineState.data);
   const currentHits = timelineData.hits.hits;
 

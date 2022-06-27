@@ -70,9 +70,6 @@ def test_simple_flow(
     deleted_item = request_events_service.delete(identity_simple, id_)
     assert deleted_item is True
     RequestEvent.index.refresh()
-    # assert that the comment was deleted and cannot be read anymore
-    with pytest.raises(NoResultFound):
-        request_events_service.read(identity_simple, id_)
     # find the newly created deleted event
     res = request_events_service.search(identity_simple, request_id, sort="newest")
     deleted = list(res.hits)[0]
@@ -80,7 +77,6 @@ def test_simple_flow(
     assert LogEventType.type_id == deleted["type"]
     assert "comment_deleted" == deleted["payload"]["event"]
     assert "deleted a comment" == deleted["payload"]["content"]
-
     # Search (batch read) events
     # Let's create a separate request with comment and make sure search is isolated
     data = copy.deepcopy(comment)

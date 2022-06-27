@@ -12,6 +12,7 @@ import {
 } from "../../timeline/state/actions";
 import { payloadSerializer } from "../../api/serializers";
 import _cloneDeep from "lodash/cloneDeep";
+import { i18next } from "../../../../translations/invenio_requests/i18next";
 
 export const updateComment = ({ content, format, event }) => {
   return async (dispatch, getState, config) => {
@@ -46,7 +47,7 @@ export const deleteComment = ({ event }) => {
 
     dispatch({
       type: SUCCESS,
-      payload: _newStateWithDelete(event.id, getState().timeline.data),
+      payload: _newStateWithDelete(event.id, getState),
     });
 
     dispatch(setTimelineInterval());
@@ -56,10 +57,9 @@ export const deleteComment = ({ event }) => {
 };
 
 const _newStateWithUpdate = (updatedComment, currentState) => {
+  // return timeline with the updated comment
   const timelineState = _cloneDeep(currentState);
-
   const currentHits = timelineState.hits.hits;
-
   const currentCommentKey = currentHits.findIndex(
     (comment) => comment.id === updatedComment.id
   );
@@ -70,13 +70,27 @@ const _newStateWithUpdate = (updatedComment, currentState) => {
 };
 
 const _newStateWithDelete = (eventId, currentState) => {
-  const timelineState = _cloneDeep(currentState);
-
+  // return timeline with the deleted comment replaced by the deletion event
+  const timelineState = _cloneDeep(currentState().timeline.data);
   const currentHits = timelineState.hits.hits;
 
-  const currentComment = currentHits.find((comment) => comment.id === eventId);
+  const indexCommentToDelete = currentHits.findIndex(
+    (comment) => comment.id === eventId
+  );
 
-  delete currentComment.payload;
+  const currentComment = currentHits[indexCommentToDelete];
+
+  const deletionPayload = {
+    content: i18next.t("deleted a comment"),
+    event: "comment_deleted",
+    format: "html",
+  };
+
+  currentHits[indexCommentToDelete] = {
+    ...currentComment,
+    type: "L",
+    payload: deletionPayload,
+  };
 
   return timelineState;
 };

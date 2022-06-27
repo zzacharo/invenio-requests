@@ -52,3 +52,12 @@ export const TimelineUnknownEvent = ({ event }) => (
     eventContent={i18next.t("unknown event")}
   />
 );
+
+export const TimelineCommentDeletionEvent = ({ event }) => (
+  <TimelineActionEvent
+    iconName="erase"
+    iconColor="grey"
+    event={event}
+    eventContent={i18next.t("deleted a comment")}
+  />
+);

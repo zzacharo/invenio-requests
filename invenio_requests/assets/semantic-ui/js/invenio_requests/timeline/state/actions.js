@@ -85,7 +85,7 @@ export const setPage = (page) => {
       payload: page,
     });
 
-    dispatch(fetchTimeline());
+    await dispatch(fetchTimeline());
   };
 };
 
