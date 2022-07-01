@@ -144,10 +144,9 @@ class RequestEventsService(RecordService):
         if event.type != CommentEventType:
             raise PermissionError("You cannot delete this event.")
 
-        # soft delete the comment
-        uow.register(RecordDeleteOp(event, self.indexer))
-
-        # create a new event for the deleted comment
+        # update the event for the deleted comment with a LogEvent
+        event.type = LogEventType
+        schema = self._wrap_schema(event.type.marshmallow_schema())
         data = dict(
             payload=dict(
                 event="comment_deleted",
@@ -155,8 +154,13 @@ class RequestEventsService(RecordService):
                 format=RequestEventFormat.HTML.value,
             )
         )
+        data, _errors = schema.load(
+            data,
+            context=dict(identity=identity, record=event, event_type=event.type),
+        )
+        event["payload"] = data["payload"]
+        uow.register(RecordCommitOp(event, indexer=self.indexer))
 
-        self.create(identity, request_id, data, LogEventType, uow=uow)
         return True
 
     def search(self, identity, request_id, params=None, es_preference=None, **kwargs):

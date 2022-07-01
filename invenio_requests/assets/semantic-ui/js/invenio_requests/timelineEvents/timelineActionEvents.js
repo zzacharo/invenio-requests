@@ -44,6 +44,15 @@ export const TimelineCancelEvent = ({ event }) => (
   />
 );
 
+export const TimelineDeleteEvent = ({ event }) => (
+  <TimelineActionEvent
+    iconName="close"
+    iconColor="red"
+    event={event}
+    eventContent={i18next.t("deleted that comment")}
+  />
+);
+
 export const TimelineUnknownEvent = ({ event }) => (
   <TimelineActionEvent
     iconName="close"

@@ -42,7 +42,7 @@ export const deleteComment = ({ event }) => {
 
     dispatch({ type: IS_REFRESHING });
 
-    const response = await commentsApi.deleteComment();
+    await commentsApi.deleteComment();
 
     dispatch({
       type: SUCCESS,

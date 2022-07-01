@@ -109,7 +109,8 @@ class TimelineCommentEvent extends Component {
                 <Feed.Summary>
                   <b>{userName}</b>
                   <Feed.Date>
-                    {i18next.t("commented")} {timestampToRelativeTime(event.created)}
+                    {i18next.t("commented")}{" "}
+                    {timestampToRelativeTime(event.created)}
                   </Feed.Date>
                 </Feed.Summary>
 
