@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version 1.0.3 (released 2022-11-15)
+
+- add `indexer_queue_name` property in service configs
+- add the services and indexers in global registry
+
 Version 1.0.2 (released 2022-11-04)
 
 - bump invenio-records-resources version
