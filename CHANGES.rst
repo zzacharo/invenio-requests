@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version 1.0.4 (released 2022-11-25)
+
+- add i18n translations.
+- use centralized axios configuration.
+
 Version 1.0.3 (released 2022-11-15)
 
 - add `indexer_queue_name` property in service configs
