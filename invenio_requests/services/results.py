@@ -30,6 +30,6 @@ class EntityResolverExpandableField(ExpandableField):
         service = _resolver.get_service()
         return v, service
 
-    def pick(self, resolved_rec):
+    def pick(self, identity, resolved_rec):
         """Pick fields defined in the entity resolver."""
-        return self.entity_proxy.pick_resolved_fields(resolved_rec)
+        return self.entity_proxy.pick_resolved_fields(identity, resolved_rec)

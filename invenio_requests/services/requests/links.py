@@ -19,7 +19,7 @@ class RequestLinksTemplate(LinksTemplate):
         super().__init__(links, context=context)
         self._action_link = action_link
 
-    def expand(self, req, identity=None):
+    def expand(self, identity, req):
         """Expand all the link templates."""
         links = {}
 
@@ -36,9 +36,11 @@ class RequestLinksTemplate(LinksTemplate):
                 links["actions"][action] = link.expand(req, ctx)
 
         # expand the other configured links
+        ctx = self.context.copy()
+        ctx["identity"] = identity
         for key, link in self._links.items():
-            if link.should_render(req, self.context):
-                links[key] = link.expand(req, self.context)
+            if link.should_render(req, ctx):
+                links[key] = link.expand(req, ctx)
 
         return links
 

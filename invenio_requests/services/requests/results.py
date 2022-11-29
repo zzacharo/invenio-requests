@@ -55,7 +55,7 @@ class RequestItem(RecordItem):
     @property
     def links(self):
         """Get links for this result item."""
-        return self._links_tpl.expand(self._request, identity=self._identity)
+        return self._links_tpl.expand(self._identity, self._request)
 
     @property
     def _obj(self):
@@ -81,7 +81,7 @@ class RequestItem(RecordItem):
 
         if self._expand and self._fields_resolver:
             self._fields_resolver.resolve(self._identity, [self._data])
-            fields = self._fields_resolver.expand(self._data)
+            fields = self._fields_resolver.expand(self._identity, self._data)
             self._data["expanded"] = fields
 
         return self._data
@@ -150,7 +150,7 @@ class RequestList(RecordList):
 
             if self._links_item_tpl:
                 projection["links"] = self._links_item_tpl.expand(
-                    request, identity=self._identity
+                    self._identity, request
                 )
 
             yield projection
@@ -164,7 +164,7 @@ class RequestList(RecordList):
         if self._expand and self._fields_resolver:
             self._fields_resolver.resolve(self._identity, hits)
             for hit in hits:
-                fields = self._fields_resolver.expand(hit)
+                fields = self._fields_resolver.expand(self._identity, hit)
                 hit["expanded"] = fields
 
         res = {
@@ -180,6 +180,6 @@ class RequestList(RecordList):
         if self._params:
             res["sortBy"] = self._params["sort"]
             if self._links_tpl:
-                res["links"] = self._links_tpl.expand(self.pagination)
+                res["links"] = self._links_tpl.expand(self._identity, self.pagination)
 
         return res
