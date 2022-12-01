@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version 1.0.5 (released 2022-12-01)
+
+- Add identity to links template expand method.
+
+
 Version 1.0.4 (released 2022-11-25)
 
 - add i18n translations.
