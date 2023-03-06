@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { Image } from "react-invenio-forms";
 import Overridable from "react-overridable";
-import { Divider, Header, Label } from "semantic-ui-react";
+import { Divider, Header, Message } from "semantic-ui-react";
 import { timestampToRelativeTime } from "../utils";
 import RequestStatus from "./RequestStatus";
 import RequestTypeLabel from "./RequestTypeLabel";
@@ -48,47 +48,47 @@ const UserOrCommunity = ({ userData, details }) => {
     return <User user={details} />;
   } else if (isCommunity) {
     return <Community community={details} />;
-  } else {
-    // default unknown created_by
-    return (
-      <div class="flex">
-        <Image
-          src="/static/images/square-placeholder.png"
-          avatar
-          size="tiny"
-          className="mr-5"
-          ui={false}
-          rounded
-        />
-        <span>{userData.user?.id || userData.community?.id}</span>
-      </div>
-    );
   }
 };
 
+const DeletedResource = ({ details }) => (
+  <Message negative>{details.metadata.title}</Message>
+);
+
 class RequestMetadata extends Component {
+  isResourceDeleted = (details) => details.is_ghost === true;
+
   render() {
     const { request } = this.props;
-
+    const expandedCreatedBy = request.expanded?.created_by;
+    const expandedReceiver = request.expanded?.receiver;
     return (
       <Overridable id="InvenioRequest.RequestMetadata.Layout" request={request}>
         <>
           <Header as="h3" size="tiny">
             {i18next.t("Creator")}
           </Header>
-          <UserOrCommunity
-            userData={request.created_by}
-            details={request.expanded?.created_by}
-          />
+          {this.isResourceDeleted(expandedCreatedBy) ? (
+            <DeletedResource details={expandedCreatedBy} />
+          ) : (
+            <UserOrCommunity
+              userData={request.created_by}
+              details={request.expanded?.created_by}
+            />
+          )}
           <Divider />
 
           <Header as="h3" size="tiny">
             {i18next.t("Receiver")}
           </Header>
-          <UserOrCommunity
-            userData={request.receiver}
-            details={request.expanded?.receiver}
-          />
+          {this.isResourceDeleted(expandedReceiver) ? (
+            <DeletedResource details={expandedReceiver} />
+          ) : (
+            <UserOrCommunity
+              userData={request.receiver}
+              details={request.expanded?.receiver}
+            />
+          )}
           <Divider />
 
           <Header as="h3" size="tiny">

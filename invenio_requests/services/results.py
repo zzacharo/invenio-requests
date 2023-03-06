@@ -22,6 +22,10 @@ class EntityResolverExpandableField(ExpandableField):
 
     entity_proxy = None
 
+    def ghost_record(self, value):
+        """Return ghost representation of not resolved value."""
+        return self.entity_proxy.ghost_record(value)
+
     def get_value_service(self, value):
         """Return the value and the service via entity resolvers."""
         self.entity_proxy = ResolverRegistry.resolve_entity_proxy(value)
