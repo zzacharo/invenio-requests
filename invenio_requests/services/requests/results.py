@@ -57,6 +57,11 @@ class RequestItem(RecordItem):
         """Get links for this result item."""
         return self._links_tpl.expand(self._identity, self._request)
 
+    @links.setter
+    def links_tpl(self, links_tpl):
+        """Set links template for this result item."""
+        self._links_tpl = links_tpl
+
     @property
     def _obj(self):
         """Return the object to dump."""
