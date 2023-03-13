@@ -8,6 +8,12 @@
 Changes
 =======
 
+Version 1.2.0 (released 2023-03-13)
+
+- add inclusion request type to UI support
+- distinguish UI labels for request types (inclusion vs review)
+- add self_html link to the resource payload
+
 Version 1.1.1 (released 2023-03-09)
 
 - results: add links template setter
