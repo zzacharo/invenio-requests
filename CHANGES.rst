@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version 1.3.0 (2023-03-24)
+
+- bump invenio-records-resources to v2.0.0
+- expand: call ghost method for unresolved entities
+
 Version 1.2.0 (released 2023-03-13)
 
 - add inclusion request type to UI support

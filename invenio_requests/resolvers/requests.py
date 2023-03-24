@@ -9,7 +9,7 @@
 
 """Resolver and proxy for requests."""
 
-from invenio_records_resources.references.resolvers.base import (
+from invenio_records_resources.references.entity_resolvers import (
     EntityProxy,
     EntityResolver,
 )
