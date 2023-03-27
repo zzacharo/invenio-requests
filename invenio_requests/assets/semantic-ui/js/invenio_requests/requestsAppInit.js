@@ -24,9 +24,6 @@ import {
   DeclineStatus,
   DeleteStatus,
   ExpireStatus,
-  LabelTypeCommunityInclusion,
-  LabelTypeCommunityInvitation,
-  LabelTypeCommunitySubmission,
   SubmitStatus,
 } from "./request";
 import {
@@ -37,6 +34,12 @@ import {
   TimelineExpireEvent,
   TimelineUnknownEvent,
 } from "./timelineEvents";
+import{
+  LabelTypeCommunityInclusion,
+  LabelTypeCommunityInvitation,
+  LabelTypeCommunitySubmission,
+}
+from "./contrib"
 
 const requestDetailsDiv = document.getElementById("request-detail");
 const request = JSON.parse(requestDetailsDiv.dataset.record);

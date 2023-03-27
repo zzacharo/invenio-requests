@@ -9,9 +9,8 @@ import { Label, Icon } from "semantic-ui-react";
 import { i18next } from "@translations/invenio_requests/i18next";
 
 export const LabelStatusSubmit = (props) => {
-  const { className, size, color } = props;
   return (
-    <Label className={className} size={size} color={color}>
+    <Label className="primary" size="small">
       <Icon name="clock outline" />
       {i18next.t("Submitted")}
     </Label>
@@ -19,9 +18,8 @@ export const LabelStatusSubmit = (props) => {
 };
 
 export const LabelStatusDelete = (props) => {
-  const { icon, className, size, color } = props;
   return (
-    <Label className={className} size={size} color={color}>
+    <Label className="negative" size="small">
       <Icon name="trash" />
       {i18next.t("Deleted")}
     </Label>
@@ -29,9 +27,8 @@ export const LabelStatusDelete = (props) => {
 };
 
 export const LabelStatusAccept = (props) => {
-  const { icon, className, size, color } = props;
   return (
-    <Label className={className} size={size} color={color}>
+    <Label className="positive" size="small">
       <Icon name="check circle" />
       {i18next.t("Accepted")}
     </Label>
@@ -39,9 +36,8 @@ export const LabelStatusAccept = (props) => {
 };
 
 export const LabelStatusDecline = (props) => {
-  const { icon, className, size, color } = props;
   return (
-    <Label className={className} size={size} color={color}>
+    <Label className="negative" size="small">
       <Icon name="times" />
       {i18next.t("Declined")}
     </Label>
@@ -49,9 +45,8 @@ export const LabelStatusDecline = (props) => {
 };
 
 export const LabelStatusCancel = (props) => {
-  const { icon, className, size, color } = props;
   return (
-    <Label className={className} size={size} color={color}>
+    <Label className="neutral" size="small">
       <Icon name="stop" />
       {i18next.t("Cancelled")}
     </Label>
@@ -59,9 +54,8 @@ export const LabelStatusCancel = (props) => {
 };
 
 export const LabelStatusExpire = (props) => {
-  const { icon, className, size, color } = props;
   return (
-    <Label className={className} size={size} color={color}>
+    <Label className="expired" size="small" >
       <Icon name="expire" />
       {i18next.t("Expired")}
     </Label>

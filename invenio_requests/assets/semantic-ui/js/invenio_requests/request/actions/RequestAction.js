@@ -36,7 +36,7 @@ export class RequestAction extends Component {
   render() {
     const { loading, performAction, toggleModal, error, modalOpen } =
       this.context;
-    const { action, requestType } = this.props;
+    const { action, requestType, size } = this.props;
     const modalId = action;
     return (
       <Overridable
@@ -52,6 +52,7 @@ export class RequestAction extends Component {
             toggleModal={toggleModal}
             modalOpen={modalOpen}
             requestType={requestType}
+            size={size}
           />
 
           <RequestActionModal
@@ -82,6 +83,7 @@ export class RequestAction extends Component {
 RequestAction.propTypes = {
   action: PropTypes.string.isRequired,
   requestType: PropTypes.string.isRequired,
+  size: PropTypes.string
 };
 
 export default Overridable.component(

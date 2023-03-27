@@ -7,6 +7,7 @@
 import { AppMedia } from "@js/invenio_theme/Media";
 import { i18next } from "@translations/invenio_requests/i18next";
 import React from "react";
+import PropTypes from "prop-types";
 import { Dropdown } from "semantic-ui-react";
 import {
   RequestAcceptButton,
@@ -48,6 +49,19 @@ export const RequestDeclineModalTrigger = ({
   );
 };
 
+RequestDeclineModalTrigger.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+  ariaAttributes: PropTypes.object,
+  size: PropTypes.string,
+  className: PropTypes.string,
+};
+
+RequestDeclineModalTrigger.defaultProps = {
+  size: "mini",
+  className: "ml-5"
+}
+
 export const RequestAcceptModalTrigger = ({
   onClick,
   requestType,
@@ -84,6 +98,19 @@ export const RequestAcceptModalTrigger = ({
   );
 };
 
+RequestAcceptModalTrigger.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+  ariaAttributes: PropTypes.object,
+  size: PropTypes.string,
+  className: PropTypes.string,
+};
+
+RequestAcceptModalTrigger.defaultProps = {
+  size: "mini",
+  className: "ml-5"
+}
+
 export const RequestCancelModalTrigger = ({
   onClick,
   loading,
@@ -115,3 +142,16 @@ export const RequestCancelModalTrigger = ({
     </MediaContextProvider>
   );
 };
+
+RequestCancelModalTrigger.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+  ariaAttributes: PropTypes.object,
+  size: PropTypes.string,
+  className: PropTypes.string,
+};
+
+RequestCancelModalTrigger.defaultProps = {
+  size: "mini",
+  className: "ml-5"
+}

@@ -10,7 +10,7 @@ import React, { Component } from "react";
 import { Image } from "react-invenio-forms";
 import Overridable from "react-overridable";
 import { Divider, Header, Message } from "semantic-ui-react";
-import { timestampToRelativeTime } from "../utils";
+import { toRelativeTime } from "react-invenio-forms";
 import RequestStatus from "./RequestStatus";
 import RequestTypeLabel from "./RequestTypeLabel";
 
@@ -106,7 +106,7 @@ class RequestMetadata extends Component {
           <Header as="h3" size="tiny">
             {i18next.t("Created")}
           </Header>
-          {timestampToRelativeTime(request.created)}
+          {toRelativeTime(request.created, i18next.language)}
 
           {request.expires_at && (
             <>
@@ -114,7 +114,7 @@ class RequestMetadata extends Component {
               <Header as="h3" size="tiny">
                 {i18next.t("Expires")}
               </Header>
-              {timestampToRelativeTime(request.expires_at)}
+              {toRelativeTime(request.expires_at, i18next.language)}
             </>
           )}
           <Divider hidden />

@@ -11,9 +11,10 @@ import { RequestAction } from "./RequestAction";
 import { Dropdown } from "semantic-ui-react";
 import { AppMedia } from "@js/invenio_theme/Media";
 
-export const RequestActions = ({ request }) => {
+export const RequestActions = ({ request, size }) => {
   const actions = Object.keys(new RequestLinksExtractor(request).actions);
   const { MediaContextProvider, Media } = AppMedia;
+
   return (
     <Overridable
       id="InvenioRequests.RequestActions.layout"
@@ -27,6 +28,7 @@ export const RequestActions = ({ request }) => {
               action={action}
               key={action}
               requestType={request.type}
+              size={size}
             />
           ))}
         </Media>

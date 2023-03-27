@@ -50,7 +50,8 @@ export class RequestActionController extends Component {
 
   render() {
     const { modalOpen, error, loading } = this.state;
-    const { request, children } = this.props;
+    const { request, children, size } = this.props;
+
     return (
       <RequestActionContext.Provider
         value={{
@@ -64,7 +65,7 @@ export class RequestActionController extends Component {
           loading: loading,
         }}
       >
-        <RequestActions request={request} />
+        <RequestActions request={request} size={size} />
         {children}
       </RequestActionContext.Provider>
     );
@@ -75,6 +76,7 @@ RequestActionController.propTypes = {
   request: PropTypes.object.isRequired,
   requestApi: PropTypes.instanceOf(InvenioRequestsAPI),
   actionSuccessCallback: PropTypes.func,
+  size: PropTypes.string,
 };
 
 RequestActionController.defaultProps = {

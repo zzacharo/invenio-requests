@@ -4,12 +4,13 @@
 // Invenio RDM Records is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
 
+import { i18next } from "@translations/invenio_requests/i18next";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { Image } from "react-invenio-forms";
 import Overridable from "react-overridable";
 import { Feed } from "semantic-ui-react";
-import { timestampToRelativeTime } from "../utils";
+import { toRelativeTime } from "react-invenio-forms";
 import RequestsFeed from "./RequestsFeed";
 import { TimelineEventBody } from "./TimelineEventBody";
 
@@ -24,13 +25,15 @@ class TimelineActionEvent extends Component {
     let userAvatar,
       user = null;
     if (isUser) {
-      userAvatar = <Image
-                      src={expandedCreatedBy.links.avatar}
-                      avatar
-                      size="tiny"
-                      className="mr-5"
-                      ui={false}
-                    />;
+      userAvatar = (
+        <Image
+          src={expandedCreatedBy.links.avatar}
+          avatar
+          size="tiny"
+          className="mr-5"
+          ui={false}
+        />
+      );
       user = expandedCreatedBy.profile?.full_name || expandedCreatedBy.username;
     }
 
@@ -53,8 +56,8 @@ class TimelineActionEvent extends Component {
                     <TimelineEventBody
                       content={eventContent}
                       format={event?.payload?.format}
-                    />
-                    {" "}{timestampToRelativeTime(event.created)}
+                    />{" "}
+                    {toRelativeTime(event.created, i18next.language)}
                   </Feed.Date>
                 </Feed.Summary>
               </Feed.Content>

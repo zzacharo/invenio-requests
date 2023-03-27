@@ -15,7 +15,7 @@ import Error from "../components/Error";
 import FormattedInputEditor from "../components/FormattedInputEditor";
 import RequestsFeed from "../components/RequestsFeed";
 import { TimelineEventBody } from "../components/TimelineEventBody";
-import { timestampToRelativeTime } from "../utils";
+import { toRelativeTime } from "react-invenio-forms";
 
 class TimelineCommentEvent extends Component {
   constructor(props) {
@@ -108,7 +108,7 @@ class TimelineCommentEvent extends Component {
                   <b>{userName}</b>
                   <Feed.Date>
                     {i18next.t("commented")}{" "}
-                    {timestampToRelativeTime(event.created)}
+                    {toRelativeTime(event.created, i18next.language)}
                   </Feed.Date>
                 </Feed.Summary>
 
