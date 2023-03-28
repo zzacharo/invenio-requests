@@ -8,6 +8,13 @@
 Changes
 =======
 
+Version 2.0.0 (2023-03-28)
+
+- add request search components
+- add contrib label components
+- refactor action components
+- refactor relative time component
+
 Version 1.3.0 (2023-03-24)
 
 - bump invenio-records-resources to v2.0.0
