@@ -74,6 +74,8 @@ class RequestEventLink(Link):
 class RequestEventsServiceConfig(RecordServiceConfig, ConfiguratorMixin):
     """Config."""
 
+    service_id = "request_events"
+
     request_cls = Request
     permission_policy_cls = FromConfig(
         "REQUESTS_PERMISSION_POLICY", default=PermissionPolicy

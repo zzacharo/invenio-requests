@@ -57,6 +57,8 @@ class RequestSearchOptions(SearchOptions):
 class RequestsServiceConfig(RecordServiceConfig, ConfiguratorMixin):
     """Requests service configuration."""
 
+    service_id = "requests"
+
     # common configuration
     permission_policy_cls = FromConfig(
         "REQUESTS_PERMISSION_POLICY", default=PermissionPolicy

@@ -10,49 +10,49 @@
 """Resolver and proxy for requests."""
 
 from invenio_records_resources.references.entity_resolvers import (
-    EntityProxy,
-    EntityResolver,
+    RecordPKProxy,
+    RecordResolver,
 )
-from sqlalchemy.exc import StatementError
-from sqlalchemy.orm.exc import NoResultFound
-
-from ..records.api import Request
+from ..records.api import Request, RequestEvent
+from ..services import RequestsServiceConfig, RequestEventsServiceConfig
 
 
-class RequestProxy(EntityProxy):
-    """Resolver proxy for a Request entity."""
-
-    def _resolve(self):
-        """Resolve the Request from the proxy's reference dict."""
-        request_id = self._parse_ref_dict_id()
-        try:
-            return Request.get_record(request_id)
-        except StatementError as exc:
-            raise NoResultFound() from exc
-
-    def get_need(self):
-        """Return None since Needs are not applicable to requests."""
-        return None
-
-
-class RequestResolver(EntityResolver):
+class RequestResolver(RecordResolver):
     """Resolver for requests."""
 
     type_id = "request"
 
-    def matches_entity(self, entity):
-        """Check if the entity is a request."""
-        return isinstance(entity, Request)
+    def __init__(self):
+        """Initialize the default record resolver."""
+        super().__init__(
+            record_cls=Request,
+            # TODO: The request service is not reegistered in the service registry
+            service_id=RequestsServiceConfig.service_id,
+            type_key=self.type_id,
+            proxy_cls=RecordPKProxy,
+        )
 
     def _reference_entity(self, entity):
         """Create a reference dict for the given request."""
         id_ = entity.number if entity.number is not None else entity.id
         return {"request": str(id_)}
 
-    def matches_reference_dict(self, ref_dict):
-        """Check if the reference dict references a request."""
-        return self._parse_ref_dict_type(ref_dict) == "request"
 
-    def _get_entity_proxy(self, ref_dict):
-        """Return a RequestProxy for the given reference dict."""
-        return RequestProxy(ref_dict)
+class RequestEventResolver(RecordResolver):
+    """Resolver for requests."""
+
+    type_id = "request_event"
+
+    def __init__(self):
+        """Initialize the default record resolver."""
+        super().__init__(
+            record_cls=RequestEvent,
+            # TODO: The request service is not reegistered in the service registry
+            service_id=RequestEventsServiceConfig.service_id,
+            type_key=self.type_id,
+            proxy_cls=RecordPKProxy,
+        )
+
+    def _reference_entity(self, entity):
+        """Create a reference dict for the given request."""
+        return {self.type_key: str(entity.id)}
