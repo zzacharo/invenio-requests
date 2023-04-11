@@ -36,8 +36,8 @@ export const RequestsResults = ({
                     <Count
                       label={() => (
                         <>
-                          {i18next.t("{{total}} result(s) found", {
-                            total: total,
+                          {i18next.t("{{count}} results found", {
+                            count: total,
                           })}
                         </>
                       )}

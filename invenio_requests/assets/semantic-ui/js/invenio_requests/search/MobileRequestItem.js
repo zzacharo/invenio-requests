@@ -80,10 +80,11 @@ export const MobileRequestItem = ({
               )}
             {result.expires_at && (
               <span>
-                {i18next.t("Expires at:")}{" "}
-                {DateTime.fromISO(result.expires_at).toLocaleString(
-                  i18next.language
-                )}
+                {i18next.t("Expires at: {{- expiringDate}}", {
+                  expiringDate: DateTime.fromISO(
+                    result.expires_at
+                  ).toLocaleString(i18next.language),
+                })}
               </span>
             )}
           </small>
