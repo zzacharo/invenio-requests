@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version 2.1.0 (2023-04-20)
+
+- upgrade invenio-records-resources
+
 Version 2.0.0 (2023-03-28)
 
 - add request search components
