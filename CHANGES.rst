@@ -8,6 +8,12 @@
 Changes
 =======
 
+Version 2.3.0 (2023-05-05)
+
+- resolvers: use record-based resolvers and proxies
+- resolvers: use request id for resolving
+- views: remove explicit service_id from register call
+
 Version 2.2.0 (2023-04-25)
 
 - upgrade invenio-records-resources
