@@ -25,8 +25,8 @@ def init(state):
     requests_service = requests_ext.requests_service
     events_service = requests_ext.request_events_service
 
-    svc_reg.register(requests_service, service_id="requests")
-    svc_reg.register(events_service, service_id="request-events")
+    svc_reg.register(requests_service)
+    svc_reg.register(events_service)
 
     idx_reg.register(requests_service.indexer, indexer_id="requests")
     idx_reg.register(events_service.indexer, indexer_id="events")
