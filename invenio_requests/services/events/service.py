@@ -10,7 +10,7 @@
 
 """RequestEvents Service."""
 
-from invenio_access.permissions import system_process
+from invenio_access.permissions import system_identity, system_user_id
 from invenio_i18n import _
 from invenio_records_resources.services import RecordService, ServiceSchemaWrapper
 from invenio_records_resources.services.base.links import LinksTemplate
@@ -218,7 +218,7 @@ class RequestEventsService(RecordService):
 
     def _get_creator(self, identity):
         """Get the creator dict from the identity."""
-        if system_process in identity.provides:
-            return None  # TODO: Change this for some agreed value
+        if identity == system_identity:
+            return {"user": str(system_user_id)}
         else:
             return {"user": str(identity.id)}
