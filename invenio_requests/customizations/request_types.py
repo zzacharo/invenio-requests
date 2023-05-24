@@ -98,7 +98,8 @@ class RequestType:
     """
 
     creator_can_be_none = True
-    """Determines if the ``created_by`` reference accepts ``None``."""
+    """Determines if the ``created_by`` reference accepts ``None``.
+    In case of ``None`` the creator will be ``System``."""
 
     receiver_can_be_none = False
     """Determines if the ``receiver`` reference accepts ``None``."""

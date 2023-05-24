@@ -56,7 +56,7 @@ export const LabelStatusCancel = (props) => {
 export const LabelStatusExpire = (props) => {
   return (
     <Label className="expired" size="small">
-      <Icon name="expire" />
+      <Icon name="calendar times outline" />
       {i18next.t("Expired")}
     </Label>
   );

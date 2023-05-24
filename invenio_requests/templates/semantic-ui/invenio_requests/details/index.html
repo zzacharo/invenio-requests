@@ -47,7 +47,38 @@
          data-record='{{ invenio_request | tojson }}'
          data-default-query-config='{{ dict(size=config["REQUESTS_TIMELINE_PAGE_SIZE"]) | tojson }}'
          data-user-avatar='{{ user_avatar | tojson }}'
-    >{# react app root #}</div>
+    >{# react app root #}
+      <div class="ui grid">
+        <div class="stretched row">
+          <div class="thirteen wide column">
+            <div class="ui">
+              <div class="ui fluid placeholder">
+                <div class="image header">
+                  <div class="line"></div>
+                  <div class="line"></div>
+                </div>
+                <div class="paragraph">
+                  {% for i in range(6) %}
+                    <div class="line"></div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="three wide column">
+            {% for i in range(6) %}
+              <div class="ui fluid placeholder">
+                <div class="image header">
+                  <div class="line"></div>
+                  <div class="line"></div>
+                </div>
+              </div>
+              <div class="ui divider"></div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
     {%- endblock request_timeline %}
 
     </div>

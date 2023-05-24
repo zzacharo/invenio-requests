@@ -45,7 +45,7 @@ export const CancelStatus = () => (
 
 export const ExpireStatus = () => (
   <div>
-    <Icon name="expire" />
+    <Icon name="calendar times outline" />
     <span>{i18next.t("Expired")}</span>
   </div>
 );

@@ -55,7 +55,7 @@ class CustomizedReferenceRequestType(RequestType):
     create_action = "custom-create"
 
     creator_can_be_none = True
-    allowed_creator_ref_types = ["community"]
+    allowed_creator_ref_types = ["community", "user"]
     allowed_receiver_ref_types = ["role", "user"]
     allowed_topic_ref_types = ["record"]
 
@@ -103,6 +103,12 @@ def test_customized_reference_types(customized_app):
         "topic": {"record": "1234-abcd"},
     }
 
+    example_request_data_3 = {
+        "created_by": {"other_ref": "ref"},
+        "receiver": {"role": "admin"},
+        "topic": {"record": "1234-abcd"},
+    }
+
     # check if the default schema accepts the first dataset but rejects the second
     schema = RequestType.marshmallow_schema()
     assert_nested_field_allows_type_key(schema, "created_by", "community", negated=True)
@@ -113,16 +119,20 @@ def test_customized_reference_types(customized_app):
     errors = schema().validate(example_request_data_2)
     assert errors
 
-    # check if the customized schema accepts the second dataset but rejects the first
+    # check if the customized schema accepts the first and the second dataset, but rejects the third
     schema = CustomizedReferenceRequestType.marshmallow_schema()
     assert_nested_field_allows_type_key(schema, "created_by", "community")
+    assert_nested_field_allows_type_key(schema, "created_by", "user")
     assert_nested_field_allows_type_key(schema, "receiver", "role")
     assert_nested_field_allows_type_key(schema, "receiver", "user")
     assert_nested_field_allows_type_key(schema, "topic", "record")
     errors = schema().validate(example_request_data)
-    assert errors
+    assert not errors
     errors = schema().validate(example_request_data_2)
     assert not errors
+
+    errors = schema().validate(example_request_data_3)
+    assert errors
 
 
 def test_customized_request_actions(customized_app, users):
