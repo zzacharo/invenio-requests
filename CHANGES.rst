@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version 2.4.0 (2023-06-02)
+
+- ui: add icons for deleted communities
+- requests resolvers: add system creator
+
 Version 2.3.0 (2023-05-05)
 
 - resolvers: use record-based resolvers and proxies
