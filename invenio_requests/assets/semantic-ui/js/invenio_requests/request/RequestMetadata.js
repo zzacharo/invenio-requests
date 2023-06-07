@@ -24,7 +24,8 @@ const User = ({ user }) => (
       ui={false}
       rounded
     />
-    <span>{user.profile?.full_name || user.username}</span>
+    <span>{user.profile?.full_name || user?.username || user?.email || i18next.t("Anonymous user")}
+    </span>
   </div>
 );
 const Community = ({ community }) => (
