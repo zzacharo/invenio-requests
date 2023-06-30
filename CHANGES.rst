@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version 2.5.0 (2023-06-30)
+
+- Update translations
+- Bump invenio-users-resources
+
 Version 2.4.0 (2023-06-02)
 
 - ui: add icons for deleted communities
