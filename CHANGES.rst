@@ -8,6 +8,13 @@
 Changes
 =======
 
+Version 2.6.0 (2023-07-13)
+
+- transifex: update configs
+- ui: fix username not appearing
+- requests-ui: add rendering of new entity for external emails
+- links: add customization of context vars when generating them
+
 Version 2.5.0 (2023-06-30)
 
 - Update translations
