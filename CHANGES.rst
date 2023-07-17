@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version 2.6.1 (2023-07-13)
+
+- ui: improve styling in request items
+
 Version 2.6.0 (2023-07-13)
 
 - transifex: update configs
