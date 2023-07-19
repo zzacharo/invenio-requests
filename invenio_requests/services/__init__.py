@@ -12,10 +12,12 @@
 
 from .events import RequestEventsService, RequestEventsServiceConfig
 from .requests import RequestsService, RequestsServiceConfig
+from .user_moderation import UserModerationRequestService
 
 __all__ = (
     "RequestEventsService",
     "RequestEventsServiceConfig",
     "RequestsService",
     "RequestsServiceConfig",
+    "UserModerationRequestService",
 )

@@ -38,3 +38,8 @@ current_requests_resource = LocalProxy(
     lambda: current_app.extensions["invenio-requests"].requests_resource
 )
 """Proxy to the instantiated requests resource."""
+
+current_user_moderation_service = LocalProxy(
+    lambda: current_app.extensions["invenio-requests"].user_moderation_requests_service
+)
+"""Proxy to the instantiated user moderation requests service."""

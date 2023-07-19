@@ -24,6 +24,7 @@ from .services import (
     RequestEventsServiceConfig,
     RequestsService,
     RequestsServiceConfig,
+    UserModerationRequestService,
 )
 
 
@@ -72,6 +73,9 @@ class InvenioRequests:
         )
         self.request_events_service = RequestEventsService(
             config=service_configs.request_events,
+        )
+        self.user_moderation_requests_service = UserModerationRequestService(
+            self.requests_service
         )
 
     def init_resources(self):

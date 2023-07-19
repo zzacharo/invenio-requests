@@ -287,6 +287,7 @@ class RequestsService(RecordService):
                 should=[
                     dsl.Q("term", **{"receiver.user": identity.id}),
                     dsl.Q("term", **{"created_by.user": identity.id}),
+                    dsl.Q("term", **{"topic.user": identity.id}),
                 ],
                 must=[~dsl.Q("term", **{"status": "created"})],
                 minimum_should_match=1,
