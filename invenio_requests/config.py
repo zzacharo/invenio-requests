@@ -8,7 +8,10 @@
 
 """Invenio module for generic and customizable requests."""
 
-from invenio_users_resources.entity_resolvers import UserResolver
+from invenio_users_resources.entity_resolvers import (
+    UserModerationResolver,
+    UserResolver,
+)
 
 from invenio_requests.services.requests import facets
 
@@ -27,9 +30,7 @@ REQUESTS_REGISTERED_EVENT_TYPES = [
 ]
 """Configuration for registered Request Event Types."""
 
-REQUESTS_ENTITY_RESOLVERS = [
-    UserResolver(),
-]
+REQUESTS_ENTITY_RESOLVERS = [UserResolver(), UserModerationResolver()]
 """Registered resolvers for resolving/creating references in request metadata."""
 
 REQUESTS_ROUTES = {

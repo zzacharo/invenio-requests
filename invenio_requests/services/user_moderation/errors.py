@@ -9,6 +9,6 @@ from invenio_i18n import lazy_gettext as _
 
 
 class InvalidCreator(Exception):
-    """Reauest creator is invalid."""
+    """Request creator is invalid."""
 
     description = _("Invalid creator for user moderation request.")

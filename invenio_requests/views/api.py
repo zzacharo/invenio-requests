@@ -19,3 +19,9 @@ def create_request_events_bp(app):
     """Create request events blueprint."""
     ext = app.extensions["invenio-requests"]
     return ext.request_events_resource.as_blueprint()
+
+
+def create_user_moderation_bp(app):
+    """Create user moderation requests bp."""
+    ext = app.extensions["invenio-requests"]
+    return ext.user_moderation_requests_resource.as_blueprint()

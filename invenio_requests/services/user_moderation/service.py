@@ -6,8 +6,9 @@
 # it under the terms of the MIT License; see LICENSE file for more details.
 """User moderation service."""
 
-from invenio_access.permissions import system_identity, system_user_id
+from invenio_access.permissions import system_user_id
 from invenio_i18n import gettext as _
+from invenio_search.engine import dsl
 
 from invenio_requests.customizations.user_moderation.user_moderation import (
     UserModeration,
@@ -28,27 +29,34 @@ class UserModerationRequestService:
         """User moderation request type."""
         return UserModeration
 
-    # /users/moderation action="block"
+    def read(self, identity, request_id, **kwargs):
+        """Proxy read request."""
+        return self.requests_service.read(identity=identity, id_=request_id, **kwargs)
 
-    # service.moderate(identity, user, action)
-    #    get user request
-    #    request_service.execute_action(identity, action=action)
+    def moderate(self, identity, request_id, action, data=None):
+        """Moderates a user."""
+        return self.requests_service.execute_action(
+            identity=identity,
+            id_=request_id,
+            action=action,
+            data=data,
+        )
 
     def request_moderation(
         self, identity, creator, topic, data=None, uow=None, **kwargs
     ):
         """Creates a UserModeration request and submits it."""
         if creator != system_user_id:
-            raise InvalidCreator("Moderation request creator can only be system.")
+            raise InvalidCreator(_("Moderation request creator can only be system."))
 
         data = data or {}
 
         # For user moderation, topic is the user to be moderated
         topic = ResolverRegistry.resolve_entity_proxy({"user": topic}).resolve()
 
-        receiver = {"user": system_user_id}
+        receiver = {"user_moderation": system_user_id}
 
-        creator = {"user": creator}
+        creator = {"user_moderation": creator}
 
         request_item = self.requests_service.create(
             identity,
@@ -66,13 +74,20 @@ class UserModerationRequestService:
             data=data,
         )
 
-    def search_moderation_requests(self, identity, params=None):
-        """Searchs for user moderation requests.
-
-        Returns only requests that concern the current user.
-        """
+    def search_moderation_requests(self, identity, params=None, expand=False):
+        """Searchs for user moderation requests."""
         params = params or {}
 
         # Search for UserModeration requests only
-        q = f"type:{self.request_type_cls.type_id}"
-        return self.requests_service.search_user_requests(identity, q=q, params=params)
+        user_mod_only_q = dsl.Q(
+            "bool",
+            should=[
+                dsl.Q("term", **{"type": self.request_type_cls.type_id}),
+            ],
+            minimum_should_match=1,
+        )
+
+        extra_filter = user_mod_only_q
+        return self.requests_service.search(
+            identity, extra_filter=extra_filter, params=params, expand=expand
+        )
