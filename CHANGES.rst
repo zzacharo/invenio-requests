@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version 2.8.0 (2023-07-24)
+
+- requests: add request event notification builder,
+            template and recipient filter
+
 Version 2.7.0 (2023-07-21)
 
 - requests: add notification flag to the service
