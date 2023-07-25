@@ -10,6 +10,7 @@ import pytest
 from flask_principal import Need
 from invenio_access.permissions import system_identity, system_user_id
 from invenio_access.utils import get_identity
+from invenio_records_resources.resources.errors import PermissionDeniedError
 
 from invenio_requests.customizations.user_moderation import UserModeration
 from invenio_requests.proxies import current_user_moderation_service
@@ -58,19 +59,15 @@ def test_search_moderation(app, es_clear, users, submit_request, mod_identity):
     request = submit_request(system_identity, receiver=user)
     assert request
 
-    # The user can't see the moderation requests against him
+    # The user can't search user moderation requests
     user_identity = get_identity(user)
     user_identity.provides.add(Need(method="system_role", value="authenticated_user"))
-    search = service.search_moderation_requests(user_identity)
-    assert search.total == 0
+    with pytest.raises(PermissionDeniedError):
+        service.search_moderation_requests(user_identity)
 
-    # Moderator can see the request
-    # TODO moderator is considered Receiver() or Sender() because UserModerationEntity grants that need
-    # TODO however, search filters do not allow the moderator to see the requests.
-    # TODO either UserModeration() is added to can_search (for the query filter 'match_all' to be added)
-    # TODO or the user_moderation should be its own service (add a lot of boilerplate, however we have more control)
-    # search = service.search_moderation_requests(mod_identity)
-    # assert search.total == 1
+    # Moderator can search and see the request
+    search = service.search_moderation_requests(mod_identity)
+    assert search.total == 1
 
     # System process can see the request
     search = service.search_moderation_requests(system_identity)
@@ -107,3 +104,61 @@ def test_moderation(app, es_clear, users, mod_identity):
     service.moderate(mod_identity, request_id=request_item.id, action="accept")
     req_read = service.read(mod_identity, request_item.id)
     assert req_read._request.status == "accepted"
+
+
+def test_moderation_accept(app, es_clear, users, mod_identity):
+    """Tests the service for moderation."""
+    user = users[0]
+
+    service = current_user_moderation_service
+
+    request_item = service.request_moderation(
+        system_identity, creator=system_user_id, topic=user.id
+    )
+    assert request_item
+    assert request_item._request.status == "submitted"
+
+    # Test accept
+    service.moderate(mod_identity, request_id=request_item.id, action="accept")
+    req_read = service.read(mod_identity, request_item.id)
+    assert req_read._request.status == "accepted"
+
+
+def test_moderation_decline(app, es_clear, users, mod_identity):
+    """Tests the service for moderation."""
+    user = users[0]
+
+    service = current_user_moderation_service
+
+    request_item = service.request_moderation(
+        system_identity, creator=system_user_id, topic=user.id
+    )
+    assert request_item
+    assert request_item._request.status == "submitted"
+
+    # Test decline
+    service.moderate(mod_identity, request_id=request_item.id, action="decline")
+    req_read = service.read(mod_identity, request_item.id)
+    assert req_read._request.status == "declined"
+
+
+def test_read(app, es_clear, users, mod_identity):
+    """Tests the service for read."""
+    user = users[0]
+
+    service = current_user_moderation_service
+
+    request_item = service.request_moderation(
+        system_identity, creator=system_user_id, topic=user.id
+    )
+    assert request_item
+    assert request_item._request.status == "submitted"
+
+    # Test read
+    req_read = service.read(mod_identity, request_item.id)
+    assert req_read._request.status == "submitted"
+
+    user_identity = get_identity(user)
+    user_identity.provides.add(Need(method="system_role", value="authenticated_user"))
+    with pytest.raises(PermissionDeniedError):
+        service.read(user_identity, request_item.id)

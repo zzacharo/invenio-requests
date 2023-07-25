@@ -10,7 +10,7 @@
 
 """Request permissions."""
 
-from invenio_records_permissions import RecordPermissionPolicy
+from invenio_records_permissions import BasePermissionPolicy, RecordPermissionPolicy
 from invenio_records_permissions.generators import (
     AnyUser,
     AuthenticatedUser,
@@ -18,6 +18,7 @@ from invenio_records_permissions.generators import (
     SystemProcess,
     SystemProcessWithoutSuperUser,
 )
+from invenio_users_resources.services.generators import UserModeration
 
 from .generators import Commenter, Creator, Receiver, Status
 
@@ -87,3 +88,12 @@ class PermissionPolicy(RecordPermissionPolicy):
     # be provided to create_search(), but the event search is already protected
     # by request's can_read, thus we use a dummy permission for the search.
     can_unused = [AnyUser()]
+
+
+class UserModerationPermissionPolicy(BasePermissionPolicy):
+    """User moderation permission policy."""
+
+    can_moderate = [UserModeration(), SystemProcess()]
+    can_read = [UserModeration(), SystemProcess()]
+    can_request_moderation = [SystemProcess()]
+    can_search_requests = [UserModeration(), SystemProcess()]

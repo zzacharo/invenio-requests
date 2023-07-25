@@ -6,6 +6,7 @@
 # it under the terms of the MIT License; see LICENSE file for more details.
 """User moderation requests service."""
 
+from .config import UserModerationServiceConfig
 from .service import UserModerationRequestService
 
-__all__ = ("UserModerationRequestService",)
+__all__ = ("UserModerationRequestService", "UserModerationServiceConfig")

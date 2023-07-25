@@ -35,9 +35,7 @@ def test_moderate(app, es_clear, client_logged_as, headers, mod_request):
         json={"action": "accept", "request_id": mod_request.id},
     )
     assert response.status_code == 200
-    # Log as moderator
-    mod_email = "admin@example.org"  # TODO should be mod@example.org. However search permissions (what moderator can see) need to be fixed.
-    client = client_logged_as(mod_email)
+
     response = client.get(
         "/user/moderation/",
         headers=headers,
@@ -47,8 +45,7 @@ def test_moderate(app, es_clear, client_logged_as, headers, mod_request):
     assert len(hits) == 1
     assert hits[0]["status"] == "accepted"
 
-    # Log as moderator again
-    client = client_logged_as("mod@example.org")
+    # Decline after accepting
     response = client.post(
         "/user/moderation/",
         headers=headers,
@@ -56,8 +53,6 @@ def test_moderate(app, es_clear, client_logged_as, headers, mod_request):
     )
     assert response.status_code == 200
 
-    # Log as moderator
-    client = client_logged_as(mod_email)
     response = client.get(
         "/user/moderation/",
         headers=headers,
@@ -105,7 +100,7 @@ def test_moderate_invalid_user(
         ("invalid", 400),  # action does not exist
     ],
 )
-def test_invalid_actions(
+def test_invalid_actions_after_submit(
     app, es_clear, client_logged_as, headers, mod_request, invalid_action, expected_code
 ):
     """Test invalid actions on a user moderation request.
@@ -160,7 +155,8 @@ def test_search_as_user(app, es_clear, client_logged_as, headers, mod_request):
         "/user/moderation/",
         headers=headers,
     )
-    assert response.status_code == 200
-    hits = response.json["hits"]["hits"]
-    # User can't see the moderation request
-    assert len(hits) == 0
+    assert response.status_code == 403
+
+
+# TODO test links
+# TODO test search filters, facets, sorting

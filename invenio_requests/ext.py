@@ -27,6 +27,7 @@ from .services import (
     RequestsService,
     RequestsServiceConfig,
     UserModerationRequestService,
+    UserModerationServiceConfig,
 )
 
 
@@ -63,6 +64,7 @@ class InvenioRequests:
         class ServiceConfigs:
             requests = RequestsServiceConfig.build(app)
             request_events = RequestEventsServiceConfig.build(app)
+            user_moderation = UserModerationServiceConfig.build(app)
 
         return ServiceConfigs
 
@@ -77,7 +79,8 @@ class InvenioRequests:
             config=service_configs.request_events,
         )
         self.user_moderation_requests_service = UserModerationRequestService(
-            self.requests_service
+            requests_service=self.requests_service,
+            config=service_configs.user_moderation,
         )
 
     def init_resources(self):
