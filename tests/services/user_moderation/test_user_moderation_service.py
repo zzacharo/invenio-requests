@@ -17,7 +17,7 @@ from invenio_requests.proxies import current_user_moderation_service
 from invenio_requests.services.user_moderation.errors import InvalidCreator
 
 
-def test_request_moderation(app, es_clear, users, identity_simple):
+def test_request_moderation(app, es_clear, users, identity_simple, mod_identity):
     """Tests the service for request moderation."""
 
     user = users[0]
@@ -42,6 +42,14 @@ def test_request_moderation(app, es_clear, users, identity_simple):
     with pytest.raises(InvalidCreator):
         service.request_moderation(system_identity, creator=user.id, topic=user.id)
 
+    # Use system identity
+    request_item = service.request_moderation(
+        mod_identity, creator=system_user_id, topic=user.id
+    )
+    assert request_item
+    # Request moderation creates and submits the moderation request
+    assert request_item._request.status == "submitted"
+
 
 def test_search_moderation(app, es_clear, users, submit_request, mod_identity):
     """Tests the search for request moderation."""
@@ -59,15 +67,19 @@ def test_search_moderation(app, es_clear, users, submit_request, mod_identity):
     request = submit_request(system_identity, receiver=user)
     assert request
 
-    # The user can't search user moderation requests
+    # The user can search user moderation requests but can't see anything
     user_identity = get_identity(user)
     user_identity.provides.add(Need(method="system_role", value="authenticated_user"))
-    with pytest.raises(PermissionDeniedError):
-        service.search_moderation_requests(user_identity)
+    search = service.search_moderation_requests(user_identity)
+    assert search.total == 0
 
     # Moderator can search and see the request
     search = service.search_moderation_requests(mod_identity)
     assert search.total == 1
+    hits = search.to_dict()["hits"]["hits"]
+    hit = hits[0]
+    assert hit["topic"]["user"] == str(user.id)
+    assert hit["type"] == service.request_type_cls.type_id
 
     # System process can see the request
     search = service.search_moderation_requests(system_identity)

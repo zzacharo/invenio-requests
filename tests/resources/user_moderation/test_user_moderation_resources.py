@@ -87,10 +87,7 @@ def test_moderate_invalid_user(
 @pytest.mark.parametrize(
     "invalid_action,expected_code",
     [
-        (
-            "delete",
-            403,
-        ),  # TODO user moderation should be able to do it. However, 'submitted' request is only deletable by system_process
+        ("delete", 403),  # invalid action but only system can delete
         ("cancel", 400),  # invalid state transition
         ("submit", 400),  # invalid state transition
         (
@@ -132,7 +129,7 @@ def test_invalid_actions_after_submit(
 def test_search_as_moderator(app, es_clear, client_logged_as, headers, mod_request):
     """Test search as a moderator."""
     # Log as moderator
-    mod_email = "admin@example.org"  # TODO should be mod@example.org. However search permissions (what moderator can see) need to be fixed.
+    mod_email = "mod@example.org"
     client = client_logged_as(mod_email)
 
     response = client.get(
@@ -155,8 +152,50 @@ def test_search_as_user(app, es_clear, client_logged_as, headers, mod_request):
         "/user/moderation/",
         headers=headers,
     )
-    assert response.status_code == 403
+    assert response.status_code == 200
+    hits = response.json["hits"]["hits"]
+    assert len(hits) == 0
 
 
-# TODO test links
+def test_links(app, es_clear, client_logged_as, headers, mod_request):
+    """Test links on search."""
+    # Log as moderator
+    mod_email = "mod@example.org"
+    client = client_logged_as(mod_email)
+
+    response = client.get(
+        "/user/moderation/",
+        headers=headers,
+    )
+    assert response.status_code == 200
+    hits = response.json["hits"]["hits"]
+    assert len(hits) == 1
+    hit = hits[0]
+    assert hit["type"] == "user-moderation"
+    assert hit["status"] == "submitted"
+    links = hit["links"]
+    assert set(["accept", "cancel", "decline"]) <= set(links["actions"])
+
+    # TODO
+    # # Decline and check links again
+    # response = client.post(
+    #     links["actions"]["decline"],
+    #     headers=headers,
+    # )
+    # assert response.status_code == 200
+
+    # response = client.get(
+    #     "/user/moderation/",
+    #     headers=headers,
+    # )
+    # assert response.status_code == 200
+    # hits = response.json["hits"]["hits"]
+    # assert len(hits) == 1
+    # hit = hits[0]
+    # links = hit["links"]
+    # breakpoint()
+    # # Actions are not allowed anymore
+    # assert set(["accept", "cancel", "decline"]) > set(links["actions"])
+
+
 # TODO test search filters, facets, sorting

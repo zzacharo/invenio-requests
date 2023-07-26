@@ -6,9 +6,8 @@
 # it under the terms of the MIT License; see LICENSE file for more details.
 """User moderation requests."""
 
-from flask_principal import RoleNeed
-from invenio_access.permissions import system_process
 from invenio_i18n import lazy_gettext as _
+from invenio_users_resources.permissions import moderation_action
 
 from invenio_requests.customizations import RequestType, actions
 
@@ -47,16 +46,11 @@ class UserModeration(RequestType):
 
     creator_can_be_none = False
     topic_can_be_none = False
-    allowed_creator_ref_types = ["user_moderation"]
-    allowed_receiver_ref_types = ["user_moderation"]
+    allowed_creator_ref_types = ["role"]
+    allowed_receiver_ref_types = ["role"]
     allowed_topic_ref_types = ["user"]
 
-    # TODO missing permissions
-    # AdminNeed = RoleNeed("admin")
-    # needs_context = {
-    # "creator.role": [system_process],
-    # "can_approve.role": [system_process],
-    # }
+    needs_context = {"roles": [moderation_action.value]}
 
     available_actions = {
         "delete": actions.DeleteAction,

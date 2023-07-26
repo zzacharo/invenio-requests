@@ -33,7 +33,7 @@ except AttributeError:
     security.safe_str_cmp = hmac.compare_digest
 
 import pytest
-from flask_principal import Identity, Need, UserNeed, identity_changed
+from flask_principal import Identity, Need, RoleNeed, UserNeed
 from flask_security import login_user
 from flask_security.utils import hash_password
 from invenio_access.models import ActionRoles
@@ -53,6 +53,7 @@ from invenio_users_resources.services.schemas import (
 )
 from marshmallow import fields
 from invenio_users_resources.permissions import user_moderation_action, user_moderator
+from invenio_users_resources.permissions import moderation_action
 
 from invenio_requests.customizations import CommentEventType, LogEventType, RequestType
 from invenio_requests.notifications.builders import (
@@ -318,7 +319,7 @@ def mod_identity(app, moderator_user):
     """Admin user for requests."""
     idt = Identity(moderator_user.id)
     # Add Role user_moderator
-    idt.provides.add(user_moderator)
+    idt.provides.add(RoleNeed(moderation_action.value))
     # Search requires user to be authenticated
     idt.provides.add(Need(method="system_role", value="authenticated_user"))
     return idt

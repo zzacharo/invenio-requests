@@ -88,12 +88,3 @@ class PermissionPolicy(RecordPermissionPolicy):
     # be provided to create_search(), but the event search is already protected
     # by request's can_read, thus we use a dummy permission for the search.
     can_unused = [AnyUser()]
-
-
-class UserModerationPermissionPolicy(BasePermissionPolicy):
-    """User moderation permission policy."""
-
-    can_moderate = [UserModeration(), SystemProcess()]
-    can_read = [UserModeration(), SystemProcess()]
-    can_request_moderation = [SystemProcess()]
-    can_search_requests = [UserModeration(), SystemProcess()]
