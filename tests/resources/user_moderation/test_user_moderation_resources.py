@@ -13,13 +13,10 @@ from invenio_requests.proxies import current_user_moderation_service
 
 
 @pytest.fixture()
-def mod_request(app, users):
-    user = users[0]
+def mod_request(app, user1, moderator_user):
     service = current_user_moderation_service
 
-    request_item = service.request_moderation(
-        system_identity, creator=system_user_id, topic=user.id
-    )
+    request_item = service.request_moderation(moderator_user.identity, user_id=user1.id)
     assert request_item
 
     return request_item
@@ -30,14 +27,12 @@ def test_moderate(app, es_clear, client_logged_as, headers, mod_request):
     client = client_logged_as("mod@example.org")
 
     response = client.post(
-        "/user/moderation/",
-        headers=headers,
-        json={"action": "accept", "request_id": mod_request.id},
+        f"/requests/{mod_request.id}/actions/accept", headers=headers
     )
     assert response.status_code == 200
 
     response = client.get(
-        "/user/moderation/",
+        "/requests/",
         headers=headers,
     )
     assert response.status_code == 200
@@ -45,22 +40,11 @@ def test_moderate(app, es_clear, client_logged_as, headers, mod_request):
     assert len(hits) == 1
     assert hits[0]["status"] == "accepted"
 
-    # Decline after accepting
+    # Decline after accepting: invalid
     response = client.post(
-        "/user/moderation/",
-        headers=headers,
-        json={"action": "decline", "request_id": mod_request.id},
+        f"/requests/{mod_request.id}/actions/decline", headers=headers
     )
-    assert response.status_code == 200
-
-    response = client.get(
-        "/user/moderation/",
-        headers=headers,
-    )
-    assert response.status_code == 200
-    hits = response.json["hits"]["hits"]
-    assert len(hits) == 1
-    assert hits[0]["status"] == "declined"
+    assert response.status_code == 400
 
 
 @pytest.mark.parametrize(
@@ -77,9 +61,7 @@ def test_moderate_invalid_user(
     # Log as a normal user that can't moderate
     client = client_logged_as("user1@example.org")
     response = client.post(
-        "/user/moderation/",
-        headers=headers,
-        json={"action": invalid_action, "request_id": mod_request.id},
+        f"/requests/{mod_request.id}/actions/{invalid_action}", headers=headers
     )
     assert response.status_code == expected_code
 
@@ -112,16 +94,13 @@ def test_invalid_actions_after_submit(
 
     # Execute good action (accept)
     response = client.post(
-        "/user/moderation/",
-        headers=headers,
-        json={"action": "accept", "request_id": mod_request.id},
+        f"/requests/{mod_request.id}/actions/accept", headers=headers
     )
+    assert response.status_code == 200
 
     # Execute invalid actions after accepting
     response = client.post(
-        "/user/moderation/",
-        headers=headers,
-        json={"action": invalid_action, "request_id": mod_request.id},
+        f"/requests/{mod_request.id}/actions/{invalid_action}", headers=headers
     )
     assert response.status_code == expected_code
 
@@ -133,7 +112,7 @@ def test_search_as_moderator(app, es_clear, client_logged_as, headers, mod_reque
     client = client_logged_as(mod_email)
 
     response = client.get(
-        "/user/moderation/",
+        "/requests/",
         headers=headers,
     )
     assert response.status_code == 200
@@ -149,7 +128,7 @@ def test_search_as_user(app, es_clear, client_logged_as, headers, mod_request):
     client = client_logged_as("user1@example.org")
 
     response = client.get(
-        "/user/moderation/",
+        "/requests/",
         headers=headers,
     )
     assert response.status_code == 200
@@ -164,7 +143,7 @@ def test_links(app, es_clear, client_logged_as, headers, mod_request):
     client = client_logged_as(mod_email)
 
     response = client.get(
-        "/user/moderation/",
+        "/requests/",
         headers=headers,
     )
     assert response.status_code == 200
@@ -176,26 +155,20 @@ def test_links(app, es_clear, client_logged_as, headers, mod_request):
     links = hit["links"]
     assert set(["accept", "cancel", "decline"]) <= set(links["actions"])
 
-    # TODO
-    # # Decline and check links again
-    # response = client.post(
-    #     links["actions"]["decline"],
-    #     headers=headers,
-    # )
-    # assert response.status_code == 200
+    # Decline and check links again
+    # Remove host/api, client is already logged.
+    url = links["actions"]["decline"][len("https://127.0.0.1:5000/api") :]
+    response = client.post(url, headers=headers)
+    assert response.status_code == 200
 
-    # response = client.get(
-    #     "/user/moderation/",
-    #     headers=headers,
-    # )
-    # assert response.status_code == 200
-    # hits = response.json["hits"]["hits"]
-    # assert len(hits) == 1
-    # hit = hits[0]
-    # links = hit["links"]
-    # breakpoint()
-    # # Actions are not allowed anymore
-    # assert set(["accept", "cancel", "decline"]) > set(links["actions"])
-
-
-# TODO test search filters, facets, sorting
+    response = client.get(
+        "/requests/",
+        headers=headers,
+    )
+    assert response.status_code == 200
+    hits = response.json["hits"]["hits"]
+    assert len(hits) == 1
+    hit = hits[0]
+    links = hit["links"]
+    # Actions are not allowed anymore
+    assert set(["accept", "cancel", "decline"]) > set(links["actions"])

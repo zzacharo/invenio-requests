@@ -7,35 +7,29 @@
 """User moderation requests."""
 
 from invenio_i18n import lazy_gettext as _
-from invenio_users_resources.permissions import moderation_action
+from invenio_users_resources.proxies import current_users_service
 
 from invenio_requests.customizations import RequestType, actions
 
 
-class BlockUserAction(actions.DeclineAction):
+class DeclineUserAction(actions.DeclineAction):
     """Represents a decline action used to block an user."""
 
     def execute(self, identity, uow):
         """Executes block action."""
-        # TODO add specific user block actions
+        user = self.request.topic.resolve()
+        current_users_service.block(identity, user.id, uow=uow)
         super().execute(identity, uow)
 
-    # Allow APPROVED -> BLOCKED transition
-    status_from = ["submitted", "accepted"]
-    status_to = "declined"
 
-
-class ApproveUserAction(actions.AcceptAction):
+class AcceptUserAction(actions.AcceptAction):
     """Represents an accept action used to aprove an user."""
 
     def execute(self, identity, uow):
         """Executes aprove action."""
-        # TODO add specific user block actions
+        user = self.request.topic.resolve()
+        current_users_service.approve(identity, user.id, uow=uow)
         super().execute(identity, uow)
-
-    # Allow BLOCKED -> APPROVED transition
-    status_from = ["submitted", "declined"]
-    status_to = "accepted"
 
 
 class UserModeration(RequestType):
@@ -46,11 +40,9 @@ class UserModeration(RequestType):
 
     creator_can_be_none = False
     topic_can_be_none = False
-    allowed_creator_ref_types = ["role"]
-    allowed_receiver_ref_types = ["role"]
+    allowed_creator_ref_types = ["group"]
+    allowed_receiver_ref_types = ["group"]
     allowed_topic_ref_types = ["user"]
-
-    needs_context = {"roles": [moderation_action.value]}
 
     available_actions = {
         "delete": actions.DeleteAction,
@@ -58,6 +50,6 @@ class UserModeration(RequestType):
         "create": actions.CreateAction,
         "cancel": actions.CancelAction,
         # Custom implemented actions
-        "accept": ApproveUserAction,
-        "decline": BlockUserAction,
+        "accept": AcceptUserAction,
+        "decline": DeclineUserAction,
     }

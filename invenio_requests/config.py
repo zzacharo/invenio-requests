@@ -8,7 +8,7 @@
 
 """Invenio module for generic and customizable requests."""
 
-from invenio_users_resources.entity_resolvers import RoleResolver, UserResolver
+from invenio_users_resources.entity_resolvers import GroupResolver, UserResolver
 
 from invenio_requests.services.requests import facets
 
@@ -27,7 +27,7 @@ REQUESTS_REGISTERED_EVENT_TYPES = [
 ]
 """Configuration for registered Request Event Types."""
 
-REQUESTS_ENTITY_RESOLVERS = [UserResolver(), RoleResolver()]
+REQUESTS_ENTITY_RESOLVERS = [UserResolver(), GroupResolver()]
 """Registered resolvers for resolving/creating references in request metadata."""
 
 REQUESTS_ROUTES = {
@@ -53,3 +53,7 @@ REQUESTS_FACETS = {
 
 REQUESTS_TIMELINE_PAGE_SIZE = 15
 """Amount of items per page on the request details timeline"""
+
+
+REQUESTS_MODERATION_ROLE = "administration-moderation"
+"""ID of the Role used for moderation."""

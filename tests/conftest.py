@@ -44,6 +44,7 @@ from invenio_app.factory import create_api as _create_api
 from invenio_notifications.backends import EmailNotificationBackend
 from invenio_notifications.services.builders import NotificationBuilder
 from invenio_records_resources.references.entity_resolvers import ServiceResultResolver
+from invenio_users_resources.permissions import user_management_action
 from invenio_users_resources.proxies import current_users_service
 from invenio_users_resources.records import UserAggregate
 from invenio_users_resources.services.schemas import (
@@ -52,8 +53,6 @@ from invenio_users_resources.services.schemas import (
     UserSchema,
 )
 from marshmallow import fields
-from invenio_users_resources.permissions import user_moderation_action, user_moderator
-from invenio_users_resources.permissions import moderation_action
 
 from invenio_requests.customizations import CommentEventType, LogEventType, RequestType
 from invenio_requests.notifications.builders import (
@@ -292,34 +291,43 @@ def superuser_role(database):
 
 
 @pytest.fixture(scope="module")
-def moderator_user(users):
+def moderator_role(app, database):
+    """Moderator role."""
+    REQUESTS_MODERATION_ROLE = app.config["REQUESTS_MODERATION_ROLE"]
+    mod_role = Role(name=REQUESTS_MODERATION_ROLE)
+    database.session.add(mod_role)
+
+    action_role = ActionRoles.create(action=user_management_action, role=mod_role)
+    database.session.add(action_role)
+    database.session.commit()
+    return mod_role
+
+
+@pytest.fixture(scope="module")
+def moderator_user(UserFixture, app, database, moderator_role):
     """Admin user for requests."""
-    return users[3]
+    u = UserFixture(
+        email="mod@example.org",
+        password=hash_password("password"),
+        active=True,
+        confirmed=True,
+    )
+    u.create(app, database)
+    u.user.roles.append(moderator_role)
+
+    database.session.commit()
+    UserAggregate.index.refresh()
+    return u
 
 
 @pytest.fixture(scope="module")
 def mod_identity(app, moderator_user):
     """Admin user for requests."""
     idt = Identity(moderator_user.id)
+    REQUESTS_MODERATION_ROLE = app.config["REQUESTS_MODERATION_ROLE"]
+
     # Add Role user_moderator
-    idt.provides.add(user_moderator)
-    # Search requires user to be authenticated
-    idt.provides.add(Need(method="system_role", value="authenticated_user"))
-    return idt
-
-
-@pytest.fixture(scope="module")
-def moderator_user(users):
-    """Admin user for requests."""
-    return users[3]
-
-
-@pytest.fixture(scope="module")
-def mod_identity(app, moderator_user):
-    """Admin user for requests."""
-    idt = Identity(moderator_user.id)
-    # Add Role user_moderator
-    idt.provides.add(RoleNeed(moderation_action.value))
+    idt.provides.add(RoleNeed(REQUESTS_MODERATION_ROLE))
     # Search requires user to be authenticated
     idt.provides.add(Need(method="system_role", value="authenticated_user"))
     return idt
@@ -343,12 +351,12 @@ def example_request(identity_simple, request_record_input_data, user1, user2):
 
 
 @pytest.fixture()
-def client_logged_as(client, users, superuser):
+def client_logged_as(client, users, superuser, moderator_user):
     """Logs in a user to the client."""
 
     def log_user(user_email):
         """Log the user."""
-        available_users = list(users.values()) + [superuser]
+        available_users = list(users.values()) + [superuser, moderator_user]
 
         user = next((u.user for u in available_users if u.email == user_email), None)
         login_user(user, remember=True)

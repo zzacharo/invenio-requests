@@ -10,7 +10,7 @@
 
 """Request permissions."""
 
-from invenio_records_permissions import BasePermissionPolicy, RecordPermissionPolicy
+from invenio_records_permissions import RecordPermissionPolicy
 from invenio_records_permissions.generators import (
     AnyUser,
     AuthenticatedUser,
@@ -18,7 +18,6 @@ from invenio_records_permissions.generators import (
     SystemProcess,
     SystemProcessWithoutSuperUser,
 )
-from invenio_users_resources.services.generators import UserModeration
 
 from .generators import Commenter, Creator, Receiver, Status
 

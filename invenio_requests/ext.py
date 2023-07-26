@@ -18,8 +18,6 @@ from .resources import (
     RequestCommentsResourceConfig,
     RequestsResource,
     RequestsResourceConfig,
-    UserModerationResource,
-    UserModerationResourceConfig,
 )
 from .services import (
     RequestEventsService,
@@ -90,11 +88,6 @@ class InvenioRequests:
         self.request_events_resource = RequestCommentsResource(
             service=self.request_events_service,
             config=RequestCommentsResourceConfig,
-        )
-
-        self.user_moderation_requests_resource = UserModerationResource(
-            service=self.user_moderation_requests_service,
-            config=UserModerationResourceConfig,
         )
 
     def init_registry(self, app):

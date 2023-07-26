@@ -12,13 +12,10 @@
 
 from .events import RequestCommentsResource, RequestCommentsResourceConfig
 from .requests import RequestsResource, RequestsResourceConfig
-from .user_moderation import UserModerationResource, UserModerationResourceConfig
 
 __all__ = (
     "RequestsResource",
     "RequestsResourceConfig",
     "RequestCommentsResource",
     "RequestCommentsResourceConfig",
-    "UserModerationResource",
-    "UserModerationResourceConfig",
 )
