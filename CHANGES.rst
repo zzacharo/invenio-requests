@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version 2.9.0 (2023-08-02)
+
+- user moderation: add new request type, service and resource
+
 Version 2.8.0 (2023-07-24)
 
 - requests: add request event notification builder,
