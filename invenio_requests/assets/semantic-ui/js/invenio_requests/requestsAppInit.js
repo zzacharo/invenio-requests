@@ -38,6 +38,8 @@ import {
   LabelTypeCommunityInclusion,
   LabelTypeCommunityInvitation,
   LabelTypeCommunitySubmission,
+  LabelTypeGuestAccess,
+  LabelTypeUserAccess,
 } from "./contrib";
 
 const requestDetailsDiv = document.getElementById("request-detail");
@@ -61,6 +63,8 @@ const overriddenComponents = {
   "RequestTypeLabel.layout.community-submission": LabelTypeCommunitySubmission,
   "RequestTypeLabel.layout.community-inclusion": LabelTypeCommunityInclusion,
   "RequestTypeLabel.layout.community-invitation": LabelTypeCommunityInvitation,
+  "RequestTypeLabel.layout.guest-access-request": LabelTypeGuestAccess,
+  "RequestTypeLabel.layout.user-access-request": LabelTypeUserAccess,
   "RequestActionModalTrigger.accept": RequestAcceptModalTrigger,
   "RequestActionModalTrigger.decline": RequestDeclineModalTrigger,
   "RequestActionModalTrigger.cancel": RequestCancelModalTrigger,

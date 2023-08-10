@@ -18,6 +18,8 @@ type = TermsFacet(
         "community-submission": _("Draft review"),
         "community-inclusion": _("Community inclusion"),
         "community-invitation": _("Member invitation"),
+        "guest-access-request": _("Guest access"),
+        "user-access-request": _("User access"),
     },
 )
 

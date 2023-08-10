@@ -8,6 +8,8 @@ import {
   LabelTypeCommunityInclusion,
   LabelTypeCommunityInvitation,
   LabelTypeCommunitySubmission,
+  LabelTypeGuestAccess,
+  LabelTypeUserAccess,
 } from "@js/invenio_requests/contrib";
 import {
   RequestAcceptButton,
@@ -24,6 +26,8 @@ export const defaultContribComponents = {
   [`RequestTypeLabel.layout.community-submission`]: LabelTypeCommunitySubmission,
   [`RequestTypeLabel.layout.community-inclusion`]: LabelTypeCommunityInclusion,
   [`RequestTypeLabel.layout.community-invitation`]: LabelTypeCommunityInvitation,
+  [`RequestTypeLabel.layout.guest-access-request`]: LabelTypeGuestAccess,
+  [`RequestTypeLabel.layout.user-access-request`]: LabelTypeUserAccess,
   [`RequestStatusLabel.layout.submitted`]: LabelStatusSubmit,
   [`RequestStatusLabel.layout.deleted`]: LabelStatusDelete,
   [`RequestStatusLabel.layout.accepted`]: LabelStatusAccept,

@@ -25,3 +25,15 @@ export const LabelTypeCommunityInvitation = (props) => (
     {i18next.t("Member invitation")}
   </Label>
 );
+
+export const LabelTypeGuestAccess = (props) => (
+  <Label horizontal className="primary" size="small">
+    {i18next.t("Guest access")}
+  </Label>
+);
+
+export const LabelTypeUserAccess = (props) => (
+  <Label horizontal className="primary" size="small">
+    {i18next.t("User access")}
+  </Label>
+);

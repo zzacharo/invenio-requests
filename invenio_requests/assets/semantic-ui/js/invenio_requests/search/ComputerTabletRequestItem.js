@@ -25,6 +25,7 @@ export const ComputerTabletRequestItem = ({
   let creatorName = "";
   const isCreatorUser = "user" in result.created_by;
   const isCreatorCommunity = "community" in result.created_by;
+  const isCreatorGuest = "email" in result.created_by;
   if (isCreatorUser) {
     creatorName =
       result.expanded?.created_by.profile?.full_name ||
@@ -33,6 +34,8 @@ export const ComputerTabletRequestItem = ({
   } else if (isCreatorCommunity) {
     creatorName =
       result.expanded?.created_by.metadata?.title || result.created_by.community;
+  } else if (isCreatorGuest) {
+    creatorName = result.created_by.email;
   }
 
   const getUserIcon = (receiver) =>  {
