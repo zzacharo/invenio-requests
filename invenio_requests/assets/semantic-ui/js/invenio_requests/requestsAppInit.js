@@ -12,12 +12,20 @@ import {
 import { i18next } from "@translations/invenio_requests/i18next";
 import React from "react";
 import ReactDOM from "react-dom";
+import { overrideStore } from "react-overridable";
+import { InvenioRequestsApp } from "./InvenioRequestsApp";
 import {
   RequestAcceptButton,
   RequestCancelButton,
   RequestDeclineButton,
 } from "./components/Buttons";
-import { InvenioRequestsApp } from "./InvenioRequestsApp";
+import {
+  LabelTypeCommunityInclusion,
+  LabelTypeCommunityInvitation,
+  LabelTypeCommunitySubmission,
+  LabelTypeGuestAccess,
+  LabelTypeUserAccess,
+} from "./contrib";
 import {
   AcceptStatus,
   CancelStatus,
@@ -34,20 +42,14 @@ import {
   TimelineExpireEvent,
   TimelineUnknownEvent,
 } from "./timelineEvents";
-import {
-  LabelTypeCommunityInclusion,
-  LabelTypeCommunityInvitation,
-  LabelTypeCommunitySubmission,
-  LabelTypeGuestAccess,
-  LabelTypeUserAccess,
-} from "./contrib";
 
 const requestDetailsDiv = document.getElementById("request-detail");
 const request = JSON.parse(requestDetailsDiv.dataset.record);
 const defaultQueryParams = JSON.parse(requestDetailsDiv.dataset.defaultQueryConfig);
 const userAvatar = JSON.parse(requestDetailsDiv.dataset.userAvatar);
+const permissions = JSON.parse(requestDetailsDiv.dataset.permissions);
 
-const overriddenComponents = {
+const defaultComponents = {
   "TimelineEvent.layout.unknown": TimelineUnknownEvent,
   "TimelineEvent.layout.declined": TimelineDeclineEvent,
   "TimelineEvent.layout.accepted": TimelineAcceptEvent,
@@ -76,12 +78,15 @@ const overriddenComponents = {
   "RequestActionModal.title.decline": () => i18next.t("Decline request"),
 };
 
+const overriddenComponents = overrideStore.getAll();
+
 ReactDOM.render(
   <InvenioRequestsApp
     request={request}
     defaultQueryParams={defaultQueryParams}
-    overriddenCmps={overriddenComponents}
+    overriddenCmps={{ ...defaultComponents, ...overriddenComponents }}
     userAvatar={userAvatar}
+    permissions={permissions}
   />,
   requestDetailsDiv
 );

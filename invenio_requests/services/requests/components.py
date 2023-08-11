@@ -41,6 +41,8 @@ class RequestDataComponent(DataComponent):
         if record.status == "created":
             keys = ("title", "description", "payload", "receiver", "topic")
         else:
+            # TODO: add possibility to update payload (https://github.com/inveniosoftware/invenio-rdm-records/issues/1402)
+            # keys = ("title", "description", "payload")
             keys = ("title", "description")
 
         for k in keys:

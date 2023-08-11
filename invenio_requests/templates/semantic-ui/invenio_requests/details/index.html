@@ -47,6 +47,7 @@
          data-record='{{ invenio_request | tojson }}'
          data-default-query-config='{{ dict(size=config["REQUESTS_TIMELINE_PAGE_SIZE"]) | tojson }}'
          data-user-avatar='{{ user_avatar | tojson }}'
+         data-permissions='{{ permissions | tojson }}'
     >{# react app root #}
       <div class="ui grid">
         <div class="stretched row">
