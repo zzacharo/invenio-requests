@@ -8,7 +8,7 @@
 
 import pytest
 from flask_principal import Need
-from invenio_access.permissions import system_identity, system_user_id
+from invenio_access.permissions import system_identity
 from invenio_access.utils import get_identity
 from invenio_records_resources.resources.errors import PermissionDeniedError
 from marshmallow import ValidationError
@@ -18,27 +18,29 @@ from invenio_requests.proxies import (
     current_requests_service,
     current_user_moderation_service,
 )
+from invenio_requests.services.user_moderation.errors import OpenRequestAlreadyExists
 
 
 def test_request_moderation(app, es_clear, users, identity_simple, mod_identity):
     """Tests the service for request moderation."""
 
-    user = users["user1"]
+    user1 = users["user1"]
+    user2 = users["user2"]
 
     service = current_user_moderation_service
 
     # Use system identity
-    request_item = service.request_moderation(system_identity, user_id=user.id)
+    request_item = service.request_moderation(system_identity, user_id=user1.id)
     assert request_item
     # Request moderation creates and submits the moderation request
     assert request_item._request.status == "submitted"
 
     # User identity is not allowed to submit moderation requests
     with pytest.raises(Exception):
-        service.request_moderation(identity_simple, user_id=user.id)
+        service.request_moderation(identity_simple, user_id=user1.id)
 
-    # Use system identity
-    request_item = service.request_moderation(mod_identity, user_id=user.id)
+    # Use moderator identity
+    request_item = service.request_moderation(mod_identity, user_id=user2.id)
     assert request_item
     # Request moderation creates and submits the moderation request
     assert request_item._request.status == "submitted"
@@ -154,3 +156,35 @@ def test_invalid_request_data(app, es_clear, users, mod_identity):
         service.request_moderation(
             mod_identity, user_id=user.id, data={"invalid": "data"}
         )
+
+
+def test_duplicate_request(app, es_clear, users, mod_identity):
+    """Test request creation when a request is already open."""
+    user = users["user1"]
+    service = current_user_moderation_service
+
+    # Create a moderation request
+    first_request = service.request_moderation(mod_identity, user_id=user.id)
+    assert first_request
+    assert first_request._request.status == "submitted"
+
+    # Duplicated request are not allowed
+    with pytest.raises(OpenRequestAlreadyExists):
+        service.request_moderation(mod_identity, user_id=user.id)  # nothing will happen
+
+    # Verify that only the first request was created
+    res = current_requests_service.search(
+        mod_identity, params={"q": f"topic.user:{user.id}"}
+    )
+    assert res.total == 1
+    assert res.to_dict()["hits"]["hits"][0]["id"] == first_request.id
+
+    # Resolve the request and re-request moderation
+    current_requests_service.execute_action(
+        mod_identity, id_=first_request.id, action="decline"
+    )
+
+    # New request
+    request_item = service.request_moderation(mod_identity, user_id=user.id)
+    assert request_item
+    assert request_item._request.status == "submitted"
