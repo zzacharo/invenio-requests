@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version 2.9.2 (2023-08-17)
+
+- access request: update guest request payload
+- access request: fix ui bugs
+
 Version 2.9.1 (2023-08-09)
 
 - ui: small improvement
