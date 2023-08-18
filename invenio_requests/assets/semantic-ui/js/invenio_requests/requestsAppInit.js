@@ -8,6 +8,7 @@ import {
   RequestAcceptModalTrigger,
   RequestCancelModalTrigger,
   RequestDeclineModalTrigger,
+  RequestSubmitModalTrigger,
 } from "@js/invenio_requests/components/ModalTriggers";
 import { i18next } from "@translations/invenio_requests/i18next";
 import React from "react";
@@ -18,14 +19,16 @@ import {
   RequestAcceptButton,
   RequestCancelButton,
   RequestDeclineButton,
+  RequestSubmitButton,
 } from "./components/Buttons";
 import {
+  defaultContribComponents,
   LabelTypeCommunityInclusion,
   LabelTypeCommunityInvitation,
   LabelTypeCommunitySubmission,
   LabelTypeGuestAccess,
   LabelTypeUserAccess,
-} from "./contrib";
+} from './contrib';
 import {
   AcceptStatus,
   CancelStatus,
@@ -50,6 +53,7 @@ const userAvatar = JSON.parse(requestDetailsDiv.dataset.userAvatar);
 const permissions = JSON.parse(requestDetailsDiv.dataset.permissions);
 
 const defaultComponents = {
+  ...defaultContribComponents,
   "TimelineEvent.layout.unknown": TimelineUnknownEvent,
   "TimelineEvent.layout.declined": TimelineDeclineEvent,
   "TimelineEvent.layout.accepted": TimelineAcceptEvent,
@@ -70,9 +74,11 @@ const defaultComponents = {
   "RequestActionModalTrigger.accept": RequestAcceptModalTrigger,
   "RequestActionModalTrigger.decline": RequestDeclineModalTrigger,
   "RequestActionModalTrigger.cancel": RequestCancelModalTrigger,
+  "RequestActionModalTrigger.submit": RequestSubmitModalTrigger,
   "RequestActionButton.cancel": RequestCancelButton,
   "RequestActionButton.accept": RequestAcceptButton,
   "RequestActionButton.decline": RequestDeclineButton,
+  "RequestActionButton.submit": RequestSubmitButton,
   "RequestActionModal.title.cancel": () => i18next.t("Cancel request"),
   "RequestActionModal.title.accept": () => i18next.t("Accept request"),
   "RequestActionModal.title.decline": () => i18next.t("Decline request"),

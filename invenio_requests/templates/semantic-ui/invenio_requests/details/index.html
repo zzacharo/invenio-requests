@@ -13,9 +13,10 @@
   {%- extends config.BASE_TEMPLATE %}
 {% endif %}
 
-{% set title = _("Request ") %}
+
 
 {% block page_body %}
+  {% set title = _("Request ") %}
   {{ super() }}
   {%- block request_body %}
     <div class="ui container request-detail-page">

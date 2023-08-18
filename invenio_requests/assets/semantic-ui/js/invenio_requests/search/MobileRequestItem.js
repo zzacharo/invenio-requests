@@ -39,7 +39,7 @@ export const MobileRequestItem = ({
     return receiver?.is_ghost ? "user secret" : "users";
   }
   const getTypeIcon = (type) => {
-    if (type =="community-invitation") return "user plus";
+    if (type ==="community-invitation") return "user plus";
     else return "plus";
   }
 

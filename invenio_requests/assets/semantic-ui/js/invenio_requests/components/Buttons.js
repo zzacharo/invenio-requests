@@ -112,3 +112,28 @@ export const RequestCancelButton = ({
     />
   );
 };
+
+
+export const RequestSubmitButton = ({
+  onClick,
+  loading,
+  ariaAttributes,
+  size,
+  content,
+  className,
+}) => {
+  return (
+  <Button
+      icon="handshake outline"
+      labelPosition="left"
+      content={i18next.t("Request access")}
+      onClick={onClick}
+      positive
+      loading={loading}
+      disabled={loading}
+      size={size}
+      className={className}
+      {...ariaAttributes}
+    />
+  );
+};

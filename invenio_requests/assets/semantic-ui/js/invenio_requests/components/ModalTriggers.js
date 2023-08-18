@@ -11,6 +11,7 @@ import PropTypes from "prop-types";
 import { Dropdown } from "semantic-ui-react";
 import {
   RequestAcceptButton,
+  RequestSubmitButton,
   RequestCancelButton,
   RequestDeclineButton,
 } from "./Buttons";
@@ -163,6 +164,57 @@ RequestCancelModalTrigger.propTypes = {
 };
 
 RequestCancelModalTrigger.defaultProps = {
+  size: "mini",
+  className: "ml-5",
+};
+
+
+export const RequestSubmitModalTrigger = ({
+  onClick,
+  requestType,
+  loading,
+  ariaAttributes,
+  size,
+  className,
+}) => {
+  const text = i18next.t("Request access");
+  return (
+    <MediaContextProvider>
+      <Media greaterThanOrEqual="tablet">
+        <RequestSubmitButton
+          onClick={onClick}
+          loading={loading}
+          disabled={loading}
+          requestType={requestType}
+          size={size}
+          className={className}
+          {...ariaAttributes}
+        />
+      </Media>
+      <Media at="mobile">
+        <Dropdown.Item
+          icon={{
+            name: "handshake outline",
+            color: "positive",
+            className: "mr-5",
+          }}
+          onClick={onClick}
+          content={text}
+        />
+      </Media>
+    </MediaContextProvider>
+  );
+};
+
+RequestSubmitModalTrigger.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
+  ariaAttributes: PropTypes.object,
+  size: PropTypes.string,
+  className: PropTypes.string,
+};
+
+RequestSubmitModalTrigger.defaultProps = {
   size: "mini",
   className: "ml-5",
 };

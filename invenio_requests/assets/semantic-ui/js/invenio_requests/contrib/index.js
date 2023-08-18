@@ -15,6 +15,7 @@ import {
   RequestAcceptButton,
   RequestCancelButton,
   RequestDeclineButton,
+  RequestSubmitButton,
 } from "@js/invenio_requests/components/Buttons";
 import {
   RequestAcceptModalTrigger,
@@ -36,6 +37,7 @@ export const defaultContribComponents = {
   [`RequestStatusLabel.layout.expired`]: LabelStatusExpire,
   [`RequestActionButton.cancel`]: RequestCancelButton,
   [`RequestActionButton.decline`]: RequestDeclineButton,
+  [`RequestActionButton.submit`]: RequestSubmitButton,
   [`RequestActionButton.accept`]: RequestAcceptButton,
   [`RequestActionModalTrigger.accept`]: RequestAcceptModalTrigger,
   [`RequestActionModalTrigger.decline`]: RequestDeclineModalTrigger,
