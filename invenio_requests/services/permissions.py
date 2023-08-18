@@ -49,6 +49,8 @@ class PermissionPolicy(RecordPermissionPolicy):
         SystemProcess(),
     ]
 
+    can_update_payload = can_update
+
     can_delete = [
         Status(["created"], [Creator()]),
         Status(

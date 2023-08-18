@@ -117,6 +117,7 @@ class RequestType:
     """A list of allowed TYPE keys for ``topic`` reference dicts."""
 
     payload_schema = None
+    payload_schema_cls = None
     """Schema for supported payload fields.
 
     Define it as a dictionary of fields mapping:
@@ -145,6 +146,15 @@ class RequestType:
         return []
 
     @classmethod
+    def _create_payload_cls(cls):
+        class PayloadBaseSchema(ma.Schema):
+            class Meta:
+                # Raise on invalid payload keys
+                unknown = ma.RAISE
+
+        cls.payload_schema_cls = PayloadBaseSchema
+
+    @classmethod
     def _create_marshmallow_schema(cls):
         """Create a marshmallow schema for this request type."""
         # Avoid circular imports
@@ -167,15 +177,12 @@ class RequestType:
             ),
         }
 
-        # Raise on invalid payload keys
-        class PayloadBaseSchema(ma.Schema):
-            class Meta:
-                unknown = ma.RAISE
-
         # If a payload schema is defined, add it to the request schema
         if cls.payload_schema is not None:
+            # TODO probably could be improved, probably in a wrong place
+            cls._create_payload_cls()
             additional_fields["payload"] = ma.fields.Nested(
-                PayloadBaseSchema.from_dict(cls.payload_schema),
+                cls.payload_schema_cls.from_dict(cls.payload_schema),
             )
 
         # Dynamically create a schema from the fields defined

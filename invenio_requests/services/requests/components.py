@@ -41,10 +41,29 @@ class RequestDataComponent(DataComponent):
         if record.status == "created":
             keys = ("title", "description", "payload", "receiver", "topic")
         else:
-            # TODO: add possibility to update payload (https://github.com/inveniosoftware/invenio-rdm-records/issues/1402)
-            # keys = ("title", "description", "payload")
-            keys = ("title", "description")
+            keys = ("title", "description", "payload")
 
         for k in keys:
             if k in data:
                 record[k] = data[k]
+
+
+class RequestPayloadComponent(DataComponent):
+    """Request variant of DataComponent using dynamic schema."""
+
+    def update(self, identity, data=None, record=None, **kwargs):
+        """Update an existing request payload based on permissions."""
+        payload = {}
+        # take permissions if exist
+        permissions = getattr(record.type.payload_schema_cls, "field_load_permissions")
+        if permissions:
+            for key in data["payload"]:
+                if key in permissions:
+                    # permissions should have been checked by now already
+                    # so we can assign the new data
+                    payload[key] = data["payload"][key]
+                else:
+                    # keep the old data - no permission to change it
+                    # workaround for the lack of patch method
+                    payload[key] = record["payload"][key]
+            record["payload"] = payload

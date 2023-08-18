@@ -156,11 +156,12 @@ class RequestsService(RecordService):
     @unit_of_work()
     def update(self, identity, id_, data, revision_id=None, uow=None, expand=False):
         """Update a request."""
+
         request = self.record_cls.get_record(id_)
 
         self.check_revision_id(request, revision_id)
 
-        self.require_permission(identity, f"update", request=request)
+        self.require_permission(identity, f"update", record=request, request=request)
 
         # we're not using "self.schema" b/c the schema may differ per
         # request type!
@@ -170,6 +171,9 @@ class RequestsService(RecordService):
             context={
                 "identity": identity,
                 "record": request,
+                # TODO get rid of request as parameter since parent services are
+                # not aware of 'request'
+                "request": request,
             },
         )
 
