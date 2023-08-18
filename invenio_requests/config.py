@@ -11,6 +11,7 @@
 from invenio_users_resources.entity_resolvers import GroupResolver, UserResolver
 
 from invenio_requests.services.requests import facets
+from invenio_i18n import lazy_gettext as _
 
 from .customizations import CommentEventType, LogEventType
 from .services.permissions import PermissionPolicy
@@ -57,3 +58,45 @@ REQUESTS_TIMELINE_PAGE_SIZE = 15
 
 REQUESTS_MODERATION_ROLE = "administration-moderation"
 """ID of the Role used for moderation."""
+
+
+#
+# User moderation administration
+#
+REQUESTS_USER_MODERATION_SEARCH = {
+    "facets": ["status", "is_open"],
+    "sort": ["bestmatch", "newest", "oldest"],
+}
+"""Community requests search configuration (i.e list of community requests)"""
+
+REQUESTS_USER_MODERATION_SORT_OPTIONS = {
+    "bestmatch": dict(
+        title=_("Best match"),
+        fields=["_score"],  # ES defaults to desc on `_score` field
+    ),
+    "newest": dict(
+        title=_("Newest"),
+        fields=["-created"],
+    ),
+    "oldest": dict(
+        title=_("Oldest"),
+        fields=["created"],
+    ),
+}
+"""Definitions of available record sort options."""
+
+REQUESTS_USER_MODERATION_FACETS = {
+    "status": {
+        "facet": facets.status,
+        "ui": {
+            "field": "status",
+        },
+    },
+    "is_open": {
+        "facet": facets.is_open,
+        "ui": {
+            "field": "is_open"
+        }
+    }
+}
+"""Available facets defined for this module."""

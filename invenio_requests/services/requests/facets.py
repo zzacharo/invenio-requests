@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2022 CERN.
+# Copyright (C) 2023 CERN.
 # Copyright (C) 2023 Graz University of Technology.
 #
 # Invenio-RDM-Records is free software; you can redistribute it and/or modify
@@ -32,5 +32,15 @@ status = TermsFacet(
         "accepted": _("Accepted"),
         "declined": _("Declined"),
         "cancelled": _("Cancelled"),
+    },
+)
+
+
+is_open = TermsFacet(
+    field="is_open",
+    label=_("Open"),
+    value_labels={
+        "true": _("Open"),
+        "false": _("Closed"),
     },
 )

@@ -27,6 +27,7 @@ requests = WebpackThemeBundle(
         "semantic-ui": dict(
             entry={
                 "invenio-requests-base": "./js/invenio_requests/requestsAppInit.js",
+                "invenio-requests-moderation-administration": "./js/invenio_requests/administration/index.js",
             },
             dependencies={
                 "semantic-ui-css": "^2.4.1",
