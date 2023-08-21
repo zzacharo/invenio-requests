@@ -41,7 +41,7 @@ class RequestDataComponent(DataComponent):
         if record.status == "created":
             keys = ("title", "description", "payload", "receiver", "topic")
         else:
-            keys = ("title", "description", "payload")
+            keys = ("title", "description")
 
         for k in keys:
             if k in data:
@@ -55,7 +55,9 @@ class RequestPayloadComponent(DataComponent):
         """Update an existing request payload based on permissions."""
         payload = {}
         # take permissions if exist
-        permissions = getattr(record.type.payload_schema_cls, "field_load_permissions")
+        permissions = getattr(
+            record.type.payload_schema_cls, "field_load_permissions", {}
+        )
         if permissions:
             for key in data["payload"]:
                 if key in permissions:

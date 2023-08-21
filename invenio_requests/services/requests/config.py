@@ -23,7 +23,7 @@ from .components import (
     EntityReferencesComponent,
     RequestDataComponent,
     RequestNumberComponent,
-    RequestPayloadComponent
+    RequestPayloadComponent,
 )
 from .links import RequestLink
 from .params import IsOpenParam, ReferenceFilterParam
@@ -91,10 +91,13 @@ class RequestsServiceConfig(RecordServiceConfig, ConfiguratorMixin):
 
     # TODO: discuss conflict between this and custom request service.
     #  Does it create issues?
-    components = FromConfig("REQUESTS_SERVICE_COMPONENTS", default=[
-        # Order of components is important!
-        RequestPayloadComponent,
-        RequestDataComponent,
-        EntityReferencesComponent,
-        RequestNumberComponent,
-    ])
+    components = FromConfig(
+        "REQUESTS_SERVICE_COMPONENTS",
+        default=[
+            # Order of components is important!
+            RequestPayloadComponent,
+            RequestDataComponent,
+            EntityReferencesComponent,
+            RequestNumberComponent,
+        ],
+    )

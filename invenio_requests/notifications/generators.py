@@ -27,6 +27,7 @@ class RequestParticipantsRecipient(RecipientGenerator):
     def _get_user_id(self, request_field):
         """Checking if entities are users for (non)-expanded requests."""
         # non expanded looks like {"user": "1"}
+        # TODO handle email entity
         non_expanded_id = request_field.get("user")
         # expanded looks like {"id": "1", "profile": {"full_name": "A user"}, ... }
         expanded_id = request_field["id"] if request_field.get("profile") else None
@@ -38,7 +39,6 @@ class RequestParticipantsRecipient(RecipientGenerator):
 
         # checking if entities are users. If not, we will not add them.
         # TODO: add support for other entities? (e.g. groups)
-
         created_by_user_id = self._get_user_id(request["created_by"])
         receiver_user_id = self._get_user_id(request["receiver"])
 

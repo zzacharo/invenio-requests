@@ -134,7 +134,7 @@ class RequestEvent(Record):
     check_referenced = partial(
         check_allowed_references,
         lambda r: True,  # for system process for now
-        lambda r: ["user"],  # only users for now
+        lambda r: ["user", "email"],  # only users for now
     )
 
     created_by = EntityReferenceField("created_by", check_referenced)

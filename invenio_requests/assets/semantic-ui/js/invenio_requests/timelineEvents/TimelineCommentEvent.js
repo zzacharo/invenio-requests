@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { Image } from "react-invenio-forms";
 import Overridable from "react-overridable";
-import { Container, Dropdown, Feed } from "semantic-ui-react";
+import { Container, Dropdown, Feed, Icon } from "semantic-ui-react";
 import { CancelButton, SaveButton } from "../components/Buttons";
 import Error from "../components/Error";
 import FormattedInputEditor from "../components/FormattedInputEditor";
@@ -58,8 +58,8 @@ class TimelineCommentEvent extends Component {
 
     const createdBy = event.created_by;
     const isUser = "user" in createdBy;
+    const isEmail = "email" in createdBy;
     const expandedCreatedBy = event.expanded?.created_by;
-
     let userAvatar,
       userName = null;
     if (isUser) {
@@ -68,7 +68,10 @@ class TimelineCommentEvent extends Component {
       );
       userName = expandedCreatedBy.profile?.full_name || expandedCreatedBy.username;
     }
-
+    else if(isEmail){
+      userAvatar = <Icon size="large" name="user circle outline"/>;
+      userName = createdBy.email;
+    }
     return (
       <Overridable id={`TimelineEvent.layout.${this.eventToType(event)}`} event={event}>
         <RequestsFeed.Item>

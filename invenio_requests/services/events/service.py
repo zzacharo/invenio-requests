@@ -9,8 +9,7 @@
 # under the terms of the MIT License; see LICENSE file for more details.
 
 """RequestEvents Service."""
-
-from invenio_access.permissions import system_identity, system_user_id
+from flask_principal import AnonymousIdentity
 from invenio_i18n import _
 from invenio_notifications.services.uow import NotificationOp
 from invenio_records_resources.services import RecordService, ServiceSchemaWrapper
@@ -29,6 +28,8 @@ from invenio_requests.notifications.builders import (
 )
 from invenio_requests.records.api import RequestEventFormat
 from invenio_requests.services.results import EntityResolverExpandableField
+
+from ...resolvers.registry import ResolverRegistry
 
 
 class RequestEventsService(RecordService):
@@ -78,7 +79,7 @@ class RequestEventsService(RecordService):
             type=event_type,
         )
         event.update(data)
-        event.created_by = self._get_creator(identity)
+        event.created_by = self._get_creator(identity, request=request)
         # Persist record (DB and index)
         uow.register(RecordCommitOp(event, indexer=self.indexer))
 
@@ -236,9 +237,17 @@ class RequestEventsService(RecordService):
         """Get associated event_id."""
         return self.record_cls.get_record(event_id, with_deleted=with_deleted)
 
-    def _get_creator(self, identity):
+    def _get_creator(self, identity, request=None):
         """Get the creator dict from the identity."""
-        if identity == system_identity:
-            return {"user": str(system_user_id)}
-        else:
-            return {"user": str(identity.id)}
+        creator = None
+        if isinstance(identity, AnonymousIdentity):
+            # not ideal - assumes that comment is created by same person
+            # who created a request - solution for guest users
+            creator = request["created_by"]
+
+        referenced_creator = (
+            ResolverRegistry.reference_entity(creator, raise_=True)
+            if creator is not None
+            else ResolverRegistry.reference_identity(identity)
+        )
+        return referenced_creator

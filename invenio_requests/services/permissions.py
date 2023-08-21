@@ -44,12 +44,12 @@ class PermissionPolicy(RecordPermissionPolicy):
     ]
 
     can_update = [
+        SystemProcess(),
         Status(["created"], [Creator()]),
         Status(["submitted"], [Creator(), Receiver()]),
-        SystemProcess(),
     ]
 
-    can_update_payload = can_update
+    can_manage_access_options = [Disable()]
 
     can_delete = [
         Status(["created"], [Creator()]),

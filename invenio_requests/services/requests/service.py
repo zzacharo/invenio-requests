@@ -156,7 +156,6 @@ class RequestsService(RecordService):
     @unit_of_work()
     def update(self, identity, id_, data, revision_id=None, uow=None, expand=False):
         """Update a request."""
-
         request = self.record_cls.get_record(id_)
 
         self.check_revision_id(request, revision_id)
