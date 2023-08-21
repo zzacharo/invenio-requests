@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version 2.10.0 (2023-08-21)
+
+- moderation: restrict request duplication
+
 Version 2.9.2 (2023-08-17)
 
 - access request: update guest request payload
