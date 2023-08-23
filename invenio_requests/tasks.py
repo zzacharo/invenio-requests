@@ -13,9 +13,10 @@ from datetime import datetime
 from celery import shared_task
 from flask import current_app
 from invenio_access.permissions import system_identity
+from invenio_search.engine import dsl
+
 from invenio_requests.proxies import current_user_moderation_service
 from invenio_requests.services.user_moderation.errors import OpenRequestAlreadyExists
-from invenio_search.engine import dsl
 
 from .proxies import current_requests_service
 
