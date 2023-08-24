@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version 2.11.0 (2023-08-24)
+
+- types: add configurable request payload schema
+- components: add payload controlling component
+
 Version 2.10.1 (2023-08-23)
 
 - tasks: add moderation creation
