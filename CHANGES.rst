@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version 2.11.1 (2023-08-30)
+
+- assets: configurable icons per request type
+
 Version 2.11.0 (2023-08-24)
 
 - types: add configurable request payload schema
