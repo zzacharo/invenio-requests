@@ -124,7 +124,7 @@ export const RequestSubmitButton = ({
 }) => {
   return (
   <Button
-      icon="handshake outline"
+      icon="unlock alternate"
       labelPosition="left"
       content={i18next.t("Request access")}
       onClick={onClick}

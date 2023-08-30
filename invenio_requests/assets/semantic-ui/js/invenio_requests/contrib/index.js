@@ -22,6 +22,12 @@ import {
   RequestDeclineModalTrigger,
   RequestCancelModalTrigger,
 } from "@js/invenio_requests/components/ModalTriggers";
+import {
+  AccessRequestIcon,
+  CommunityInclusionIcon,
+  CommunityInvitationIcon
+} from './Icons';
+
 
 export const defaultContribComponents = {
   [`RequestTypeLabel.layout.community-submission`]: LabelTypeCommunitySubmission,
@@ -42,6 +48,13 @@ export const defaultContribComponents = {
   [`RequestActionModalTrigger.accept`]: RequestAcceptModalTrigger,
   [`RequestActionModalTrigger.decline`]: RequestDeclineModalTrigger,
   [`RequestActionModalTrigger.cancel`]: RequestCancelModalTrigger,
+  [`InvenioRequests.RequestTypeIcon.layout.guest-access-request`]: AccessRequestIcon,
+  [`InvenioRequests.RequestTypeIcon.layout.user-access-request`]: AccessRequestIcon,
+  [`InvenioRequests.RequestTypeIcon.layout.community-inclusion`]: CommunityInclusionIcon,
+  [`InvenioRequests.RequestTypeIcon.layout.community-submission`]: CommunityInclusionIcon,
+  [`InvenioRequests.RequestTypeIcon.layout.community-invitation`]: CommunityInvitationIcon,
 };
 
 export * from "./labels";
+export * from "./Icons";
+

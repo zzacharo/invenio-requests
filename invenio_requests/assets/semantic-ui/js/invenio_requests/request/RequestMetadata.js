@@ -37,7 +37,7 @@ const Community = ({ community }) => (
 const ExternalEmail = ({ email }) => (
   <div className="flex">
     <Icon name="mail" className="mr-5" />
-    <span>{i18next.t("External email")}: {email.id}</span>
+    <span>{i18next.t("Email")}: {email.id}</span>
   </div>
 );
 

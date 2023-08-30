@@ -5,6 +5,7 @@
 // under the terms of the MIT License; see LICENSE file for more details.
 
 import { i18next } from "@translations/invenio_requests/i18next";
+import { default as RequestTypeIcon } from '@js/invenio_requests/components/RequestTypeIcon';
 import { Trans } from "react-i18next";
 import React from "react";
 import RequestTypeLabel from "@js/invenio_requests/request/RequestTypeLabel";
@@ -42,17 +43,12 @@ export const ComputerTabletRequestItem = ({
     return receiver?.is_ghost ? "user secret" : "users";
   }
 
-  const getTypeIcon = (type) => {
-    if (type =="community-invitation") return "user plus";
-    else return "plus";
-  }
-
   return (
     <Item key={result.id} className="computer tablet only flex">
       <div className="status-icon mr-10">
         <Item.Content verticalAlign="top">
           <Item.Extra>
-            <Icon name={getTypeIcon(result.type)} className="neutral" />
+            <RequestTypeIcon type={result.type}/>
           </Item.Extra>
         </Item.Content>
       </div>

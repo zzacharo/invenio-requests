@@ -194,7 +194,7 @@ export const RequestSubmitModalTrigger = ({
       <Media at="mobile">
         <Dropdown.Item
           icon={{
-            name: "handshake outline",
+            name: "unlock alternate",
             color: "positive",
             className: "mr-5",
           }}
