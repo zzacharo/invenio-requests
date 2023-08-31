@@ -31,7 +31,8 @@ export const RequestEventInnerContainer = ({ children, isEvent }) => (
 
 export const RequestEventAvatarContainer = ({ src, ...uiProps }) => (
   <div className="requests-avatar-container">
-    <Image src={src} rounded avatar {...uiProps} />
+    {src && <Image src={src} rounded avatar {...uiProps} />}
+    {!src && <Icon size="large" name="user circle outline"/>}
   </div>
 );
 
