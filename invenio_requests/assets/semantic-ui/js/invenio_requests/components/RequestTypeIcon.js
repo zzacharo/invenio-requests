@@ -19,7 +19,7 @@ export class RequestTypeIcon extends Component {
     const { type } = this.props;
     return (
       <Overridable id={`InvenioRequests.RequestTypeIcon.layout.${type}`}>
-        <Icon name="plus" className="neutral"/>
+        <Icon name="plus" className="neutral" />
       </Overridable>
     );
   }

@@ -24,7 +24,11 @@ const User = ({ user }) => (
       ui={false}
       rounded
     />
-    <span>{user.profile?.full_name || user?.username || user?.email || i18next.t("Anonymous user")}
+    <span>
+      {user.profile?.full_name ||
+        user?.username ||
+        user?.email ||
+        i18next.t("Anonymous user")}
     </span>
   </div>
 );
@@ -37,7 +41,9 @@ const Community = ({ community }) => (
 const ExternalEmail = ({ email }) => (
   <div className="flex">
     <Icon name="mail" className="mr-5" />
-    <span>{i18next.t("Email")}: {email.id}</span>
+    <span>
+      {i18next.t("Email")}: {email.id}
+    </span>
   </div>
 );
 
@@ -69,7 +75,7 @@ class RequestMetadata extends Component {
     return (
       <Overridable id="InvenioRequest.RequestMetadata.Layout" request={request}>
         <>
-          {expandedCreatedBy !== undefined &&
+          {expandedCreatedBy !== undefined && (
             <>
               <Header as="h3" size="tiny">
                 {i18next.t("Creator")}
@@ -84,7 +90,7 @@ class RequestMetadata extends Component {
               )}
               <Divider />
             </>
-          }
+          )}
 
           <Header as="h3" size="tiny">
             {i18next.t("Receiver")}

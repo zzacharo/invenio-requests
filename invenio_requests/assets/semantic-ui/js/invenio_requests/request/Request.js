@@ -28,7 +28,11 @@ export class Request extends Component {
             request={request}
             actionSuccessCallback={updateRequestAfterAction}
           />
-          <RequestDetails request={request} userAvatar={userAvatar} permissions={permissions}/>
+          <RequestDetails
+            request={request}
+            userAvatar={userAvatar}
+            permissions={permissions}
+          />
         </Loader>
       </Overridable>
     );

@@ -41,7 +41,17 @@ class TimelineFeed extends Component {
   };
 
   render() {
-    const { timeline, loading, error, setPage, size, page, userAvatar, request, permissions } = this.props;
+    const {
+      timeline,
+      loading,
+      error,
+      setPage,
+      size,
+      page,
+      userAvatar,
+      request,
+      permissions,
+    } = this.props;
     const { modalOpen, modalAction } = this.state;
 
     return (
@@ -49,7 +59,11 @@ class TimelineFeed extends Component {
         <Error error={error}>
           <Overridable id="TimelineFeed.layout" {...this.props}>
             <Container id="requests-timeline" className="ml-0-mobile mr-0-mobile">
-              <Overridable id="TimelineFeed.header" request={request} permissions={permissions}/>
+              <Overridable
+                id="TimelineFeed.header"
+                request={request}
+                permissions={permissions}
+              />
               <RequestsFeed>
                 {timeline.hits?.hits.map((event) => (
                   <TimelineCommentEventControlled

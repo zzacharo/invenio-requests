@@ -168,7 +168,6 @@ RequestCancelModalTrigger.defaultProps = {
   className: "ml-5",
 };
 
-
 export const RequestSubmitModalTrigger = ({
   onClick,
   requestType,

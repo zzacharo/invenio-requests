@@ -28,7 +28,7 @@ import {
   LabelTypeCommunitySubmission,
   LabelTypeGuestAccess,
   LabelTypeUserAccess,
-} from './contrib';
+} from "./contrib";
 import {
   AcceptStatus,
   CancelStatus,

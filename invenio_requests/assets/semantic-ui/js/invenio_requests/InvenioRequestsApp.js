@@ -43,7 +43,7 @@ export class InvenioRequestsApp extends Component {
     return (
       <OverridableContext.Provider value={overriddenCmps}>
         <Provider store={this.store}>
-          <Request userAvatar={userAvatar} permissions={permissions}/>
+          <Request userAvatar={userAvatar} permissions={permissions} />
         </Provider>
       </OverridableContext.Provider>
     );

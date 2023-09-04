@@ -19,7 +19,11 @@ class RequestDetails extends Component {
         <>
           <Grid stackable reversed="mobile">
             <Grid.Column mobile={16} tablet={12} computer={13}>
-              <Timeline userAvatar={userAvatar} request={request} permissions={permissions}/>
+              <Timeline
+                userAvatar={userAvatar}
+                request={request}
+                permissions={permissions}
+              />
             </Grid.Column>
             <Grid.Column mobile={16} tablet={4} computer={3}>
               <RequestMetadata request={request} />

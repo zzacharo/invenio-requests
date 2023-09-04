@@ -67,9 +67,8 @@ class TimelineCommentEvent extends Component {
         <RequestsFeed.Avatar src={expandedCreatedBy.links.avatar} as={Image} circular />
       );
       userName = expandedCreatedBy.profile?.full_name || expandedCreatedBy.username;
-    }
-    else if(isEmail){
-      userAvatar = <Icon size="large" name="user circle outline"/>;
+    } else if (isEmail) {
+      userAvatar = <Icon size="large" name="user circle outline" />;
       userName = createdBy.email;
     }
     return (

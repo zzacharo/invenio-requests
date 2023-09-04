@@ -113,7 +113,6 @@ export const RequestCancelButton = ({
   );
 };
 
-
 export const RequestSubmitButton = ({
   onClick,
   loading,
@@ -123,7 +122,7 @@ export const RequestSubmitButton = ({
   className,
 }) => {
   return (
-  <Button
+    <Button
       icon="unlock alternate"
       labelPosition="left"
       content={i18next.t("Request access")}

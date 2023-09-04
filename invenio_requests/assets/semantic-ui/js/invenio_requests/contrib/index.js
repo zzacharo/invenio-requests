@@ -25,9 +25,8 @@ import {
 import {
   AccessRequestIcon,
   CommunityInclusionIcon,
-  CommunityInvitationIcon
-} from './Icons';
-
+  CommunityInvitationIcon,
+} from "./Icons";
 
 export const defaultContribComponents = {
   [`RequestTypeLabel.layout.community-submission`]: LabelTypeCommunitySubmission,
@@ -50,11 +49,13 @@ export const defaultContribComponents = {
   [`RequestActionModalTrigger.cancel`]: RequestCancelModalTrigger,
   [`InvenioRequests.RequestTypeIcon.layout.guest-access-request`]: AccessRequestIcon,
   [`InvenioRequests.RequestTypeIcon.layout.user-access-request`]: AccessRequestIcon,
-  [`InvenioRequests.RequestTypeIcon.layout.community-inclusion`]: CommunityInclusionIcon,
-  [`InvenioRequests.RequestTypeIcon.layout.community-submission`]: CommunityInclusionIcon,
-  [`InvenioRequests.RequestTypeIcon.layout.community-invitation`]: CommunityInvitationIcon,
+  [`InvenioRequests.RequestTypeIcon.layout.community-inclusion`]:
+    CommunityInclusionIcon,
+  [`InvenioRequests.RequestTypeIcon.layout.community-submission`]:
+    CommunityInclusionIcon,
+  [`InvenioRequests.RequestTypeIcon.layout.community-invitation`]:
+    CommunityInvitationIcon,
 };
 
 export * from "./labels";
 export * from "./Icons";
-
