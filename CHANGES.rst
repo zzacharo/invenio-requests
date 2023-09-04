@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version 2.11.2 (2023-09-04)
+
+- assets: fix missing guest user avatar
+
 Version 2.11.1 (2023-08-30)
 
 - assets: configurable icons per request type
