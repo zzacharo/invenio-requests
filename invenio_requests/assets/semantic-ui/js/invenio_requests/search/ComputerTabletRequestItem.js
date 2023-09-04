@@ -5,7 +5,7 @@
 // under the terms of the MIT License; see LICENSE file for more details.
 
 import { i18next } from "@translations/invenio_requests/i18next";
-import { default as RequestTypeIcon } from '@js/invenio_requests/components/RequestTypeIcon';
+import { default as RequestTypeIcon } from "@js/invenio_requests/components/RequestTypeIcon";
 import { Trans } from "react-i18next";
 import React from "react";
 import RequestTypeLabel from "@js/invenio_requests/request/RequestTypeLabel";
@@ -39,16 +39,16 @@ export const ComputerTabletRequestItem = ({
     creatorName = result.created_by.email;
   }
 
-  const getUserIcon = (receiver) =>  {
+  const getUserIcon = (receiver) => {
     return receiver?.is_ghost ? "user secret" : "users";
-  }
+  };
 
   return (
     <Item key={result.id} className="computer tablet only flex">
       <div className="status-icon mr-10">
         <Item.Content verticalAlign="top">
           <Item.Extra>
-            <RequestTypeIcon type={result.type}/>
+            <RequestTypeIcon type={result.type} />
           </Item.Extra>
         </Item.Content>
       </div>
@@ -86,7 +86,10 @@ export const ComputerTabletRequestItem = ({
           <small className="right floated">
             {result.receiver.community && result.expanded?.receiver.metadata.title && (
               <>
-                <Icon className="default-margin" name={getUserIcon(result.expanded?.receiver)} />
+                <Icon
+                  className="default-margin"
+                  name={getUserIcon(result.expanded?.receiver)}
+                />
                 <span className="ml-5">{result.expanded?.receiver.metadata.title}</span>
               </>
             )}

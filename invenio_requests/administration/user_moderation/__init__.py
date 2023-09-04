@@ -6,6 +6,6 @@
 # it under the terms of the MIT License; see LICENSE file for more details.
 """User moderation administration module."""
 
-from .user_moderation import UserModerationListView
+from .user_moderation import UserModerationListView, UserModerationRequestDetailView
 
-__all__ = ("UserModerationListView",)
+__all__ = ("UserModerationListView", "UserModerationRequestDetailView")

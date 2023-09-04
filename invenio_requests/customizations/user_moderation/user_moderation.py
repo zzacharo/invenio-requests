@@ -13,7 +13,7 @@ from invenio_requests.customizations import RequestType, actions
 
 
 class DeclineUserAction(actions.DeclineAction):
-    """Represents a decline action used to block an user."""
+    """Represents a decline action used to block a user."""
 
     def execute(self, identity, uow):
         """Executes block action."""
@@ -23,17 +23,17 @@ class DeclineUserAction(actions.DeclineAction):
 
 
 class AcceptUserAction(actions.AcceptAction):
-    """Represents an accept action used to aprove an user."""
+    """Represents an accept action used to approve a user."""
 
     def execute(self, identity, uow):
-        """Executes aprove action."""
+        """Executes approve action."""
         user = self.request.topic.resolve()
         current_users_service.approve(identity, user.id, uow=uow)
         super().execute(identity, uow)
 
 
-class UserModeration(RequestType):
-    """Request to moderate an user."""
+class UserModerationRequest(RequestType):
+    """Request to moderate a user."""
 
     type_id = "user-moderation"
     name = _("User moderation")

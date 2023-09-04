@@ -58,6 +58,8 @@ class RequestsService(RecordService):
         return [
             EntityResolverExpandableField("created_by"),
             EntityResolverExpandableField("receiver"),
+            # TODO to be verified
+            EntityResolverExpandableField("topic"),
         ]
 
     @unit_of_work()

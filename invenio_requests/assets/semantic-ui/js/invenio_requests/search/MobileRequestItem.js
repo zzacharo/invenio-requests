@@ -35,13 +35,13 @@ export const MobileRequestItem = ({
       result.expanded?.created_by.metadata?.title || result.created_by.community;
   }
 
-  const getUserIcon = (receiver) =>  {
+  const getUserIcon = (receiver) => {
     return receiver?.is_ghost ? "user secret" : "users";
-  }
+  };
   const getTypeIcon = (type) => {
-    if (type ==="community-invitation") return "user plus";
+    if (type === "community-invitation") return "user plus";
     else return "plus";
-  }
+  };
 
   return (
     <Item key={result.id} className="mobile only flex">
@@ -54,7 +54,11 @@ export const MobileRequestItem = ({
         </Item.Extra>
         <Item.Header className="truncate-lines-2 rel-mt-1">
           <a className="header-link p-0" href={detailsURL}>
-            <Icon size="small" name={getTypeIcon(result.type)} className="neutral mr-5" />
+            <Icon
+              size="small"
+              name={getTypeIcon(result.type)}
+              className="neutral mr-5"
+            />
             {result.title}
           </a>
         </Item.Header>
@@ -74,7 +78,10 @@ export const MobileRequestItem = ({
           <small className="block rel-mt-1">
             {result.receiver.community && result.expanded?.receiver.metadata.title && (
               <>
-                <Icon className="default-margin" name={getUserIcon(result.expanded?.receiver)} />
+                <Icon
+                  className="default-margin"
+                  name={getUserIcon(result.expanded?.receiver)}
+                />
                 <span className="ml-5">{result.expanded?.receiver.metadata.title}</span>
               </>
             )}

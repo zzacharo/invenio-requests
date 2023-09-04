@@ -6,14 +6,14 @@
  * under the terms of the MIT License; see LICENSE file for more details.
  */
 
+import { ModerationActions } from "./ModerationActions";
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { Table } from "semantic-ui-react";
 import isEmpty from "lodash/isEmpty";
-import { Actions } from "../actions/Actions";
 import { withState } from "react-searchkit";
-import { AdminUIRoutes } from "../routes";
-import Formatter from "@js/invenio_administration/components/Formatter";
+import { AdminUIRoutes } from "@js/invenio_administration/src/routes";
+import { UserListItemCompact, SearchResultsRowCheckbox } from "react-invenio-forms";
 
 class SearchResultItemComponent extends Component {
   refreshAfterAction = () => {
@@ -33,41 +33,62 @@ class SearchResultItemComponent extends Component {
       idKeyPath,
       resourceSchema,
       listUIEndpoint,
+      resourceHasActions,
     } = this.props;
-    const resourceHasActions = displayEdit || displayDelete || !isEmpty(actions);
 
+    console.log(columns, "-------------------------------------------------");
+    console.log(result, "+++++++++++++++++++++++++++");
+    console.log(resourceSchema, "+++++++++++++++++++++++++++");
+
+    const {
+      expanded: { topic: user },
+      topic: { user: userId },
+    } = result;
+    const splitEmail = user.email.split("@");
     return (
       <Table.Row>
-        {columns.map(([property, { text, order }], index) => {
-          return (
-            <Table.Cell
-              key={`${text}-${order}`}
-              data-label={text}
-              className="word-break-all"
-            >
-              {index === 0 && (
-                <a href={AdminUIRoutes.detailsView(listUIEndpoint, result, idKeyPath)}>
-                  <Formatter
-                    result={result}
-                    resourceSchema={resourceSchema}
-                    property={property}
-                  />
-                </a>
-              )}
-              {index !== 0 && (
-                <Formatter
-                  result={result}
-                  resourceSchema={resourceSchema}
-                  property={property}
-                />
-              )}
-            </Table.Cell>
-          );
-        })}
-        {resourceHasActions && (
-          <Table.Cell collapsing>
-            <Actions
+        <Table.Cell>
+          {/*We pass user ID to bulk actions - user moderation API takes user IDs*/}
+          {/*<SearchResultsRowCheckbox rowId={userId} data={result} />*/}
+        </Table.Cell>
+        <Table.Cell
+          key={`user-column-${result.id}`}
+          data-label="User"
+          className="word-break-all"
+        >
+          <UserListItemCompact
+            user={user}
+            id={result.id}
+            linkToDetailView={AdminUIRoutes.detailsView(
+              listUIEndpoint,
+              result,
+              idKeyPath
+            )}
+          />
+        </Table.Cell>
+        <Table.Cell
+          key={`user-email-${result.id}`}
+          data-label="Email"
+          className="word-break-all"
+        >
+          {splitEmail[0]}
+        </Table.Cell>
+        <Table.Cell
+          key={`user-email-domain-${result.id}`}
+          data-label="Email"
+          className="word-break-all"
+        >
+          @{splitEmail[1]}
+        </Table.Cell>
+        <Table.Cell />
+        <Table.Cell />
+        <Table.Cell />
+
+        <Table.Cell collapsing>
+          {resourceHasActions && result.is_open && (
+            <ModerationActions
               title={title}
+              user={user}
               resourceName={resourceName}
               editUrl={AdminUIRoutes.editView(listUIEndpoint, result, idKeyPath)}
               displayEdit={displayEdit}
@@ -78,8 +99,8 @@ class SearchResultItemComponent extends Component {
               successCallback={this.refreshAfterAction}
               listUIEndpoint={listUIEndpoint}
             />
-          </Table.Cell>
-        )}
+          )}
+        </Table.Cell>
       </Table.Row>
     );
   }
@@ -106,4 +127,4 @@ SearchResultItemComponent.defaultProps = {
   actions: {},
 };
 
-export const SearchResultItem = withState(SearchResultItemComponent);
+export const SearchResultItemLayout = withState(SearchResultItemComponent);

@@ -12,10 +12,11 @@ from invenio_records_resources.services.uow import unit_of_work
 from invenio_search.engine import dsl
 
 from invenio_requests.customizations.user_moderation.user_moderation import (
-    UserModeration,
+    UserModerationRequest,
 )
 from invenio_requests.proxies import current_request_type_registry
 from invenio_requests.services.user_moderation.errors import OpenRequestAlreadyExists
+from ..results import EntityResolverExpandableField
 
 
 class UserModerationRequestService:
@@ -28,7 +29,7 @@ class UserModerationRequestService:
     @property
     def request_type_cls(self):
         """User moderation request type."""
-        return current_request_type_registry.lookup(UserModeration.type_id)
+        return current_request_type_registry.lookup(UserModerationRequest.type_id)
 
     def _exists(self, identity, user_id):
         """Return the request id if an open request already exists, else None."""
@@ -89,3 +90,12 @@ class UserModerationRequestService:
             data=data,
             uow=uow,
         )
+
+    @property
+    def expandable_fields(self):
+        """Get expandable fields."""
+        return [
+            EntityResolverExpandableField("created_by"),
+            EntityResolverExpandableField("receiver"),
+            EntityResolverExpandableField("topic"),
+        ]

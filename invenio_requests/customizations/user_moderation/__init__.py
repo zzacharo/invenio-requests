@@ -6,6 +6,6 @@
 # it under the terms of the MIT License; see LICENSE file for more details.
 """User moderation request type."""
 
-from .user_moderation import AcceptUserAction, DeclineUserAction, UserModeration
+from .user_moderation import AcceptUserAction, DeclineUserAction, UserModerationRequest
 
-__all__ = ("UserModeration", "AcceptUserAction", "DeclineUserAction")
+__all__ = ("UserModerationRequest", "AcceptUserAction", "DeclineUserAction")
