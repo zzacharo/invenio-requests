@@ -16,6 +16,7 @@ from invenio_requests.customizations.user_moderation.user_moderation import (
 )
 from invenio_requests.proxies import current_request_type_registry
 from invenio_requests.services.user_moderation.errors import OpenRequestAlreadyExists
+
 from ..results import EntityResolverExpandableField
 
 

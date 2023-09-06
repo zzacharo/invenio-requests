@@ -8,10 +8,10 @@
 
 """Invenio module for generic and customizable requests."""
 
+from invenio_i18n import lazy_gettext as _
 from invenio_users_resources.entity_resolvers import GroupResolver, UserResolver
 
 from invenio_requests.services.requests import facets
-from invenio_i18n import lazy_gettext as _
 
 from .customizations import CommentEventType, LogEventType
 from .services.permissions import PermissionPolicy
@@ -92,11 +92,6 @@ REQUESTS_USER_MODERATION_FACETS = {
             "field": "status",
         },
     },
-    "is_open": {
-        "facet": facets.is_open,
-        "ui": {
-            "field": "is_open"
-        }
-    }
+    "is_open": {"facet": facets.is_open, "ui": {"field": "is_open"}},
 }
 """Available facets defined for this module."""
