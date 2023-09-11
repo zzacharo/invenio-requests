@@ -8,6 +8,12 @@
 Changes
 =======
 
+Version 2.12.0 (2023-09-11)
+
+* administration: custom overridable search item display
+* chore: eslint formatting
+* setup: upgrade invenio-users-resources
+
 Version 2.11.2 (2023-09-04)
 
 - assets: fix missing guest user avatar
