@@ -17,6 +17,7 @@ from invenio_records_resources.resources import (
     RecordResourceConfig,
     SearchRequestArgsSchema,
 )
+from invenio_records_resources.services.base.config import ConfiguratorMixin, FromConfig
 from marshmallow import fields
 
 from ...errors import CannotExecuteActionError, NoSuchActionError
@@ -35,10 +36,26 @@ class RequestSearchRequestArgsSchema(SearchRequestArgsSchema):
     is_open = fields.Boolean()
 
 
+request_error_handlers = {
+    CannotExecuteActionError: create_error_handler(
+        lambda e: HTTPJSONException(
+            code=400,
+            description=str(e),
+        )
+    ),
+    NoSuchActionError: create_error_handler(
+        lambda e: HTTPJSONException(
+            code=400,
+            description=str(e),
+        )
+    ),
+}
+
+
 #
 # Resource config
 #
-class RequestsResourceConfig(RecordResourceConfig):
+class RequestsResourceConfig(RecordResourceConfig, ConfiguratorMixin):
     """Requests resource configuration."""
 
     blueprint_name = "requests"
@@ -57,17 +74,6 @@ class RequestsResourceConfig(RecordResourceConfig):
 
     request_search_args = RequestSearchRequestArgsSchema
 
-    error_handlers = {
-        CannotExecuteActionError: create_error_handler(
-            lambda e: HTTPJSONException(
-                code=400,
-                description=str(e),
-            )
-        ),
-        NoSuchActionError: create_error_handler(
-            lambda e: HTTPJSONException(
-                code=400,
-                description=str(e),
-            )
-        ),
-    }
+    error_handlers = FromConfig(
+        "REQUESTS_ERROR_HANDLERS", default=request_error_handlers
+    )

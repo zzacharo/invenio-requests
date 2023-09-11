@@ -45,7 +45,7 @@ class InvenioRequests:
         """Flask application initialization."""
         self.init_config(app)
         self.init_services(app)
-        self.init_resources()
+        self.init_resources(app)
         self.init_registry(app)
         app.extensions["invenio-requests"] = self
 
@@ -78,11 +78,11 @@ class InvenioRequests:
             requests_service=self.requests_service,
         )
 
-    def init_resources(self):
+    def init_resources(self, app):
         """Init resources."""
         self.requests_resource = RequestsResource(
             service=self.requests_service,
-            config=RequestsResourceConfig,
+            config=RequestsResourceConfig.build(app),
         )
 
         self.request_events_resource = RequestCommentsResource(
