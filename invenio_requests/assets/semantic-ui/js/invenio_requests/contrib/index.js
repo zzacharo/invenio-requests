@@ -10,6 +10,7 @@ import {
   LabelTypeCommunitySubmission,
   LabelTypeGuestAccess,
   LabelTypeUserAccess,
+  LabelTypeCommunityManageRecord,
 } from "@js/invenio_requests/contrib";
 import {
   RequestAcceptButton,
@@ -34,6 +35,7 @@ export const defaultContribComponents = {
   [`RequestTypeLabel.layout.community-invitation`]: LabelTypeCommunityInvitation,
   [`RequestTypeLabel.layout.guest-access-request`]: LabelTypeGuestAccess,
   [`RequestTypeLabel.layout.user-access-request`]: LabelTypeUserAccess,
+  [`RequestTypeLabel.layout.community-manage-record`]: LabelTypeCommunityManageRecord,
   [`RequestStatusLabel.layout.submitted`]: LabelStatusSubmit,
   [`RequestStatusLabel.layout.deleted`]: LabelStatusDelete,
   [`RequestStatusLabel.layout.accepted`]: LabelStatusAccept,

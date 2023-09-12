@@ -37,3 +37,9 @@ export const LabelTypeUserAccess = (props) => (
     {i18next.t("User access")}
   </Label>
 );
+
+export const LabelTypeCommunityManageRecord = (props) => (
+   <Label horizontal className="primary" size="small">
+     {i18next.t("Community manage record")}
+   </Label>
+ );

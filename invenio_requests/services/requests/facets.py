@@ -20,6 +20,7 @@ type = TermsFacet(
         "community-invitation": _("Member invitation"),
         "guest-access-request": _("Guest access"),
         "user-access-request": _("User access"),
+        "community-manage-record": _("Community manage record"),
     },
 )
 
