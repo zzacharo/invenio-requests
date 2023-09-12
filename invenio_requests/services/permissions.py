@@ -51,7 +51,7 @@ class PermissionPolicy(RecordPermissionPolicy):
 
     can_manage_access_options = [Disable()]
 
-    can_delete = [
+    can_action_delete = [
         Status(["created"], [Creator()]),
         Status(
             ["submitted", "deleted", "cancelled", "expired", "accepted", "declined"],

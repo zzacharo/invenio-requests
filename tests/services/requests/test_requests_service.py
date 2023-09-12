@@ -79,6 +79,30 @@ def test_cancel_request(
     assert 2 == results.total  # submit comment + cancel event
 
 
+def test_delete_request(
+    app,
+    identity_simple,
+    identity_simple_2,
+    submit_request,
+    requests_service,
+    request_events_service,
+    create_request,
+):
+    # Create a request
+    request = create_request(identity_simple)
+    Request.index.refresh()
+
+    # Delete it
+    result = requests_service.execute_action(identity_simple, request.id, "delete", {})
+    request = result._request
+
+    RequestEvent.index.refresh()
+
+    assert "deleted" == request.status
+    results = request_events_service.search(identity_simple, request.id)
+    assert 1 == results.total
+
+
 def test_decline_request(
     app,
     identity_simple,

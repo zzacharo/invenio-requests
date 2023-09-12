@@ -202,7 +202,7 @@ class RequestsService(RecordService):
         # self.check_revision_id(request, revision_id)
 
         # check permissions
-        self.require_permission(identity, f"delete", request=request)
+        self.require_permission(identity, f"action_delete", request=request)
 
         # run components
         self.run_components("delete", identity, record=request, uow=uow)
