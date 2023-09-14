@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version 2.14.0 (2023-09-14)
+
+- ui: support community manage record request facets and labels
+- icons: Update icons
+
 Version 2.13.0 (2023-09-13)
 
 - resource: add configurable error handlers
