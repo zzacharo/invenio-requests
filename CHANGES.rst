@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version 2.14.1 (2023-09-22)
+
+- a11y: add aria-label to accept request modal
+
 Version 2.14.0 (2023-09-14)
 
 - ui: support community manage record request facets and labels
