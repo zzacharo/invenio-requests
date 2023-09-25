@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version 2.14.2 (2023-09-25)
+
+- a11y: added label for context menu
+
 Version 2.14.1 (2023-09-22)
 
 - a11y: add aria-label to accept request modal
