@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version 2.14.3 (2023-10-06)
+
+- notifications: update comment notification to work with email
+
 Version 2.14.2 (2023-09-25)
 
 - a11y: added label for context menu
