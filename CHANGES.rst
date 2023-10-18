@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version 2.14.4 (2023-10-18)
+
+- assets: improve quote replies styling
+
 Version 2.14.3 (2023-10-06)
 
 - notifications: update comment notification to work with email
