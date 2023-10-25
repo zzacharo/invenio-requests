@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version 2.14.5 (2023-10-25)
+
+- assets: update email styling
+
 Version 2.14.4 (2023-10-18)
 
 - assets: improve quote replies styling
