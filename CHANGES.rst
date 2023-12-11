@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version 2.14.6 (2023-12-11)
+
+- request metadata: add record link
+
 Version 2.14.5 (2023-10-25)
 
 - assets: update email styling
