@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version 2.14.7 (2023-12-12)
+
+- replace ckeditor with tinymce due to license issue
+
 Version 2.14.6 (2023-12-11)
 
 - request metadata: add record link
