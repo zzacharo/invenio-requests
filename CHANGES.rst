@@ -1,5 +1,5 @@
 ..
-    Copyright (C) 2021-2023 CERN.
+    Copyright (C) 2021-2024 CERN.
 
     Invenio-Requests is free software; you can redistribute it and/or
     modify it under the terms of the MIT License; see LICENSE file for more
@@ -7,6 +7,10 @@
 
 Changes
 =======
+
+Version 3.0.0 (released 2024-01-31)
+
+- installation: bump records-resources and users-resources
 
 Version 2.14.7 (2023-12-12)
 
