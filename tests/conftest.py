@@ -115,12 +115,12 @@ def app_config(app_config):
     app_config["JSONSCHEMAS_HOST"] = "localhost"
     app_config["BABEL_DEFAULT_LOCALE"] = "en"
     # app_config["I18N_LANGUAGES"] = [('da', 'Danish')]
-    app_config[
-        "RECORDS_REFRESOLVER_CLS"
-    ] = "invenio_records.resolver.InvenioRefResolver"
-    app_config[
-        "RECORDS_REFRESOLVER_STORE"
-    ] = "invenio_jsonschemas.proxies.current_refresolver_store"
+    app_config["RECORDS_REFRESOLVER_CLS"] = (
+        "invenio_records.resolver.InvenioRefResolver"
+    )
+    app_config["RECORDS_REFRESOLVER_STORE"] = (
+        "invenio_jsonschemas.proxies.current_refresolver_store"
+    )
     app_config["REQUESTS_REGISTERED_TYPES"] = [RequestType()]
     app_config["REQUESTS_REGISTERED_EVENT_TYPES"] = [
         LogEventType(),
@@ -147,9 +147,9 @@ def app_config(app_config):
     ]
 
     # Extending preferences schemas, to include notification preferences. Should not matter for most test cases
-    app_config[
-        "ACCOUNTS_USER_PREFERENCES_SCHEMA"
-    ] = UserPreferencesNotificationsSchema()
+    app_config["ACCOUNTS_USER_PREFERENCES_SCHEMA"] = (
+        UserPreferencesNotificationsSchema()
+    )
     app_config["USERS_RESOURCES_SERVICE_SCHEMA"] = NotificationsUserSchema
     return app_config
 

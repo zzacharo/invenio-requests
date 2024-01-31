@@ -104,9 +104,9 @@ class EventType:
         """Create a schema for the entire request including payload."""
         type_id = cls.type_id
         if type_id not in current_requests._events_schema_cache:
-            current_requests._events_schema_cache[
-                type_id
-            ] = cls._create_marshmallow_schema()
+            current_requests._events_schema_cache[type_id] = (
+                cls._create_marshmallow_schema()
+            )
         return current_requests._events_schema_cache[type_id]
 
 
