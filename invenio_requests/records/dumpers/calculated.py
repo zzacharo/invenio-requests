@@ -30,4 +30,4 @@ class CalculatedFieldDumperExt(SearchDumperExt):
 
     def load(self, data, record_cls):
         """Load the data."""
-        data.pop(self.field)
+        data.pop(self.field, None)
