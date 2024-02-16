@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version 3.0.1 (released 2024-02-16)
+
+- calculated: make easier to support backwards compatibility
+
 Version 3.0.0 (released 2024-01-31)
 
 - installation: bump records-resources and users-resources
