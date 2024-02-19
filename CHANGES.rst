@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version 4.0.0 (released 2024-02-19)
+
+- major bump on invenio-users-resources
+
 Version 3.0.1 (released 2024-02-16)
 
 - calculated: make easier to support backwards compatibility
