@@ -8,6 +8,13 @@
 Changes
 =======
 
+Version 4.1.0 (released 2024-03-23)
+
+- mappings: change "dynamic" values to string
+- ui: handle default case for EntityDetails (bug)
+- ui: add group for EntityDetails
+- init: move record_once to finalize_app
+
 Version 4.0.0 (released 2024-02-19)
 
 - major bump on invenio-users-resources
