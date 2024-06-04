@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version 4.2.0 (released 2024-06-04)
+
+- installation: major bump on invenio-records-resources
+
 Version 4.1.0 (released 2024-03-23)
 
 - mappings: change "dynamic" values to string
