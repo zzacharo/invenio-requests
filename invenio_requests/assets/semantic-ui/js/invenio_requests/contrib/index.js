@@ -1,4 +1,5 @@
 import {
+
   LabelStatusAccept,
   LabelStatusCancel,
   LabelStatusDecline,
@@ -11,19 +12,24 @@ import {
   LabelTypeGuestAccess,
   LabelTypeUserAccess,
   LabelTypeCommunityManageRecord,
+  LabelTypeCommunitySubcommunity
+
 } from "@js/invenio_requests/contrib";
 import {
+
   RequestAcceptButton,
   RequestCancelButton,
   RequestDeclineButton,
   RequestSubmitButton,
 } from "@js/invenio_requests/components/Buttons";
 import {
+
   RequestAcceptModalTrigger,
   RequestDeclineModalTrigger,
   RequestCancelModalTrigger,
 } from "@js/invenio_requests/components/ModalTriggers";
 import {
+
   AccessRequestIcon,
   CommunityInclusionIcon,
   CommunityInvitationIcon,
@@ -36,6 +42,7 @@ export const defaultContribComponents = {
   [`RequestTypeLabel.layout.guest-access-request`]: LabelTypeGuestAccess,
   [`RequestTypeLabel.layout.user-access-request`]: LabelTypeUserAccess,
   [`RequestTypeLabel.layout.community-manage-record`]: LabelTypeCommunityManageRecord,
+  [`RequestTypeLabel.layout.subcommunity`]: LabelTypeCommunitySubcommunity,
   [`RequestStatusLabel.layout.submitted`]: LabelStatusSubmit,
   [`RequestStatusLabel.layout.deleted`]: LabelStatusDelete,
   [`RequestStatusLabel.layout.accepted`]: LabelStatusAccept,

@@ -29,6 +29,7 @@ import {
   LabelTypeGuestAccess,
   LabelTypeUserAccess,
   LabelTypeCommunityManageRecord,
+  LabelTypeCommunitySubcommunity
 } from "./contrib";
 import {
   AcceptStatus,
@@ -73,6 +74,7 @@ const defaultComponents = {
   "RequestTypeLabel.layout.guest-access-request": LabelTypeGuestAccess,
   "RequestTypeLabel.layout.user-access-request": LabelTypeUserAccess,
   "RequestTypeLabel.layout.community-manage-record": LabelTypeCommunityManageRecord,
+  "RequestTypeLabel.layout.subcommunity": LabelTypeCommunitySubcommunity,
   "RequestActionModalTrigger.accept": RequestAcceptModalTrigger,
   "RequestActionModalTrigger.decline": RequestDeclineModalTrigger,
   "RequestActionModalTrigger.cancel": RequestCancelModalTrigger,

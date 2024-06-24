@@ -43,3 +43,9 @@ export const LabelTypeCommunityManageRecord = (props) => (
     {i18next.t("Community manage record")}
   </Label>
 );
+
+export const LabelTypeCommunitySubcommunity = (props) => (
+  <Label horizontal className="primary" size="small">
+    {i18next.t("Subcommunity")}
+  </Label>
+);
