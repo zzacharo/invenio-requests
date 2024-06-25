@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version 4.3.0 (released 2024-06-25)
+
+- contrib: added subcommunity type label.
+- config: allow request search configuration
+
 Version 4.2.0 (released 2024-06-04)
 
 - installation: major bump on invenio-records-resources
