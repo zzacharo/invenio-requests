@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version 4.5.1 (released 2024-06-28)
+
+- service: fix request ID passing
+
 Version 4.5.0 (released 2024-06-28)
 
 - service: handle request parameters flexibly
