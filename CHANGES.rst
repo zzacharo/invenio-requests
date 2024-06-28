@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version 4.5.0 (released 2024-06-28)
+
+- service: handle request parameters flexibly
+
 Version 4.4.0 (released 2024-06-27)
 
 - registry: allow entry points to be callables
