@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version 4.7.0 (released 2024-08-09)
+
+- resources: accept vnd.inveniordm.v1+json header
+- conversation: fix comment editor
+
 Version 4.6.0 (released 2024-07-28)
 
 - comments: fix jumping cursor
