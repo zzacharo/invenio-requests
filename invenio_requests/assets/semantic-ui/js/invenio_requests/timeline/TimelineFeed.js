@@ -15,6 +15,7 @@ import { Pagination } from "../components/Pagination";
 import RequestsFeed from "../components/RequestsFeed";
 import { TimelineCommentEditor } from "../timelineCommentEditor";
 import { TimelineCommentEventControlled } from "../timelineCommentEventControlled";
+import _ from "lodash";
 
 class TimelineFeed extends Component {
   constructor(props) {
@@ -29,6 +30,14 @@ class TimelineFeed extends Component {
   componentDidMount() {
     const { getTimelineWithRefresh } = this.props;
     getTimelineWithRefresh();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { timeline } = this.props;
+
+    if (!_.isEqual(prevProps.timeline, timeline) && timeline?.hits?.total > 0) {
+      window.MathJax?.typeset();
+    }
   }
 
   componentWillUnmount() {
