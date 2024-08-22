@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version 5.0.0 (released 2024-08-22)
+
+- bump invenio-users-resources with breaking changes
+
 Version 4.7.0 (released 2024-08-09)
 
 - resources: accept vnd.inveniordm.v1+json header
