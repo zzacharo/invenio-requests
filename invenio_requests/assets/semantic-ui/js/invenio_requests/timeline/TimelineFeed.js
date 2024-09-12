@@ -35,7 +35,9 @@ class TimelineFeed extends Component {
   componentDidUpdate(prevProps) {
     const { timeline } = this.props;
 
-    if (!_.isEqual(prevProps.timeline, timeline) && timeline?.hits?.total > 0) {
+    const hasComments = timeline?.hits?.total > 0;
+    const hasNewComments = prevProps.timeline?.hits?.total !== timeline?.hits?.total;
+    if (hasComments && hasNewComments) {
       window.MathJax?.typeset();
     }
   }
