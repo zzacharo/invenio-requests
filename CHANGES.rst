@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version 5.1.0 (released 2024-09-17)
+
+- assets: add mathjax support to timeline comments
+
 Version 5.0.0 (released 2024-08-22)
 
 - bump invenio-users-resources with breaking changes
