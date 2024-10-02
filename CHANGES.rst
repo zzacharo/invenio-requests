@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version 5.1.1 (released 2024-10-02)
+
+- views: add callback hook on search results rendered
+
 Version 5.1.0 (released 2024-09-17)
 
 - assets: add mathjax support to timeline comments
