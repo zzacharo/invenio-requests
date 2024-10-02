@@ -17,6 +17,10 @@ export const RequestsResults = ({
   currentResultsState,
 }) => {
   const { total } = currentResultsState.data;
+
+  const handleResultsRendered = () => {
+    window.invenio?.onSearchResultsRendered();
+  };
   return (
     total && (
       <Grid>
@@ -55,7 +59,7 @@ export const RequestsResults = ({
                 </Grid.Row>
                 <Grid.Row>
                   <Grid.Column>
-                    <ResultsList />
+                    <ResultsList onResultsRendered={handleResultsRendered} />
                   </Grid.Column>
                 </Grid.Row>
               </Grid>
