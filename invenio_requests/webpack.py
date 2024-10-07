@@ -33,7 +33,7 @@ requests = WebpackThemeBundle(
                 "semantic-ui-react": "^2.1.1",
                 "@tinymce/tinymce-react": "^4.3.0",
                 "tinymce": "^6.7.2",
-                "axios": "^0.19.0",
+                "axios": "^1.7.7",
                 "lodash": "^4.17.15",
                 "luxon": "^1.21.1",
                 "path": "^0.12.7",
