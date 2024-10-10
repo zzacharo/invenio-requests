@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version 5.2.0 (released 2024-10-10)
+
+- webpack: update axios major version
+
 Version 5.1.1 (released 2024-10-02)
 
 - views: add callback hook on search results rendered
