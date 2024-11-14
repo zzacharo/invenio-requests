@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2023 CERN.
+# Copyright (C) 2023-2024 CERN.
 # Copyright (C) 2023 Graz University of Technology.
 #
 # Invenio-RDM-Records is free software; you can redistribute it and/or modify
@@ -15,13 +15,22 @@ type = TermsFacet(
     field="type",
     label=_("Type"),
     value_labels={
-        "community-submission": _("Draft review"),
-        "community-inclusion": _("Community inclusion"),
-        "community-invitation": _("Member invitation"),
+        # Access
         "guest-access-request": _("Guest access"),
         "user-access-request": _("User access"),
-        "community-manage-record": _("Community manage record"),
+        # Community record and draft submission
+        "community-inclusion": _("Community inclusion"),
+        "community-submission": _("Draft review"),
+        # Membership
         "community-membership-request": _("Membership request"),
+        "community-invitation": _("Member invitation"),
+        # Subcommunity
+        "subcommunity": _("Subcommunity"),
+        # Moderation
+        "user-moderation": _("User moderation"),
+        # Instance-specific labels which ideally should not be listed here
+        "community-manage-record": _("Community manage record"),
+        "legacy-record-upgrade": _("Upgrade legacy record"),
     },
 )
 
