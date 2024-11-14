@@ -224,7 +224,9 @@ class RequestsService(RecordService):
         action_obj.execute(identity, uow)
 
     @unit_of_work()
-    def execute_action(self, identity, id_, action, data=None, uow=None, expand=False):
+    def execute_action(
+        self, identity, id_, action, data=None, uow=None, expand=False, **kwargs
+    ):
         """Execute the given action for the request, if possible.
 
         For instance, it would be not possible to execute the specified
@@ -244,7 +246,7 @@ class RequestsService(RecordService):
             raise CannotExecuteActionError(action)
 
         # Execute action and register request for persistence.
-        action_obj.execute(identity, uow)
+        action_obj.execute(identity, uow, **kwargs)
         uow.register(RecordCommitOp(request, indexer=self.indexer))
 
         # Assuming that data is just for comment payload
