@@ -8,6 +8,12 @@
 Changes
 =======
 
+Version 5.3.0 (released 2024-11-15)
+
+- actions: allows passing kwargs to execute_action, so that custom behaviour
+  can be implemented in each action
+- translations: include Jinja templates in translations
+
 Version 5.2.0 (released 2024-10-10)
 
 - webpack: update axios major version
