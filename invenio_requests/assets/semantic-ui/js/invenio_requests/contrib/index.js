@@ -1,3 +1,9 @@
+// This file is part of Invenio Requests
+// Copyright (C) 2024 CERN.
+//
+// Invenio is free software; you can redistribute it and/or modify it
+// under the terms of the MIT License; see LICENSE file for more details.
+
 import {
   LabelStatusAccept,
   LabelStatusCancel,
@@ -12,6 +18,7 @@ import {
   LabelTypeUserAccess,
   LabelTypeCommunityManageRecord,
   LabelTypeCommunitySubcommunity,
+  LabelTypeCommunitySubcommunityInvitation,
   LabelTypeCommunityMembershipRequest,
 } from "@js/invenio_requests/contrib";
 import {
@@ -39,6 +46,8 @@ export const defaultContribComponents = {
   [`RequestTypeLabel.layout.user-access-request`]: LabelTypeUserAccess,
   [`RequestTypeLabel.layout.community-manage-record`]: LabelTypeCommunityManageRecord,
   [`RequestTypeLabel.layout.subcommunity`]: LabelTypeCommunitySubcommunity,
+  [`RequestTypeLabel.layout.subcommunity-invitation`]:
+    LabelTypeCommunitySubcommunityInvitation,
   [`RequestTypeLabel.layout.community-membership-request`]:
     LabelTypeCommunityMembershipRequest,
   [`RequestStatusLabel.layout.submitted`]: LabelStatusSubmit,

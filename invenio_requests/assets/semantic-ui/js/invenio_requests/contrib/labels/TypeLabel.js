@@ -51,6 +51,12 @@ export const LabelTypeCommunitySubcommunity = (props) => (
   </Label>
 );
 
+export const LabelTypeCommunitySubcommunityInvitation = (props) => (
+  <Label horizontal className="primary" size="small">
+    {i18next.t("Subcommunity invitation")}
+  </Label>
+);
+
 export const LabelTypeCommunityMembershipRequest = (props) => (
   <Label horizontal className="primary" size="small">
     {i18next.t("Membership request")}

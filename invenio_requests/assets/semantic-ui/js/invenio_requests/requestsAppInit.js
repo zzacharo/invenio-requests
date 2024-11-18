@@ -32,6 +32,7 @@ import {
   LabelTypeUserAccess,
   LabelTypeCommunityManageRecord,
   LabelTypeCommunitySubcommunity,
+  LabelTypeCommunitySubcommunityInvitation,
   LabelTypeCommunityMembershipRequest,
 } from "./contrib";
 import {
@@ -78,6 +79,8 @@ const defaultComponents = {
   "RequestTypeLabel.layout.user-access-request": LabelTypeUserAccess,
   "RequestTypeLabel.layout.community-manage-record": LabelTypeCommunityManageRecord,
   "RequestTypeLabel.layout.subcommunity": LabelTypeCommunitySubcommunity,
+  "RequestTypeLabel.layout.subcommunity-invitation":
+    LabelTypeCommunitySubcommunityInvitation,
   "RequestTypeLabel.layout.community-membership-request":
     LabelTypeCommunityMembershipRequest,
   "RequestActionModalTrigger.accept": RequestAcceptModalTrigger,

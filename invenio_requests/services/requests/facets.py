@@ -26,6 +26,7 @@ type = TermsFacet(
         "community-invitation": _("Member invitation"),
         # Subcommunity
         "subcommunity": _("Subcommunity"),
+        "subcommunity-invitation": _("Subcommunity invitation"),
         # Moderation
         "user-moderation": _("User moderation"),
         # Instance-specific labels which ideally should not be listed here
