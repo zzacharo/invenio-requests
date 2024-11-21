@@ -91,6 +91,7 @@ export const ComputerTabletRequestItem = ({
                   name={getUserIcon(result.expanded?.receiver)}
                 />
                 <span className="ml-5">{result.expanded?.receiver.metadata.title}</span>
+                {result.expires_at && " - "}
               </>
             )}
             {result.expires_at && (
