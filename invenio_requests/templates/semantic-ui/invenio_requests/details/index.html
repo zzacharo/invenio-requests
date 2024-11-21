@@ -13,7 +13,7 @@
   {%- extends config.BASE_TEMPLATE %}
 {% endif %}
 
-
+{% set title = invenio_request.title %}
 
 {% block page_body %}
   {% set title = _("Request ") %}
