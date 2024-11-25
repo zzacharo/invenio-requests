@@ -31,6 +31,7 @@ import {
   RequestAcceptModalTrigger,
   RequestDeclineModalTrigger,
   RequestCancelModalTrigger,
+  RequestSubmitModalTrigger,
 } from "@js/invenio_requests/components/ModalTriggers";
 import {
   AccessRequestIcon,
@@ -63,6 +64,7 @@ export const defaultContribComponents = {
   [`RequestActionModalTrigger.accept`]: RequestAcceptModalTrigger,
   [`RequestActionModalTrigger.decline`]: RequestDeclineModalTrigger,
   [`RequestActionModalTrigger.cancel`]: RequestCancelModalTrigger,
+  [`RequestActionModalTrigger.submit`]: RequestSubmitModalTrigger,
   [`InvenioRequests.RequestTypeIcon.layout.guest-access-request`]: AccessRequestIcon,
   [`InvenioRequests.RequestTypeIcon.layout.user-access-request`]: AccessRequestIcon,
   [`InvenioRequests.RequestTypeIcon.layout.community-inclusion`]:
