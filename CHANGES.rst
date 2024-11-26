@@ -8,6 +8,13 @@
 Changes
 =======
 
+Version v5.4.0 (released 2024-11-26)
+
+- UI: add seperator on list of requests
+- ui: add subcommunity invitation facet and label
+- ux: set tab title to request title
+- requests: add missing facets and reorder
+
 Version 5.3.0 (released 2024-11-15)
 
 - actions: allows passing kwargs to execute_action, so that custom behaviour

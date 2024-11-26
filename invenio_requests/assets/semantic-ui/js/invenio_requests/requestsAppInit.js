@@ -1,5 +1,5 @@
 // This file is part of InvenioRequests
-// Copyright (C) 2022 CERN.
+// Copyright (C) 2022-2024 CERN.
 // Copyright (C) 2024 Northwestern University.
 // Copyright (C) 2024 KTH Royal Institute of Technology.
 //
