@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version v5.5.0 (released 2024-12-09)
+
+- config: allow comment notification builder to be custom
+
 Version v5.4.0 (released 2024-11-26)
 
 - UI: add seperator on list of requests
