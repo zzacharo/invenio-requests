@@ -13,3 +13,4 @@ export {
 } from "./RequestsEmptyResults";
 export { RequestsResults } from "./RequestsResults";
 export { RequestStatusFilter } from "./RequestStatusFilterComponent";
+export { SharedOrMyRequestsFilter } from "./SharedOrMyRequestsFilterComponent";

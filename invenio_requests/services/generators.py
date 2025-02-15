@@ -82,6 +82,12 @@ class Receiver(EntityNeedsGenerator):
     entity_field = "receiver"
 
 
+class Topic(EntityNeedsGenerator):
+    """Allows the topic of the request."""
+
+    entity_field = "topic"
+
+
 class Commenter(Generator):
     """The user who created a specific comment."""
 

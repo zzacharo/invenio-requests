@@ -8,6 +8,7 @@
 
 """Search parameter interpreters for requests."""
 from functools import partial
+from opensearch_dsl import Q
 
 from invenio_records_resources.services.records.params import (
     FilterParam,
@@ -78,4 +79,28 @@ class IsOpenParam(ParamInterpreter):
             search = search.filter("term", **{self.field_name: True})
         elif params.get("is_open") is False:
             search = search.filter("term", **{self.field_name: False})
+        return search
+
+
+class IsSharedWithMeParam(ParamInterpreter):
+    """Evaluates the 'shared_with_me' parameter."""
+
+    def apply(self, identity, search, params):
+        """Evaluate the shared_with_me parameter on the search."""
+        created_by = "created_by.user"
+        receiver = "receiver.user"
+        my_requests_q = Q(
+            "bool",
+            should=[
+                Q("term", **{created_by: identity.id}),
+                Q("term", **{receiver: identity.id}),
+            ],
+        )
+        if params.get("shared_with_me") is True:
+            # Shared with me
+            search = search.filter(~my_requests_q)
+        elif params.get("shared_with_me") is False:
+            # My requests
+            search = search.filter(my_requests_q)
+
         return search

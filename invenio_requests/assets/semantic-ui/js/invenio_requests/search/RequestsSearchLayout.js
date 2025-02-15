@@ -10,13 +10,18 @@ import {
 } from "@js/invenio_search_ui/components";
 import { i18next } from "@translations/invenio_requests/i18next";
 import { RequestStatusFilter } from "./RequestStatusFilterComponent";
+import { SharedOrMyRequestsFilter } from "./SharedOrMyRequestsFilterComponent";
 import PropTypes from "prop-types";
 import React from "react";
 import { GridResponsiveSidebarColumn } from "react-invenio-forms";
 import { SearchBar } from "react-searchkit";
 import { Button, Container, Grid } from "semantic-ui-react";
 
-export const RequestsSearchLayout = ({ config, appName }) => {
+export const RequestsSearchLayout = ({
+  config,
+  appName,
+  showSharedDropdown = false,
+}) => {
   const [sidebarVisible, setSidebarVisible] = React.useState(false);
   return (
     <Container>
@@ -32,18 +37,28 @@ export const RequestsSearchLayout = ({ config, appName }) => {
               className="rel-mb-1"
             />
           </Grid.Column>
-
+          {showSharedDropdown && (
+            <Grid.Column
+              mobile={13}
+              tablet={13}
+              computer={3}
+              floated="left"
+              className="text-align-left-mobile text-align-left-tablet"
+            >
+              <SharedOrMyRequestsFilter />
+            </Grid.Column>
+          )}
           <Grid.Column
             mobile={13}
-            tablet={4}
-            computer={3}
+            tablet={13}
+            computer={5}
             floated="right"
-            className="text-align-right-mobile"
+            className="text-align-right-mobile text-align-right-tablet"
           >
             <RequestStatusFilter className="rel-mb-1" />
           </Grid.Column>
 
-          <Grid.Column mobile={16} tablet={11} computer={9}>
+          <Grid.Column mobile={16} tablet={16} computer={7}>
             <SearchBar placeholder={i18next.t("Search in my requests...")} />
           </Grid.Column>
         </Grid.Row>

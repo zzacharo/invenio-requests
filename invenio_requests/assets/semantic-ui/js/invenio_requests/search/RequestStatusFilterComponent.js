@@ -90,7 +90,7 @@ RequestStatusFilterComponent.propTypes = {
 };
 
 RequestStatusFilterComponent.defaultProps = {
-  keepFiltersOnUpdate: false,
+  keepFiltersOnUpdate: true,
 };
 
 export const RequestStatusFilter = withState(RequestStatusFilterComponent);
