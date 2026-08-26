@@ -241,7 +241,7 @@ def test_creator_and_receiver_can_update_open_request(
     assert requests_service.update(identity_simple, request_id, data)
 
 
-def test_only_system_can_update_closed_request(
+def test_receiver_and_system_can_update_closed_request(
     app,
     identity_simple,
     identity_simple_2,
@@ -257,12 +257,11 @@ def test_only_system_can_update_closed_request(
     # Stranger
     with pytest.raises(PermissionDeniedError):
         requests_service.update(identity_stranger, request_id, data)
-    # Receiver
-    with pytest.raises(PermissionDeniedError):
-        requests_service.update(identity_simple_2, request_id, data)
     # Creator
     with pytest.raises(PermissionDeniedError):
         requests_service.update(identity_simple, request_id, data)
+    # Receiver
+    assert requests_service.update(identity_simple_2, request_id, data)
     # System
     assert requests_service.update(system_identity, request_id, data)
 

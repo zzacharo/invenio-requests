@@ -55,6 +55,10 @@ class PermissionPolicy(RecordPermissionPolicy):
         SystemProcess(),
         Status(["created"], [Creator()]),
         Status(["submitted"], [Creator(), Receiver()]),
+        Status(
+            ["accepted", "declined", "cancelled", "expired"],
+            [Receiver()],
+        ),
     ]
 
     can_manage_access_options = [Disable()]
